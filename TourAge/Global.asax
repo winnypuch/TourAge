@@ -1,0 +1,1 @@
+<%@ Application Codebehind="Global.asax.cs" Inherits="TourAge.MvcApplication" Language="C#" %>

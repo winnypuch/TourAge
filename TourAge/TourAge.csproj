@@ -1,0 +1,591 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A0D11573-6E40-4A21-BF5D-5BBDE6488A8D}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TourAge</RootNamespace>
+    <AssemblyName>TourAge</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <UpgradeBackupLocation />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="DevExpress.Data.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.ASPxThemes.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.RichEdit.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.RichEdit.v20.2.Export, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Printing.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.Mvc5.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraReports.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraReports.v20.2.Web, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraReports.v20.2.Web.WebForms, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Pdf.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.Resources.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Charts.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.CodeParser.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.DataAccess.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Office.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.PivotGrid.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Sparkline.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpo.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraCharts.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraGauges.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="WebMatrix.Data, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.Data.3.2.7\lib\net45\WebMatrix.Data.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\BlogPosts.xml" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\Banner.jpg" />
+    <Content Include="Content\Images\Blog\image0.png" />
+    <Content Include="Content\Images\Blog\image1.png" />
+    <Content Include="Content\Images\Blog\image2.png" />
+    <Content Include="Content\Images\Blog\image3.png" />
+    <Content Include="Content\Images\calendar.png" />
+    <Content Include="Content\Images\captcha-refresh.png" />
+    <Content Include="Content\Images\card_ax.png" />
+    <Content Include="Content\Images\card_maestro.png" />
+    <Content Include="Content\Images\card_master.png" />
+    <Content Include="Content\Images\card_visa.png" />
+    <Content Include="Content\Images\cc.png" />
+    <Content Include="Content\Images\Cities\Athens.jpg" />
+    <Content Include="Content\Images\Cities\Barcelona.jpg" />
+    <Content Include="Content\Images\Cities\Berlin.jpg" />
+    <Content Include="Content\Images\Cities\Cairo.jpg" />
+    <Content Include="Content\Images\Cities\LA.jpg" />
+    <Content Include="Content\Images\Cities\London.jpg" />
+    <Content Include="Content\Images\Cities\Moscow.jpg" />
+    <Content Include="Content\Images\Cities\NY.jpg" />
+    <Content Include="Content\Images\Cities\Paris.jpg" />
+    <Content Include="Content\Images\Cities\Prague.jpg" />
+    <Content Include="Content\Images\Cities\Rio.jpg" />
+    <Content Include="Content\Images\Cities\Sydney.jpg" />
+    <Content Include="Content\Images\Cities\Tokoyo.jpg" />
+    <Content Include="Content\Images\Components\aspnet-mvc-extensions.jpg" />
+    <Content Include="Content\Images\Components\DevExpress-Dashboard.jpg" />
+    <Content Include="Content\Images\Components\DevExpress-WinForms-Diagram-Control.jpg" />
+    <Content Include="Content\Images\Components\Grid-Dashboard.jpg" />
+    <Content Include="Content\Images\Components\WPF-Office-Inspired-App.jpg" />
+    <Content Include="Content\Images\Customers\GaryRubio.jpg" />
+    <Content Include="Content\Images\Customers\HeidiLopez.jpg" />
+    <Content Include="Content\Images\Customers\NathanBryant.jpg" />
+    <Content Include="Content\Images\Customers\RafaelRaje.jpg" />
+    <Content Include="Content\Images\Footer_Logo.png" />
+    <Content Include="Content\Images\Header.png" />
+    <Content Include="Content\Images\Header1.png" />
+    <Content Include="Content\Images\help.png" />
+    <Content Include="Content\Images\list-image.png" />
+    <Content Include="Content\Images\Maps\Hamburg.png" />
+    <Content Include="Content\Images\Maps\Honolulu.png" />
+    <Content Include="Content\Images\Maps\Las-Vegas.png" />
+    <Content Include="Content\Images\Maps\London.png" />
+    <Content Include="Content\Images\Maps\Los-Angeles.png" />
+    <Content Include="Content\Images\Maps\Nassau.png" />
+    <Content Include="Content\Images\Maps\New-York.png" />
+    <Content Include="Content\Images\Maps\Paris.png" />
+    <Content Include="Content\Images\Maps\Rome.png" />
+    <Content Include="Content\Images\Maps\San-Francisco.png" />
+    <Content Include="Content\Images\offer-close-ico.png" />
+    <Content Include="Content\Images\Pictures\Bathroom-0.jpg" />
+    <Content Include="Content\Images\Pictures\Bathroom-2.jpg" />
+    <Content Include="Content\Images\Pictures\Bathroom-3.jpg" />
+    <Content Include="Content\Images\Pictures\Bathroom-4.jpg" />
+    <Content Include="Content\Images\Pictures\Bathroom-6.jpg" />
+    <Content Include="Content\Images\Pictures\Bathroom-7.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-1-0.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-1-2.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-1-3.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-1-5.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-1-7.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-1-8.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-1-9.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-2-0.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-2-1.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-2-10.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-2-11.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-2-2.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-2-3.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-2-4.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-2-5.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-2-8.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-2-9.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-3-0.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-3-1.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-3-10.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-3-11.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-3-2.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-3-3.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-3-4.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-3-5.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-3-6.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-3-7.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-3-8.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-3-9.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-4-0.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-4-10.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-4-11.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-4-3.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-4-4.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-4-5.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-4-6.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-4-7.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-4-8.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-4-9.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-5-1.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-5-10.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-5-11.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-5-12.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-5-14.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-5-2.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-5-3.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-5-4.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-5-5.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-5-7.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-5-8.jpg" />
+    <Content Include="Content\Images\Pictures\Bedroom-5-9.jpg" />
+    <Content Include="Content\Images\Pictures\Hamburg-0.jpg" />
+    <Content Include="Content\Images\Pictures\Hamburg-1.jpg" />
+    <Content Include="Content\Images\Pictures\Hamburg-2.jpg" />
+    <Content Include="Content\Images\Pictures\Hamburg-3.jpg" />
+    <Content Include="Content\Images\Pictures\Hamburg-4.jpg" />
+    <Content Include="Content\Images\Pictures\Hamburg-5.jpg" />
+    <Content Include="Content\Images\Pictures\Hamburg-6.jpg" />
+    <Content Include="Content\Images\Pictures\Hamburg-7.jpg" />
+    <Content Include="Content\Images\Pictures\Hamburg-8.jpg" />
+    <Content Include="Content\Images\Pictures\Honolulu-0.jpg" />
+    <Content Include="Content\Images\Pictures\Honolulu-1.jpg" />
+    <Content Include="Content\Images\Pictures\Honolulu-10.jpg" />
+    <Content Include="Content\Images\Pictures\Honolulu-2.jpg" />
+    <Content Include="Content\Images\Pictures\Honolulu-3.jpg" />
+    <Content Include="Content\Images\Pictures\Honolulu-4.jpg" />
+    <Content Include="Content\Images\Pictures\Honolulu-5.jpg" />
+    <Content Include="Content\Images\Pictures\Honolulu-6.jpg" />
+    <Content Include="Content\Images\Pictures\Honolulu-7.jpg" />
+    <Content Include="Content\Images\Pictures\Honolulu-9.jpg" />
+    <Content Include="Content\Images\Pictures\LA-0.jpg" />
+    <Content Include="Content\Images\Pictures\LA-1.jpg" />
+    <Content Include="Content\Images\Pictures\LA-2.jpg" />
+    <Content Include="Content\Images\Pictures\LA-3.jpg" />
+    <Content Include="Content\Images\Pictures\LA-4.jpg" />
+    <Content Include="Content\Images\Pictures\LA-5.jpg" />
+    <Content Include="Content\Images\Pictures\LA-7.jpg" />
+    <Content Include="Content\Images\Pictures\LA-8.jpg" />
+    <Content Include="Content\Images\Pictures\LA-9.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-0.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-1.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-10.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-11.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-12.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-13.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-14.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-15.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-16.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-17.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-18.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-19.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-2.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-20.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-21.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-22.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-23.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-25.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-27.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-28.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-29.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-3.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-30.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-31.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-32.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-33.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-4.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-5.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-6.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-7.jpg" />
+    <Content Include="Content\Images\Pictures\Lobby-9.jpg" />
+    <Content Include="Content\Images\Pictures\London-0.jpg" />
+    <Content Include="Content\Images\Pictures\London-1.jpg" />
+    <Content Include="Content\Images\Pictures\London-10.jpg" />
+    <Content Include="Content\Images\Pictures\London-2.jpg" />
+    <Content Include="Content\Images\Pictures\London-3.jpg" />
+    <Content Include="Content\Images\Pictures\London-4.jpg" />
+    <Content Include="Content\Images\Pictures\London-5.jpg" />
+    <Content Include="Content\Images\Pictures\London-7.jpg" />
+    <Content Include="Content\Images\Pictures\London-8.jpg" />
+    <Content Include="Content\Images\Pictures\LV-0.jpg" />
+    <Content Include="Content\Images\Pictures\LV-1.jpg" />
+    <Content Include="Content\Images\Pictures\LV-2.jpg" />
+    <Content Include="Content\Images\Pictures\LV-3.jpg" />
+    <Content Include="Content\Images\Pictures\LV-4.jpg" />
+    <Content Include="Content\Images\Pictures\LV-5.jpg" />
+    <Content Include="Content\Images\Pictures\LV-6.jpg" />
+    <Content Include="Content\Images\Pictures\LV-7.jpg" />
+    <Content Include="Content\Images\Pictures\LV-8.jpg" />
+    <Content Include="Content\Images\Pictures\MeetingRoom-0.jpg" />
+    <Content Include="Content\Images\Pictures\MeetingRoom-1.jpg" />
+    <Content Include="Content\Images\Pictures\MeetingRoom-2.jpg" />
+    <Content Include="Content\Images\Pictures\MeetingRoom-4.jpg" />
+    <Content Include="Content\Images\Pictures\MeetingRoom-5.jpg" />
+    <Content Include="Content\Images\Pictures\Nassau-0.jpg" />
+    <Content Include="Content\Images\Pictures\Nassau-11.jpg" />
+    <Content Include="Content\Images\Pictures\Nassau-12.jpg" />
+    <Content Include="Content\Images\Pictures\Nassau-14.jpg" />
+    <Content Include="Content\Images\Pictures\Nassau-2.jpg" />
+    <Content Include="Content\Images\Pictures\Nassau-4.jpg" />
+    <Content Include="Content\Images\Pictures\Nassau-5.jpg" />
+    <Content Include="Content\Images\Pictures\Nassau-6.jpg" />
+    <Content Include="Content\Images\Pictures\Nassau-8.jpg" />
+    <Content Include="Content\Images\Pictures\NYC-0.jpg" />
+    <Content Include="Content\Images\Pictures\NYC-1.jpg" />
+    <Content Include="Content\Images\Pictures\NYC-10.jpg" />
+    <Content Include="Content\Images\Pictures\NYC-2.jpg" />
+    <Content Include="Content\Images\Pictures\NYC-3.jpg" />
+    <Content Include="Content\Images\Pictures\NYC-4.jpg" />
+    <Content Include="Content\Images\Pictures\NYC-6.jpg" />
+    <Content Include="Content\Images\Pictures\NYC-8.jpg" />
+    <Content Include="Content\Images\Pictures\NYC-9.jpg" />
+    <Content Include="Content\Images\Pictures\Paris-1.jpg" />
+    <Content Include="Content\Images\Pictures\Paris-10.jpg" />
+    <Content Include="Content\Images\Pictures\Paris-2.jpg" />
+    <Content Include="Content\Images\Pictures\Paris-3.jpg" />
+    <Content Include="Content\Images\Pictures\Paris-4.jpg" />
+    <Content Include="Content\Images\Pictures\Paris-5.jpg" />
+    <Content Include="Content\Images\Pictures\Paris-6.jpg" />
+    <Content Include="Content\Images\Pictures\Paris-8.jpg" />
+    <Content Include="Content\Images\Pictures\Paris-9.jpg" />
+    <Content Include="Content\Images\Pictures\Pool-0.jpg" />
+    <Content Include="Content\Images\Pictures\Pool-1.jpg" />
+    <Content Include="Content\Images\Pictures\Pool-11.jpg" />
+    <Content Include="Content\Images\Pictures\Pool-13.jpg" />
+    <Content Include="Content\Images\Pictures\Pool-14.jpg" />
+    <Content Include="Content\Images\Pictures\Pool-3.jpg" />
+    <Content Include="Content\Images\Pictures\Pool-4.jpg" />
+    <Content Include="Content\Images\Pictures\Pool-5.jpg" />
+    <Content Include="Content\Images\Pictures\Pool-6.jpg" />
+    <Content Include="Content\Images\Pictures\Pool-7.jpg" />
+    <Content Include="Content\Images\Pictures\Pool-8.jpg" />
+    <Content Include="Content\Images\Pictures\Restaurant-0.jpg" />
+    <Content Include="Content\Images\Pictures\Restaurant-1.jpg" />
+    <Content Include="Content\Images\Pictures\Restaurant-10.jpg" />
+    <Content Include="Content\Images\Pictures\Restaurant-11.jpg" />
+    <Content Include="Content\Images\Pictures\Restaurant-12.jpg" />
+    <Content Include="Content\Images\Pictures\Restaurant-13.jpg" />
+    <Content Include="Content\Images\Pictures\Restaurant-14.jpg" />
+    <Content Include="Content\Images\Pictures\Restaurant-15.jpg" />
+    <Content Include="Content\Images\Pictures\Restaurant-16.jpg" />
+    <Content Include="Content\Images\Pictures\Restaurant-17.jpg" />
+    <Content Include="Content\Images\Pictures\Restaurant-18.jpg" />
+    <Content Include="Content\Images\Pictures\Restaurant-19.jpg" />
+    <Content Include="Content\Images\Pictures\Restaurant-2.jpg" />
+    <Content Include="Content\Images\Pictures\Restaurant-20.jpg" />
+    <Content Include="Content\Images\Pictures\Restaurant-21.jpg" />
+    <Content Include="Content\Images\Pictures\Restaurant-3.jpg" />
+    <Content Include="Content\Images\Pictures\Restaurant-4.jpg" />
+    <Content Include="Content\Images\Pictures\Restaurant-5.jpg" />
+    <Content Include="Content\Images\Pictures\Restaurant-6.jpg" />
+    <Content Include="Content\Images\Pictures\Restaurant-7.jpg" />
+    <Content Include="Content\Images\Pictures\Restaurant-8.jpg" />
+    <Content Include="Content\Images\Pictures\Restaurant-9.jpg" />
+    <Content Include="Content\Images\Pictures\Rome-0.jpg" />
+    <Content Include="Content\Images\Pictures\Rome-1.jpg" />
+    <Content Include="Content\Images\Pictures\Rome-2.jpg" />
+    <Content Include="Content\Images\Pictures\Rome-3.jpg" />
+    <Content Include="Content\Images\Pictures\Rome-4.jpg" />
+    <Content Include="Content\Images\Pictures\Rome-5.jpg" />
+    <Content Include="Content\Images\Pictures\Rome-6.jpg" />
+    <Content Include="Content\Images\Pictures\Rome-7.jpg" />
+    <Content Include="Content\Images\Pictures\Rome-8.jpg" />
+    <Content Include="Content\Images\Pictures\Room-0.jpg" />
+    <Content Include="Content\Images\Pictures\Room-1.jpg" />
+    <Content Include="Content\Images\Pictures\Room-2.jpg" />
+    <Content Include="Content\Images\Pictures\Room-3.jpg" />
+    <Content Include="Content\Images\Pictures\SF-0.jpg" />
+    <Content Include="Content\Images\Pictures\SF-2.jpg" />
+    <Content Include="Content\Images\Pictures\SF-3.jpg" />
+    <Content Include="Content\Images\Pictures\SF-4.jpg" />
+    <Content Include="Content\Images\Pictures\SF-5.jpg" />
+    <Content Include="Content\Images\Pictures\SF-6.jpg" />
+    <Content Include="Content\Images\Pictures\SF-7.jpg" />
+    <Content Include="Content\Images\Pictures\SF-8.jpg" />
+    <Content Include="Content\Images\Pictures\SF-9.jpg" />
+    <Content Include="Content\Images\r-close.png" />
+    <Content Include="Content\Images\r-export.png" />
+    <Content Include="Content\Images\r-print.png" />
+    <Content Include="Content\Images\rating-map.png" />
+    <Content Include="Content\Images\Report\Rating0.png" />
+    <Content Include="Content\Images\Report\Rating1.png" />
+    <Content Include="Content\Images\Report\Rating2.png" />
+    <Content Include="Content\Images\Report\Rating3.png" />
+    <Content Include="Content\Images\Report\Rating4.png" />
+    <Content Include="Content\Images\Report\Rating5.png" />
+    <Content Include="Content\Images\RoomColButton.png" />
+    <Content Include="Content\Images\RoomExpButton.png" />
+    <Content Include="Content\Images\RoomFeatures\Bathrobes.png" />
+    <Content Include="Content\Images\RoomFeatures\BottledWater.png" />
+    <Content Include="Content\Images\RoomFeatures\BuffetBreakfast.png" />
+    <Content Include="Content\Images\RoomFeatures\CableTV.png" />
+    <Content Include="Content\Images\RoomFeatures\CoffeeMaker.png" />
+    <Content Include="Content\Images\RoomFeatures\ContinentalBreakfast.png" />
+    <Content Include="Content\Images\RoomFeatures\FitnessCenter.png" />
+    <Content Include="Content\Images\RoomFeatures\FlatscreenTV.png" />
+    <Content Include="Content\Images\RoomFeatures\HotWater.png" />
+    <Content Include="Content\Images\RoomFeatures\Mini-Refrigerator.png" />
+    <Content Include="Content\Images\RoomFeatures\MiniBar.png" />
+    <Content Include="Content\Images\RoomFeatures\PremiumBedding.png" />
+    <Content Include="Content\Images\RoomFeatures\SteamShower.png" />
+    <Content Include="Content\Images\RoomFeatures\TurndownSvc.png" />
+    <Content Include="Content\Images\RoomFeatures\VideoGames.png" />
+    <Content Include="Content\Images\RoomFeatures\WirelessInternet.png" />
+    <Content Include="Content\Images\RoomFeatures\XboxOne.png" />
+    <Content Include="Content\Images\search.png" />
+    <Content Include="Content\Images\star.png" />
+    <Content Include="Content\Images\star1.png" />
+    <Content Include="Content\Images\star2.png" />
+    <Content Include="Content\Images\star3.png" />
+    <Content Include="Content\Images\star4.png" />
+    <Content Include="Content\Images\star5.png" />
+    <Content Include="Content\Images\tick.png" />
+    <Content Include="Content\Images\wid1.png" />
+    <Content Include="Content\Images\wid2.png" />
+    <Content Include="Content\Images\wid3.png" />
+    <Content Include="Content\jquery-ui.css" />
+    <Content Include="Content\jquery-ui.min.css" />
+    <Content Include="Content\site.css" />
+    <Content Include="Content\Styles.css" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\ace.js" />
+    <Content Include="Scripts\additional-methods.js" />
+    <Content Include="Scripts\additional-methods.min.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\cldr.event.js" />
+    <Content Include="Scripts\cldr.js" />
+    <Content Include="Scripts\cldr.supplemental.js" />
+    <Content Include="Scripts\cldr.unresolved.js" />
+    <Content Include="Scripts\ext-language_tools.js" />
+    <Content Include="Scripts\globalize.currency.js" />
+    <Content Include="Scripts\globalize.date.js" />
+    <Content Include="Scripts\globalize.js" />
+    <Content Include="Scripts\globalize.message.js" />
+    <Content Include="Scripts\globalize.number.js" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
+    <Content Include="Scripts\jquery.js" />
+    <Content Include="Scripts\jquery.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\knockout-3.3.0.debug.js" />
+    <Content Include="Scripts\knockout-3.3.0.js" />
+    <None Include="packages.config" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\site.js" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Decimal.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\MultilineText.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EmailAddress.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Pages\AddCommentFormPartial.cshtml" />
+    <Content Include="Views\Shared\HeaderPanelContentPartial.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Pages\BlogPost.cshtml" />
+    <Content Include="Views\Pages\Home.cshtml" />
+    <Content Include="Views\Pages\Contacts.cshtml" />
+    <Content Include="Views\Pages\BlogTimeline.cshtml" />
+    <Content Include="Views\Pages\BlogPostsDataViewPartial.cshtml" />
+    <Content Include="Views\Pages\BlogPostPreviewPartial.cshtml" />
+    <Content Include="Views\Pages\BlogCategoriesNavBarPartial.cshtml" />
+    <Content Include="Views\Pages\Search.cshtml" />
+    <Content Include="Views\Pages\SearchGridViewPartial.cshtml" />
+    <Content Include="Scripts\jquery.min.map" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\PagesController.BlogPosts.cs" />
+    <Compile Include="Controllers\PagesController.Contacts.cs" />
+    <Compile Include="Controllers\PagesController.Home.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BlogPosts.cs" />
+    <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\DataProvider.cs" />
+    <Compile Include="Models\TourAgency\cCcities.cs" />
+    <Compile Include="Models\TourAgency\cCity.cs" />
+    <Compile Include="Models\TourAgency\cClient.cs" />
+    <Compile Include="Models\TourAgency\cClients.cs" />
+    <Compile Include="Models\TourAgency\cCountries.cs" />
+    <Compile Include="Models\TourAgency\cCountry.cs" />
+    <Compile Include="Models\TourAgency\cOrder.cs" />
+    <Compile Include="Models\TourAgency\cOrders.cs" />
+    <Compile Include="Models\TourAgency\cRout.cs" />
+    <Compile Include="Models\TourAgency\cRouts.cs" />
+    <Compile Include="Models\TourAgency\cTour.cs" />
+    <Compile Include="Models\TourAgency\cTours.cs" />
+    <Compile Include="Models\TourAgency\cUser.cs" />
+    <Compile Include="Models\TourAgency\cUsers.cs" />
+    <Compile Include="Models\TourAgency\IBase.cs" />
+    <Compile Include="Models\TourAgency\IExtCollections.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>22218</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:22218/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+</Project>

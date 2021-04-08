@@ -1,0 +1,21 @@
+<div class="header">
+	<div class="content-ñolumn">
+		<div class="logo">
+			@Html.DevExpress().Button(settings =>
+			{
+				settings.Name = "Button";
+				settings.RenderMode = ButtonRenderMode.Link;
+				settings.Images.Image.Url = Url.Content("~/Content/Images/Header1.png");
+				settings.ClientSideEvents.Click = "function(e) { window.location = '" + @Url.Action("Home", "Pages") + "'; }";
+
+				settings.UseSubmitBehavior = true;
+			}).GetHtml();
+
+		</div>
+		@*<div class="buttons">
+
+
+		</div>*@
+	</div>
+	<div class="clearfix"></div>
+</div>

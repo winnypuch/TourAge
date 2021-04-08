@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourAge", "TourAge\TourAge.csproj", "{A0D11573-6E40-4A21-BF5D-5BBDE6488A8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourAgeTest", "TourAgeTest\TourAgeTest.csproj", "{2526D91C-E24F-45DB-BAB3-0CCA6838C5F8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A0D11573-6E40-4A21-BF5D-5BBDE6488A8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0D11573-6E40-4A21-BF5D-5BBDE6488A8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0D11573-6E40-4A21-BF5D-5BBDE6488A8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0D11573-6E40-4A21-BF5D-5BBDE6488A8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2526D91C-E24F-45DB-BAB3-0CCA6838C5F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2526D91C-E24F-45DB-BAB3-0CCA6838C5F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2526D91C-E24F-45DB-BAB3-0CCA6838C5F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2526D91C-E24F-45DB-BAB3-0CCA6838C5F8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {947C6555-54FC-4456-947C-B277C58160DE}
+	EndGlobalSection
+EndGlobal
