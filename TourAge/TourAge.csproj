@@ -518,6 +518,7 @@
     <Content Include="Scripts\jquery.min.map" />
     <Content Include="Views\Cities\CitiesGridPartial.cshtml" />
     <Content Include="Views\Tools\PCToolsPartial.cshtml" />
+    <Content Include="Views\Countries\CountriesGridPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -529,6 +530,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CountriesController.cs" />
     <Compile Include="Controllers\CitiesController.cs" />
     <Compile Include="Controllers\PagesController.BlogPosts.cs" />
     <Compile Include="Controllers\PagesController.Contacts.cs" />
@@ -541,7 +543,7 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\DataProvider.cs" />
     <Compile Include="Models\SearchModel.cs" />
-    <Compile Include="Models\cCcities.cs" />
+    <Compile Include="Models\cCities.cs" />
     <Compile Include="Models\cCity.cs" />
     <Compile Include="Models\cClient.cs" />
     <Compile Include="Models\cClients.cs" />

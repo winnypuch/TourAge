@@ -10,53 +10,53 @@ using TourAge.Models;
 namespace TourAge.Controllers
 {
 	/// <summary>
-	/// Контроллер городов
+	/// Контроллер стран
 	/// </summary>
-	public class CitiesController : Controller
+	public class CountriesController : Controller
 	{
-		#region < Города >
+		#region < Страны >
 
 		/// <summary>
-		/// Таблица детализации городов
+		/// Таблица детализации стран
 		/// </summary>
 		/// <returns></returns>
-		public ActionResult CitiesGridPartial()
+		public ActionResult CountriesGridPartial()
 		{
-			return PartialView("CitiesGridPartial", cCities.Fill());
+			return PartialView("CountriesGridPartial", cCountries.Fill());
 		}
 
 		/// <summary>
-		/// Добавление нового города
+		/// Добавление новой страны
 		/// </summary>
-		/// <param name="vCity">Модель города</param>
+		/// <param name="vCountry">Модель страны</param>
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult CitiesAddNewPartial(cCity vCity)
+		public ActionResult CountriesAddNewPartial(cCountry vCountry)
 		{
-			UpdateCity(vCity, true);
+			UpdateCountry(vCountry, true);
 
-			return CitiesGridPartial();
+			return CountriesGridPartial();
 		}
 
 		/// <summary>
-		/// Обновление города
+		/// Обновление страны
 		/// </summary>
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult CitiesUpdatePartial(cCity vCity)
+		public ActionResult CountriesUpdatePartial(cCountry vCountry)
 		{
-			UpdateCity(vCity);
+			UpdateCountry(vCountry);
 
-			return CitiesGridPartial();
+			return CountriesGridPartial();
 		}
 
 		/// <summary>
-		/// Удаление города
+		/// Удаление страны
 		/// </summary>
-		/// <param name="iCityId">Id договора</param>
+		/// <param name="iCountryId">Id страны</param>
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult CitiesDeletePartial(int iCityId)
+		public ActionResult CountriesDeletePartial(int iCountryId)
 		{
 			if (iCityId > 0)
 			{
@@ -81,11 +81,11 @@ namespace TourAge.Controllers
 		}
 
 		/// <summary>
-		/// Добавление/обновление города
+		/// Добавление/обновление страны
 		/// </summary>
-		/// <param name="vCity">Модель города</param>
-		/// <param name="bAddNewCity">Добавить новый город</param>
-		private void UpdateCity(cCity vCity, bool bAddNewCity = false)
+		/// <param name="vCountry">Модель страны</param>
+		/// <param name="bAddNewCountry">Добавить новую страну</param>
+		private void UpdateCountry(cCountry vCountry, bool bAddNewCountry = false)
 		{
 			if (ModelState.IsValid)
 			{
@@ -134,6 +134,6 @@ namespace TourAge.Controllers
 				ViewData["vCategoryModel"] = vAgentCategoryModel;
 		}
 
-		#endregion < Города >
+		#endregion < Страны >
 	}
 }

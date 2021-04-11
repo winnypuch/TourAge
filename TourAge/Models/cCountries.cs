@@ -150,5 +150,16 @@ namespace TourAge.Models
 	            base.Remove(vCountry);
             }
         }
+
+        /// <summary>
+        /// Загрузить коллекцию стран
+        /// </summary>
+        /// <returns></returns>
+        public static cCountries Fill()
+        {
+	        cCountries vCountries = new cCountries();
+	        vCountries.Load();
+	        return vCountries;
+        }
     }
 }

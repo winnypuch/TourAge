@@ -153,5 +153,16 @@ namespace TourAge.Models
 	            base.Remove(vCity);
             }
         }
+
+        /// <summary>
+        /// Загрузить коллекцию городов
+        /// </summary>
+        /// <returns></returns>
+        public static cCities Fill()
+        {
+	        cCities vCities = new cCities();
+	        vCities.Load();
+	        return vCities;
+        }
     }
 }

@@ -70,19 +70,12 @@ public static class DataProvider
 
 					if (bReturnLastInsertRow)
 					{
-						if (vCommand.ExecuteNonQuery() > 0)
-						{
+						vCommand.CommandText += " SELECT SCOPE_IDENTITY()";
+						iResult = Convert.ToInt32(vCommand.ExecuteScalar());
+						//if (vCommand.ExecuteNonQuery() > 0)
+						//{
 
-							vCommand.CommandText = "select LAST_INSERT_ID()";
-
-							// The row ID is a 64-bit value - cast the Command result to an Int64.
-							//
-							int iLastRowID64 = Convert.ToInt32(vCommand.ExecuteScalar());
-
-							// Then grab the bottom 32-bits as the unique ID of the row.
-							//
-							iResult = (int) iLastRowID64;
-						}
+						//}
 					}
 					else
 					{

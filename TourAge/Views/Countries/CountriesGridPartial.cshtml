@@ -3,19 +3,19 @@
 @{
 	GridViewExtension vGrid = Html.DevExpress().GridView<cCity>(vGridView =>
 	{
-		vGridView.Name = "gvCities";
-		vGridView.CallbackRouteValues = new {Controller = "Cities", Action = "CitiesGridPartial"};
+		vGridView.Name = "gvCountries";
+		vGridView.CallbackRouteValues = new {Controller = "Countries", Action = "CountriesGridPartial" };
 
-		vGridView.SettingsEditing.AddNewRowRouteValues = new {Controller = "Cities", Action = "CitiesAddNewPartial"};
+		vGridView.SettingsEditing.AddNewRowRouteValues = new {Controller = "Countries", Action = "CountriesAddNewPartial" };
 
-		vGridView.SettingsEditing.UpdateRowRouteValues = new {Controller = "Cities", Action = "CitiesUpdatePartial"};
+		vGridView.SettingsEditing.UpdateRowRouteValues = new {Controller = "Countries", Action = "CountriesUpdatePartial" };
 
-		vGridView.SettingsEditing.DeleteRowRouteValues = new {Controller = "Cities", Action = "CitiesDeletePartial"};
+		vGridView.SettingsEditing.DeleteRowRouteValues = new {Controller = "Countries", Action = "CountriesDeletePartial" };
 
 		//vGridView.ClientSideEvents.BeginCallback = "OnBeginCallback";
 		vGridView.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
 		//vGridView.SettingsEditing.Mode = GridViewEditingMode.PopupEditForm;
-		vGridView.KeyFieldName = "CityId"; //;CategoryDate;CategoryId
+		vGridView.KeyFieldName = "CountryId"; //;CategoryDate;CategoryId
 
 		vGridView.Settings.ShowFooter = false;
 		vGridView.Settings.ShowColumnHeaders = true;
@@ -33,28 +33,28 @@
 			if (ViewData["EditError"] != null)
 				e.Properties["cpEditError"] = ViewData["EditError"];
 		};
-			//vGridView.ClientSideEvents.ToolbarItemClick = "Categories_ToolbarItemClick";
-			vGridView.Toolbars.Add(vToolBar =>
+		//vGridView.ClientSideEvents.ToolbarItemClick = "Categories_ToolbarItemClick";
+		vGridView.Toolbars.Add(vToolBar =>
+		{
+			vToolBar.Enabled = true;
+			vToolBar.Position = GridToolbarPosition.Top;
+			vToolBar.ItemAlign = GridToolbarItemAlign.Right;
+			vToolBar.SettingsAdaptivity.Enabled = true;
+			vToolBar.SettingsAdaptivity.EnableCollapseRootItemsToIcons = true;
+
+			vToolBar.Items.Add(GridViewToolbarCommand.New);
+
+			vToolBar.Items.Add(GridViewToolbarCommand.Edit);
+
+			vToolBar.Items.Add(GridViewToolbarCommand.Delete);
+
+			vToolBar.Items.Add(i =>
 			{
-				vToolBar.Enabled = true;
-				vToolBar.Position = GridToolbarPosition.Top;
-				vToolBar.ItemAlign = GridToolbarItemAlign.Right;
-				vToolBar.SettingsAdaptivity.Enabled = true;
-				vToolBar.SettingsAdaptivity.EnableCollapseRootItemsToIcons = true;
-
-				vToolBar.Items.Add(GridViewToolbarCommand.New);
-
-				vToolBar.Items.Add(GridViewToolbarCommand.Edit);
-
-				vToolBar.Items.Add(GridViewToolbarCommand.Delete);
-
-				vToolBar.Items.Add(i =>
-				{
-					i.SetTemplateContent(c => {
-						ViewContext.Writer.Write(Html.AntiForgeryToken().ToHtmlString());
-					});
+				i.SetTemplateContent(c => {
+					ViewContext.Writer.Write(Html.AntiForgeryToken().ToHtmlString());
 				});
 			});
+		});
 
 		vGridView.Columns.Add(vColumnNumber =>
 		{
@@ -80,14 +80,14 @@
 		{
 			Html.DevExpress().FormLayout(flSettings =>
 			{
-				flSettings.Name = "FormLayoutCities";
+				flSettings.Name = "FormLayoutCountries";
 				flSettings.Width = Unit.Percentage(100);
 				flSettings.ColCount = 2;
 
-				flSettings.Items.Add(vColumnCityName =>
+				flSettings.Items.Add(vColumnCountryName =>
 				{
-					vColumnCityName.FieldName = "Name";
-					vColumnCityName.NestedExtension().TextBox(p =>
+					vColumnCountryName.FieldName = "CountryName";
+					vColumnCountryName.NestedExtension().TextBox(p =>
 					{
 						p.Height = Unit.Pixel(20);
 						p.Width = Unit.Percentage(100);
@@ -95,37 +95,7 @@
 				});
 
 
-				flSettings.Items.Add(vColumnCountryName =>
-				{
-					vColumnCountryName.FieldName = "Country.Id";
-					vColumnCountryName.Caption = "Наименование категории";
-					vColumnCountryName.ShowCaption = DefaultBoolean.False;
-					vColumnCountryName.NestedExtension().ComboBox(vComboBox =>
-					{
-						vComboBox.Properties.TextField = "Name";
-						vComboBox.Properties.ValueField = "Id";
-						vComboBox.Properties.ValueType = typeof(int);
-						vComboBox.Properties.DataSource = cCountries.Fill();
-						vComboBox.Properties.ValidationSettings.Display = Display.Dynamic;
-						vComboBox.ShowModelErrors = true;
-						vComboBox.Width = Unit.Pixel(130);
-						vComboBox.PreRender = (s, e) =>
-						{
-							if (vTemplate.Grid.IsNewRowEditing)
-							{
-								ASPxComboBox vCBox = s as ASPxComboBox;
-
-								if (vCBox != null)
-								{
-									vCBox.SelectedIndex = 0;
-								}
-							}
-						};
-					});
-					vColumnCountryName.Width = Unit.Pixel(140);
-				});
-
-				//flSettings.Items.AddEmptyItem();
+				flSettings.Items.AddEmptyItem();
 
 				flSettings.Items.Add(i =>
 				{
@@ -137,7 +107,7 @@
 					{
 						hlSettings.Name = "lnkUpdate";
 						hlSettings.Properties.Text = "Сохранить";
-						hlSettings.Properties.ClientSideEvents.Click = "function(s, e){ gvCities.UpdateEdit(); }";
+						hlSettings.Properties.ClientSideEvents.Click = "function(s, e){ gvCountries.UpdateEdit(); }";
 					}).Render();
 
 					Html.DevExpress().HyperLink(hlSettings =>
@@ -145,11 +115,11 @@
 						hlSettings.Name = "lnkCancel";
 						hlSettings.Properties.Text = "Отмена";
 						hlSettings.Style[HtmlTextWriterStyle.MarginLeft] = "5px";
-						hlSettings.Properties.ClientSideEvents.Click = "function(s, e){ gvCities.CancelEdit(); }";
+						hlSettings.Properties.ClientSideEvents.Click = "function(s, e){ gvCountries.CancelEdit(); }";
 					}).Render();
 					ViewContext.Writer.Write("</div>");
 				});
-			}).Bind(ViewData["cCity"] ?? (vTemplate.Grid.IsNewRowEditing ? new cCity() : vTemplate.Grid.GetRow(vTemplate.Grid.EditingRowVisibleIndex))).Render();
+			}).Bind(ViewData["cCountry"] ?? (vTemplate.Grid.IsNewRowEditing ? new cCountry() : vTemplate.Grid.GetRow(vTemplate.Grid.EditingRowVisibleIndex))).Render();
 		});
 
 		string sColumnFieldName;
