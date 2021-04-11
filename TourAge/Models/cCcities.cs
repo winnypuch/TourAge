@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Windows.Forms;
 
-namespace TourAgency
+namespace TourAge.Models
 {
 	public class cCities : BindingList<cCity>, IExtCollections<cCity>
     {

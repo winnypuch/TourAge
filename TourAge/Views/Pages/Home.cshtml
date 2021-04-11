@@ -1,129 +1,267 @@
-@{ ViewBag.Title = "Home"; }
+﻿@model TourAge.Models.SearchModel
+<div class="index-banner">
+	<div class="searchPanelContainer">
+		<div id="Search" class="search-panel">
+
+	@Html.DevExpress().FormLayout(flSettings =>
+{
+	//flSettings.UseDefaultPaddings = false;
+	//flSettings.AlignItemCaptionsInAllGroups = true;
+
+	flSettings.Name = "flSearchPanelLayout";
+	flSettings.Width = Unit.Percentage(100);
+	flSettings.ColCount = 2;
+	flSettings.SettingsItemCaptions.Location = LayoutItemCaptionLocation.Top;
+	flSettings.Items.Add(i =>
+	{
+		i.Name = "lblSearch";
+		i.ShowCaption = DefaultBoolean.False;
+		i.NestedExtension().Label(vLabelProp =>
+		{
+			vLabelProp.Width = Unit.Percentage(100);
+			vLabelProp.Text = "<h3>Поиск Туров</h3>";
+			vLabelProp.EncodeHtml = false;
+		});
+		i.ColSpan = 2;
+	});
+
+	flSettings.Items.Add(m => m.CityId, vColumnCountryName =>
+	{
+		vColumnCountryName.Caption = "Страна";
+		vColumnCountryName.ShowCaption = DefaultBoolean.True;
+		vColumnCountryName.Width = Unit.Percentage(100);
+		vColumnCountryName.CssClass = "cmbLocs";
+		vColumnCountryName.ColSpan = 2;
+		vColumnCountryName.NestedExtension().ComboBox(vComboBox =>
+		{
+			vComboBox.Width = Unit.Percentage(100);
+			vComboBox.Properties.TextField = "CountryName";
+			vComboBox.Properties.ValueField = "CountryId";
+			vComboBox.Properties.ValueType = typeof(int);
+			vComboBox.Properties.DataSource = ""; //SocialCategoryModel.FillAllSocialCategories();
+			vComboBox.Properties.ValidationSettings.Display = Display.Dynamic;
+			//vComboBox.Properties.ClientSideEvents.ValueChanged = "SocialCategory_Check";
+			//vComboBox.Properties.ClientSideEvents.KeyUp = "SocialCategory_Check";
+			vComboBox.ShowModelErrors = true;
+			vComboBox.PreRender = (s, e) =>
+			{
+				ASPxComboBox vCBox = s as ASPxComboBox;
+
+				if (vCBox != null)
+				{
+					if ((string) ViewData["sAction"] == "New")
+						vCBox.SelectedIndex = 0;
+					else
+					{
+						if (Convert.ToInt64(vCBox.Value) == 0)
+							vCBox.Value = "";
+					}
+				}
+			};
+		});
+	});
+
+	flSettings.Items.Add(m => m.DateBegin, i =>
+	{
+		i.Width = Unit.Percentage(50);
+		i.NestedExtension().DateEdit(vDateEditProp =>
+		{
+			//vDateEditProp.Width = Unit.Percentage(50);
+			vDateEditProp.Height = Unit.Pixel(30);
+			//vDateEditProp.ControlStyle.CssClass = "cmbLocs";
+			vDateEditProp.Properties.EditFormat = EditFormat.Custom;
+			vDateEditProp.Properties.DisplayFormatString = "dd/MM/yyyy";
+			vDateEditProp.Properties.EditFormatString = "dd/MM/yyyy";
+			//vDateEditProp.Properties.ClientSideEvents.ValueChanged = "SocialCategory_Check";
+			//vDateEditProp.Properties.ClientSideEvents.KeyUp = "SocialCategory_Check";
+			vDateEditProp.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Popup;
+			vDateEditProp.Properties.SelectInputTextOnClick = true;
+			vDateEditProp.Properties.NullText = "Введите дату начала...";
+			vDateEditProp.Properties.NullTextDisplayMode = NullTextDisplayMode.UnfocusedAndFocused;
+			vDateEditProp.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+			vDateEditProp.Properties.DropDownButton.Image.Url = Url.Content("~/Content/Images/calendar.png");
+			vDateEditProp.PreRender = (s, e) =>
+			{
+				ASPxDateEdit vDateEdit = s as ASPxDateEdit;
+
+				if (vDateEdit != null)
+				{
+					if (vDateEdit.Date == DateTime.MaxValue.Date)
+						vDateEdit.Value = "";
+				}
+			};
+		});
+	});
+
+	flSettings.Items.Add(m => m.DateEnd, i =>
+	{
+		i.Width = Unit.Percentage(50);
+		i.NestedExtension().DateEdit(vDateEditProp =>
+		{
+			vDateEditProp.Height = Unit.Pixel(30);
+			vDateEditProp.ControlStyle.CssClass = "cmbLocs";
+			vDateEditProp.Properties.EditFormat = EditFormat.Custom;
+			vDateEditProp.Properties.DisplayFormatString = "dd/MM/yyyy";
+			vDateEditProp.Properties.EditFormatString = "dd/MM/yyyy";
+			//vDateEditProp.Properties.ClientSideEvents.ValueChanged = "SocialCategory_Check";
+			//vDateEditProp.Properties.ClientSideEvents.KeyUp = "SocialCategory_Check";
+			vDateEditProp.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Popup;
+			vDateEditProp.Properties.SelectInputTextOnClick = true;
+			vDateEditProp.Properties.NullText = "Введите дату окончания...";
+			vDateEditProp.Properties.NullTextDisplayMode = NullTextDisplayMode.UnfocusedAndFocused;
+			vDateEditProp.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+			vDateEditProp.Properties.DropDownButton.Image.Url = Url.Content("~/Content/Images/calendar.png");
+			vDateEditProp.PreRender = (s, e) =>
+			{
+				ASPxDateEdit vDateEdit = s as ASPxDateEdit;
+
+				if (vDateEdit != null)
+				{
+					if (vDateEdit.Date == DateTime.MaxValue.Date)
+						vDateEdit.Value = "";
+				}
+			};
+		});
+	});
+	flSettings.Items.Add(i =>
+	{
+		i.ShowCaption = DefaultBoolean.False;
+		i.ColSpan = 2;
+		i.NestedExtension().Button(vButtonProp =>
+		{
+			vButtonProp.Name = "SearchButton";
+			vButtonProp.RenderMode = ButtonRenderMode.Button;
+			vButtonProp.Width = Unit.Percentage(100);
+			vButtonProp.Text = "ПОИСК";
+			vButtonProp.ControlStyle.CssClass = "search-button";
+			//vButtonProp.PreRender = (s, e) =>
+			//{
+			//	(s as MVCxButton).HoverStyle.CssClass = "search-button-hover";
+			//};
+		});
+
+	});
+}).GetHtml()
+
+		</div>
+		<div class="text">
+			<h1>Оформление туров и поездок</h1>
+
+		</div>
+	</div>
+</div>
+<div class="clear"></div>
+
+<div class="index-offers content-сolumn">
+	<div class="title">
+		Специальные предложения
+	</div>
+	<div class="imageSlider">
+		@Html.DevExpress().ImageSlider(settings =>
+   {
+	   settings.Name = "SpecialOffersImageSlider";
+	   settings.Width = Unit.Percentage(100);
+	   settings.Height = Unit.Pixel(505);
+
+	   settings.SettingsImageArea.ImageSizeMode = ImageSizeMode.FillAndCrop;
+	   settings.SettingsImageArea.ItemTextVisibility = ElementVisibilityMode.Always;
+	   settings.SettingsImageArea.NavigationButtonVisibility = ElementVisibilityMode.OnMouseOver;
+	   settings.SettingsAutoGeneratedImages.ImageCacheFolder = Url.Content("~\\Thumb\\");
+	   //settings.SettingsImageArea.EnableLoopNavigation = true;
+	   //settings.SettingsNavigationBar.Mode = NavigationBarMode.Dots;
+
+	   settings.SettingsSlideShow.AutoPlay = true;
+	   settings.SettingsSlideShow.PlayPauseButtonVisibility = ElementVisibilityMode.OnMouseOver;
+	   settings.SettingsSlideShow.StopPlayingWhenPaging = true;
+	   settings.Items.Add(item =>
+	   {
+		   item.ImageUrl = Url.Content("~/Content/Images/Cities/Athens.jpg");
+		   //item.NavigateUrl = "1";
+		   item.SetTextTemplateContent("<div class='hotel'>Тур в Грецию(Афины)</div><div class='city'></div><div class='price'>₽2214</div>");
+	   });
+	   settings.Items.Add(item =>
+	   {
+		   item.ImageUrl = Url.Content("~/Content/Images/Cities/Barcelona.jpg");
+		   //item.NavigateUrl = "2";
+		   item.SetTextTemplateContent("<div class='hotel'>Тур в Испанию(Барселона)</div><div  class='city'></div><div class='price'>$136</div>");
+	   });
+	   settings.Items.Add(item =>
+	   {
+		   item.ImageUrl = Url.Content("~/Content/Images/Cities/Berlin.jpg");
+		   //item.NavigateUrl = "3";
+		   item.SetTextTemplateContent("<div class='hotel'>Тур в Германию(Берлин)</div><div class='city'></div><div class='price'>$155</div>");
+	   });
+	   settings.Items.Add(item =>
+	   {
+		   item.ImageUrl = Url.Content("~/Content/Images/Cities/Cairo.jpg");
+		   //item.NavigateUrl = "4";
+		   item.SetTextTemplateContent("<div class='hotel'>Тур в Египет(Каир)</div><div class='city'></div><div class='price'>$215</div>");
+	   });
+	   settings.Items.Add(item =>
+	   {
+		   item.ImageUrl = Url.Content("~/Content/Images/Cities/LA.jpg");
+		   //item.NavigateUrl = "5";
+		   item.SetTextTemplateContent("<div class='hotel'>Тур в Америку(Лос Анджелес)</div><div class='city'></div><div class='price'>$215</div>");
+	   });
+	   settings.Items.Add(item =>
+	   {
+		   item.ImageUrl = Url.Content("~/Content/Images/Cities/London.jpg");
+		   //item.NavigateUrl = "6";
+		   item.SetTextTemplateContent("<div class='hotel'>Тур в Англию(Лондон)</div><div class='city'></div><div class='price'>$355</div>");
+	   });
+	   settings.Items.Add(item =>
+	   {
+		   item.ImageUrl = Url.Content("~/Content/Images/Cities/Moscow.jpg");
+		   //item.NavigateUrl = "7";
+		   item.SetTextTemplateContent("<div class='hotel'>Тур в Россию(Москва)</div><div class='city'></div><div class='price'>$143</div>");
+	   });
+	   settings.Items.Add(item =>
+	   {
+		   item.ImageUrl = Url.Content("~/Content/Images/Cities/NY.jpg");
+		   //item.NavigateUrl = "8";
+		   item.SetTextTemplateContent("<div class='hotel'>Тур в Америку(Нью-Йорк)</div><div class='city'></div><div class='price'>$199</div>");
+	   });
+	   settings.Items.Add(item =>
+	   {
+		   item.ImageUrl = Url.Content("~/Content/Images/Cities/Paris.jpg");
+		   //item.NavigateUrl = "9";
+		   item.SetTextTemplateContent("<div class='hotel'>Тур по Франции(Париж)</div><div class='city'></div><div class='price'>$438</div>");
+	   });
+	   settings.Items.Add(item =>
+	   {
+		   item.ImageUrl = Url.Content("~/Content/Images/Cities/Prague.jpg");
+		   //item.NavigateUrl = "10";
+		   item.SetTextTemplateContent("<div class='hotel'>Тур в Чехию(Прага)</div><div class='city'></div><div class='price'>$227</div>");
+	   });
+	   settings.Items.Add(item =>
+	   {
+		   item.ImageUrl = Url.Content("~/Content/Images/Cities/Rio.jpg");
+		   //item.NavigateUrl = "11";
+		   item.SetTextTemplateContent("<div class='hotel'>Тур в Бразилию(Рио)</div><div class='city'></div><div class='price'>$600</div>");
+	   });
+	   settings.Items.Add(item =>
+	   {
+		   item.ImageUrl = Url.Content("~/Content/Images/Cities/Sydney.jpg");
+		   //item.NavigateUrl = "12";
+		   item.SetTextTemplateContent("<div class='hotel'>Тур в Австралию(Сидней)</div><div class='city'></div><div class='price'>$354</div>");
+	   });
+	   settings.Items.Add(item =>
+	   {
+		   item.ImageUrl = Url.Content("~/Content/Images/Cities/Tokoyo.jpg");
+		   //item.NavigateUrl = "13";
+		   item.SetTextTemplateContent("<div class='hotel'>Тур в Японию(Токио)</div><div  class='city'></div><div class='price'>$136</div>");
+	   });
+
+   }).GetHtml()
+	</div>
+</div>
+
+
 <div class="container-fluid">
-    <div class="row">
-        @Html.DevExpress().ImageSlider(s => {
-            s.Name = "ImageSlider";
-            s.Width = Unit.Percentage(100);
-            s.Height = Unit.Pixel(400);
+	<div class="row">
 
-            s.SettingsImageArea.ImageSizeMode = ImageSizeMode.FillAndCrop;
-            s.SettingsImageArea.NavigationButtonVisibility = ElementVisibilityMode.Always;
-            s.SettingsImageArea.EnableLoopNavigation = true;
-            s.SettingsNavigationBar.Mode = NavigationBarMode.Dots;
-
-            s.SettingsSlideShow.AutoPlay = true;
-            s.SettingsSlideShow.PlayPauseButtonVisibility = ElementVisibilityMode.OnMouseOver;
-        }).BindToFolder("~/Content/Images/Components").GetHtml()
-
-    </div>
+	</div>
 </div>
 <div class="container">
-    <section class="row text-center">
-        <div class="col-md-12">
-            <h1>ASP.NET Blog Web Site</h1>
-            <p class="mainText">This website is based on the Blog Web Site project template available in the DevExpress Template Gallery. This template utilizes DevExpress ASP.NET MVC extensions in conjunction with the Bootstrap framework to create a website with multi-page design and responsive, mobile-friendly interface out of the box. By default, the website has a format of a <a href="@Url.Action("BlogTimeline", "Pages")">blog</a> with integrated <a href="@Url.Action("Search", "Pages")">full-text search</a><br /><br />If you are using a custom Bootstrap theme, it is recommended that you manually modify the base color in the DevExpress theme of your choice to better suit the overall color scheme. You can accomplish this task by <a href="https://documentation.devexpress.com/AspNet/118729/Common-Concepts/Appearance-Customization-Theming/Changing-Theme-Base-Color-and-Font-Settings">changing Theme Base Color</a>.</p>
-        </div>
-        <div class="col-md-12 marginTop20">
-            <a class="btn btn-primary btn-lg" href="#"><i class="glyphicon glyphicon-info-sign"></i> Learn more</a>
-        </div>
-    </section>
-    <section class="row features">
-        <div class="col-md-4 media">
-            <div class="media-left">
-                <div class="media-object">
-                    <i class="glyphicon glyphicon-wrench featureIcon text-primary"></i>
-                </div>
-            </div>
-            <div class="media-body">
-                <h4 class="media-heading">Cross-browser compatibility</h4>
-                <p>DevExpress ASP.NET AJAX Controls and MVC Extensions are cross-browser compatible and are carefully tested against the following browsers to ensure utmost compatibility: Microsoft Internet Explorer, Microsoft Edge, Mozilla FireFox, Google Chrome, Safari, and Opera</p>
-            </div>
-        </div>
-        <div class="col-md-4 media">
-            <div class="media-left">
-                <div class="media-object">
-                    <i class="glyphicon glyphicon-cog featureIcon text-primary"></i>
-                </div>
-            </div>
-            <div class="media-body">
-                <h4 class="media-heading">AJAX Enabled</h4>
-                <p>Each and every control provides an ability to update the control using callbacks, eliminating the need to re-load the entire page. This callback functionality allows you to optimize how data is transferred to the client</p>
-            </div>
-        </div>
-        <div class="col-md-4 media">
-            <div class="media-left">
-                <div class="media-object">
-                    <i class="glyphicon glyphicon-phone featureIcon text-primary"></i>
-                </div>
-            </div>
-            <div class="media-body">
-                <h4 class="media-heading">Touch and Mobile Device Enabled</h4>
-                <p>The ASP.NET Subscription helps you leverage your current investments and address customer needs via a comprehensive range of WebForms Controls and MVC Extensions that support touch on iOS Safari, Android and Internet Explorer 10+.</p>
-            </div>
-        </div>
-    </section>
-    <section>
-        <div class="row marginTop20">
-            <div class="col-md-12">
-                <h3>Our Customers</h3>
-                <p>No amount of marketing hype and hyperbole can mask a company's ability to deliver products that meet and exceed customer expectations. The following is a brief list of comments sent to us from our end-users - developers such as yourself who don't have time and money to waste - developers who need to get down to business and address client needs in the shortest possible.</p>
-            </div>
-        </div>
-        <div class="row customers">
-            <div class="col-md-6">
-                <div class="media">
-                    <div class="media-left media-middle">
-                        <div class="media-object">
-                            <img src="@Url.Content("~/Content/Images/Customers/RafaelRaje.jpg")" width="100" alt="customer" class="img-circle">
-                        </div>
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading">Rafael Raje</h4>
-                        <p><small>Lorem ipsum dolor sit amet, nec te errem ridens aeterno. Ei mea utinam incorrupte intellegebat, te sonet aliquando intellegebat nam, offendit theophrastus ea per. Ei vel tota noluisse, meis utamur referrentur ea sit. Mel nulla vulputate ei.</small></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="media">
-                    <div class="media-left media-middle">
-                        <div class="media-object">
-                            <img src="@Url.Content("~/Content/Images/Customers/NathanBryant.jpg")" width="100" alt="customer" class="img-circle">
-                        </div>
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading">Nathan Bryant</h4>
-                        <p><small>Ut per alia constituto, vis amet adhuc quidam no, ea amet aeterno ceteros mea. Nec scriptorem adversarium id, dolorum elaboraret id sit. Novum ignota per ne, mel mollis verear ut. Id per integre periculis gubergren, eam aperiam apeirian.</small></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row customers">
-            <div class="col-md-6">
-                <div class="media">
-                    <div class="media-left media-middle">
-                        <div class="media-object">
-                            <img src="@Url.Content("~/Content/Images/Customers/HeidiLopez.jpg")" width="100" alt="customer" class="img-circle">
-                        </div>
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading">Heidi Lopez</h4>
-                        <p><small>Mollis vivendum in pro. Partem tritani cu duo, te cum antiopam consequuntur. Qui in solum habemus, eripuit similique mel ad. No officiis similique nec, te fierent disputando eam. Mei legimus habemus atomorum cu, vix in ullum delicatissimi. Nec te iusto commodo.</small></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="media">
-                    <div class="media-left media-middle">
-                        <div class="media-object">
-                            <img src="@Url.Content("~/Content/Images/Customers/GaryRubio.jpg")" width="100" alt="customer" class="img-circle">
-                        </div>
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading">Gary Rubio</h4>
-                        <p><small>Eos id tale tantas, id vidit impedit omnesque mea. In soluta suscipiantur usu, duo ad tale liber assueverit. Nec an aeterno detracto vulputate, usu et causae perpetua, debet soluta deseruisse in pri. Te error iudico primis vel, sed ut dicam saperet mandamus.</small></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+
 </div>

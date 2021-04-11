@@ -16,8 +16,8 @@ h1, h2, h3, h4, h5 {
     font-weight: normal;
 }
 
-.page, 
-.header, 
+.page,
+.header,
 .footer {
     width: 100%;
 }
@@ -94,7 +94,7 @@ h1, h2, h3, h4, h5 {
     font-size: 14px;
     color: #676767;
     margin-bottom: 6px;
-    
+
 }
 
 .footer .info {
@@ -332,8 +332,8 @@ h1, h2, h3, h4, h5 {
     padding: 24px 18px 24px 50px !important;
 }
 
-.index-offers .hotel, 
-.index-offers .city, 
+.index-offers .hotel,
+.index-offers .city,
 .index-offers .price {
     text-align: right;
     line-height: 110%;
@@ -1181,4 +1181,27 @@ body .editor {
 }
 .dxeValidStEditorTable .dxeErrorFrameSys {
     outline: none;
+}
+
+.btnBackToTop {
+	background: none;
+	margin: 0;
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	width: 70px;
+	height: 70px;
+	z-index: 100;
+	display: inline;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.btnBackToTop i {
+	font-size: 60px;
+	color: #c7c7c7;
+}
+
+.btnBackToTop i:hover {
+	color: #e0e0e0;
 }

@@ -1,0 +1,279 @@
+﻿@using DevExpress.Web.Mvc.UI
+@{
+	GridViewExtension vGrid = Html.DevExpress().GridView<AgentCategoryModel>(vGridView =>
+	{
+		vGridView.Name = "gvCategoriesDetail";
+		vGridView.CallbackRouteValues = new {Controller = "Categories", Action = "CategoriesDetailGridPartial"
+			, iContractId = ViewData["iContractId"], iLocationId = ViewData["iLocationId"], iSubscriberId = ViewData["iSubscriberId"] };
+
+		if (bIsCategoryAdd)
+			vGridView.SettingsEditing.AddNewRowRouteValues = new {Controller = "Categories", Action = "CategoriesAddNewPartial", iContractId = ViewData["iContractId"], iLocationId = ViewData["iLocationId"], iSubscriberId = ViewData["iSubscriberId"]};
+
+		if (bIsCategoryUpdate)
+			vGridView.SettingsEditing.UpdateRowRouteValues = new {Controller = "Categories", Action = "CategoriesUpdatePartial", iContractId = ViewData["iContractId"], iLocationId = ViewData["iLocationId"], iSubscriberId = ViewData["iSubscriberId"]};
+
+		//if (bIsCategoryDelete)
+		//	vGridView.SettingsEditing.DeleteRowRouteValues = new {Controller = "Categories", Action = "CategoriesDeletePartial", iContractId = ViewData["iContractId"], iLocationId = ViewData["iLocationId"], iSubscriberId = ViewData["iSubscriberId"]};
+
+		//vGridView.ClientSideEvents.BeginCallback = "OnBeginCallback";
+		vGridView.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+		//vGridView.SettingsEditing.Mode = GridViewEditingMode.PopupEditForm;
+		vGridView.KeyFieldName = "CategoryDate"; //;CategoryDate;CategoryId
+
+		vGridView.Settings.ShowFooter = false;
+		vGridView.Settings.ShowColumnHeaders = true;
+		vGridView.Styles.AlternatingRow.Enabled = DefaultBoolean.True;
+
+		vGridView.SettingsBehavior.AllowFocusedRow = true;
+		vGridView.SettingsBehavior.ConfirmDelete = true;
+		vGridView.SettingsBehavior.EnableRowHotTrack = true;
+
+		vGridView.SettingsPager.PageSize = 5;
+		vGridView.Width = Unit.Percentage(100);
+
+		vGridView.CustomJSProperties = (sender, e) =>
+		{
+			if (ViewData["EditError"] != null)
+				e.Properties["cpEditError"] = ViewData["EditError"];
+		};
+
+		if (bIsCategoryAdd || bIsCategoryUpdate || bIsCategoryDelete)
+		{
+			vGridView.ClientSideEvents.ToolbarItemClick = "Categories_ToolbarItemClick";
+			vGridView.Toolbars.Add(vToolBar =>
+			{
+				vToolBar.Enabled = true;
+				vToolBar.Position = GridToolbarPosition.Top;
+				vToolBar.ItemAlign = GridToolbarItemAlign.Right;
+				vToolBar.SettingsAdaptivity.Enabled = true;
+				vToolBar.SettingsAdaptivity.EnableCollapseRootItemsToIcons = true;
+
+				if (bIsCategoryAdd)
+					vToolBar.Items.Add(GridViewToolbarCommand.New);
+
+				if (bIsCategoryUpdate)
+					vToolBar.Items.Add(GridViewToolbarCommand.Edit);
+
+				if (bIsCategoryDelete)
+					vToolBar.Items.Add(GridViewToolbarCommand.Delete);
+
+				vToolBar.Items.Add(i =>
+				{
+					i.SetTemplateContent(c => {
+						ViewContext.Writer.Write(Html.AntiForgeryToken().ToHtmlString());
+					});
+				});
+			});
+		}
+
+		//vGridView.Columns.Add("CategoryId").SetColVisible(false);
+
+		vGridView.Columns.Add(vColumnNumber =>
+		{
+			vColumnNumber.FieldName = "№";
+			vColumnNumber.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+			vColumnNumber.CellStyle.HorizontalAlign = HorizontalAlign.Center;
+			vColumnNumber.UnboundType = DevExpress.Data.UnboundColumnType.Integer;
+			vColumnNumber.Width = Unit.Pixel(20);
+		});
+
+		vGridView.Columns.Add(vColumnCategoryDate =>
+		{
+			vColumnCategoryDate.FieldName = "CategoryDate";
+			vColumnCategoryDate.Caption = "Дата";
+			vColumnCategoryDate.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+			vColumnCategoryDate.CellStyle.HorizontalAlign = HorizontalAlign.Center;
+			vColumnCategoryDate.Width = Unit.Pixel(70);
+		});
+
+		vGridView.Columns.Add(vColumnCategoryName =>
+		{
+
+			vColumnCategoryName.FieldName = "CategoryName";
+			vColumnCategoryName.Caption = "Наименование";
+			//vColumnCategoryName.EditorProperties().ComboBox(vComboBox =>
+			//{
+			//	vComboBox.TextField = "CategoryName";
+			//	vComboBox.ValueField = "CategoryId";
+			//	vComboBox.ValueType = typeof(int);
+			//	vComboBox.BindList(CategoryModel.FillAllCategories());
+			//});
+			vColumnCategoryName.Width = Unit.Pixel(125);
+			vColumnCategoryName.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+			vColumnCategoryName.CellStyle.HorizontalAlign = HorizontalAlign.Center;
+		});
+
+		//vGridView.Columns.Add(vColumnCategoryName =>
+		//{
+		//	vColumnCategoryName.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+		//	vColumnCategoryName.FieldName = "CategoryName";
+		//	vColumnCategoryName.Caption = "Наименование";
+		//	//vColumnCategoryName.EditorProperties().ComboBox(vComboBox =>
+		//	//{
+		//	//	vComboBox.TextField = "CategoryName";
+		//	//	vComboBox.ValueField = "CategoryId";
+		//	//	vComboBox.ValueType = typeof(int);
+		//	//	vComboBox.BindList(CategoryModel.FillAllCategories());
+		//	//});
+		//	vColumnCategoryName.Width = Unit.Pixel(125);
+		//});
+
+
+		//vGridView.EditFormLayoutProperties.ColCount = 2;
+		//vGridView.EditFormLayoutProperties.ShowItemCaptionColon = false;
+		//MVCxGridViewColumnLayoutItem vEditViewColumnCategoryDate = vGridView.EditFormLayoutProperties.Items.Add(i => i.CategoryDate);
+		//vEditViewColumnCategoryDate.ShowCaption = DefaultBoolean.False;
+
+
+		////ASPxDateEdit vCategoryDateControl = vEditViewColumnCategoryDate.GetNestedControl() as ASPxDateEdit;
+		//////vGridView.EditFormLayoutProperties.GetNestedControlValueByFieldName()
+		////vCategoryDateControl.PreRender += (s, e) =>
+		////{
+		////	if (1==1)//grid.IsNewRowEditing)
+		////	{
+		////		ASPxDateEdit vDate = s as ASPxDateEdit;
+		////		vDate.Date = DateTime.Today;
+		////	}
+		////};
+		////vViewColumnLayoutItem.Column.
+
+
+		//MVCxGridViewColumnLayoutItem vEditViewColumnCategoryId = vGridView.EditFormLayoutProperties.Items.Add(i => i.CategoryId);
+		//vEditViewColumnCategoryId.ShowCaption = DefaultBoolean.False;
+
+
+
+		//////MVCxGridViewColumnLayoutItem vViewColumnLayoutItem = new MVCxGridViewColumnLayoutItem();
+
+
+		////vGridView.EditFormLayoutProperties.Items.Add(vViewColumnLayoutItem);
+		//vGridView.EditFormLayoutProperties.Items.AddCommandItem(i =>
+		//{
+		//	i.ColumnSpan = 2;
+		//	i.HorizontalAlign = FormLayoutHorizontalAlign.Right;
+		//});
+
+		vGridView.SetEditFormTemplateContent(vTemplate =>
+		{
+			Html.DevExpress().FormLayout(flSettings =>
+			{
+				flSettings.Name = "FormLayoutCategories";
+				flSettings.Width = Unit.Percentage(100);
+				flSettings.ColCount = 2;
+
+				flSettings.Items.Add(vColumnCategoryDate =>
+				{
+					vColumnCategoryDate.FieldName = "CategoryDate";
+					vColumnCategoryDate.Caption = "Дата категории";
+					vColumnCategoryDate.ShowCaption = DefaultBoolean.False;
+					vColumnCategoryDate.NestedExtension().DateEdit(vCategoryDate =>
+					{
+						vCategoryDate.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+						vCategoryDate.Properties.ValidationSettings.Display = Display.Dynamic;
+						vCategoryDate.ShowModelErrors = true;
+						vCategoryDate.Width = Unit.Pixel(90);
+						vCategoryDate.Enabled = vTemplate.Grid.IsNewRowEditing;
+						vCategoryDate.PreRender = (s, e) =>
+						{
+							if (vTemplate.Grid.IsNewRowEditing)
+							{
+								ASPxDateEdit vDate = s as ASPxDateEdit;
+
+								if (vDate != null)
+								{
+									vDate.Date = DateTime.Today;
+								}
+							}
+						};
+					});
+
+					vColumnCategoryDate.Width = Unit.Pixel(100);
+				});
+
+				flSettings.Items.Add(vColumnCategoryName =>
+				{
+					vColumnCategoryName.FieldName = "CategoryId";
+					vColumnCategoryName.Caption = "Наименование категории";
+					vColumnCategoryName.ShowCaption = DefaultBoolean.False;
+					vColumnCategoryName.NestedExtension().ComboBox(vComboBox =>
+					{
+						vComboBox.Properties.TextField = "CategoryName";
+						vComboBox.Properties.ValueField = "CategoryId";
+						vComboBox.Properties.ValueType = typeof(int);
+						vComboBox.Properties.DataSource = CategoryModel.FillAllCategories();
+						vComboBox.Properties.ValidationSettings.Display = Display.Dynamic;
+						vComboBox.ShowModelErrors = true;
+						vComboBox.Width = Unit.Pixel(130);
+						vComboBox.PreRender = (s, e) =>
+						{
+							if (vTemplate.Grid.IsNewRowEditing)
+							{
+								ASPxComboBox vCBox = s as ASPxComboBox;
+
+								if (vCBox != null)
+								{
+									vCBox.SelectedIndex = 0;
+								}
+							}
+						};
+					});
+					vColumnCategoryName.Width = Unit.Pixel(140);
+				});
+
+				flSettings.Items.AddEmptyItem();
+
+				flSettings.Items.Add(i =>
+				{
+					i.ShowCaption = DefaultBoolean.False;
+				}).SetNestedContent(() =>
+				{
+					ViewContext.Writer.Write("<div style='float:right'>");
+					Html.DevExpress().HyperLink(hlSettings =>
+					{
+						hlSettings.Name = "lnkUpdate";
+						hlSettings.Properties.Text = "Сохранить";
+						hlSettings.Properties.ClientSideEvents.Click = "function(s, e){ gvCategoriesDetail.UpdateEdit(); }";
+					}).Render();
+
+					Html.DevExpress().HyperLink(hlSettings =>
+					{
+						hlSettings.Name = "lnkCancel";
+						hlSettings.Properties.Text = "Отмена";
+						hlSettings.Style[HtmlTextWriterStyle.MarginLeft] = "5px";
+						hlSettings.Properties.ClientSideEvents.Click = "function(s, e){ gvCategoriesDetail.CancelEdit(); }";
+					}).Render();
+					ViewContext.Writer.Write("</div>");
+				});
+			}).Bind(ViewData["vCategoryModel"] ?? (vTemplate.Grid.IsNewRowEditing ? new CategoryModel() : vTemplate.Grid.GetRow(vTemplate.Grid.EditingRowVisibleIndex))).Render();
+		});
+
+		string sColumnFieldName;
+		GridViewDataColumn vColumn;
+
+		vGridView.CustomColumnDisplayText = (s, e) =>
+		{
+			vColumn = e.Column;
+
+			if (vColumn == null)
+				return;
+
+			sColumnFieldName = vColumn.FieldName;
+
+			switch (sColumnFieldName)
+			{
+				case "№":
+					e.DisplayText = (e.VisibleIndex + 1).ToString();
+					break;
+				case "CategoryDate":
+					e.DisplayText = UtilsHelper.GridDateConverter(e.Value);
+					break;
+			}
+		};
+	});
+
+	if (ViewData["EditError"] != null)
+	{
+		vGrid.SetEditErrorText((string) ViewData["EditError"]);
+	}
+	vGrid.Bind(Model).GetHtml();
+}

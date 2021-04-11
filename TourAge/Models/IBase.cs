@@ -1,4 +1,4 @@
-﻿namespace TourAgency
+﻿namespace TourAge.Models
 {
 	public  interface IBase
 	{

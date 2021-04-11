@@ -3,19 +3,28 @@
 		<div class="logo">
 			@Html.DevExpress().Button(settings =>
 			{
-				settings.Name = "Button";
+				settings.Name = "logo";
 				settings.RenderMode = ButtonRenderMode.Link;
 				settings.Images.Image.Url = Url.Content("~/Content/Images/Header1.png");
 				settings.ClientSideEvents.Click = "function(e) { window.location = '" + @Url.Action("Home", "Pages") + "'; }";
-
+				settings.Text = "";
 				settings.UseSubmitBehavior = true;
 			}).GetHtml();
 
 		</div>
-		@*<div class="buttons">
-
-
-		</div>*@
+		<div class="buttons">
+			@Html.DevExpress().Button(settings =>
+			{
+				settings.Name = "Contact";
+				settings.RenderMode = ButtonRenderMode.Button;
+				settings.ClientSideEvents.Click = "function(e) { window.location = '" + @Url.Action("Home", "Pages") + "'; }";
+				settings.Text = "Помощь";
+				settings.Width = Unit.Pixel(107);
+				settings.Height = Unit.Pixel(38);
+				settings.ControlStyle.CssClass = "orangeButton";
+			}).GetHtml();
+		</div>
+		<div class="clear"></div>
 	</div>
-	<div class="clearfix"></div>
+
 </div>

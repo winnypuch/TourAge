@@ -1,0 +1,37 @@
+﻿@Html.DevExpress().PageControl(pcSettings =>
+{
+	pcSettings.Name = "pcTools";
+	pcSettings.CallbackRouteValues = new
+	{
+		Controller = "Tools", Action = "PCToolsPartial"
+	};
+
+	pcSettings.Width = Unit.Percentage(100);
+	pcSettings.Styles.Content.CssClass = "padding4";
+	pcSettings.Styles.Tab.CssClass = "padding4";
+	pcSettings.EnableClientSideAPI = true;
+
+	pcSettings.TabPages.Add(vTabPage =>
+	{
+		vTabPage.Name = "tpCities";
+		vTabPage.TabImage.Url = "~/Content/Images/16x16/Find.png";
+		vTabPage.Text = "Города";
+		vTabPage.ToolTip = "Города";
+		vTabPage.SetContent(() =>
+		{
+			Html.RenderAction("CitiesGridPartial", "Cities");
+		});
+	});
+
+	pcSettings.TabPages.Add(vTabPage =>
+	{
+		vTabPage.Name = "tpCities";
+		vTabPage.TabImage.Url = "~/Content/Images/16x16/Find.png";
+		vTabPage.Text = "Города";
+		vTabPage.ToolTip = "Города";
+		vTabPage.SetContent(() =>
+		{
+		//Html.RenderAction("CitiesPartial", "Cities");
+		});
+	});
+}).GetHtml()

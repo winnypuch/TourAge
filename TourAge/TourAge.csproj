@@ -138,6 +138,7 @@
   <ItemGroup>
     <Content Include="App_Data\BlogPosts.xml" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Images\Banner.jpg" />
     <Content Include="Content\Images\Blog\image0.png" />
     <Content Include="Content\Images\Blog\image1.png" />
@@ -478,6 +479,11 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\knockout-3.3.0.debug.js" />
     <Content Include="Scripts\knockout-3.3.0.js" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\bootstrap.css.map" />
     <None Include="packages.config" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -510,6 +516,8 @@
     <Content Include="Views\Pages\Search.cshtml" />
     <Content Include="Views\Pages\SearchGridViewPartial.cshtml" />
     <Content Include="Scripts\jquery.min.map" />
+    <Content Include="Views\Cities\CitiesGridPartial.cshtml" />
+    <Content Include="Views\Tools\PCToolsPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -521,8 +529,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CitiesController.cs" />
     <Compile Include="Controllers\PagesController.BlogPosts.cs" />
     <Compile Include="Controllers\PagesController.Contacts.cs" />
+    <Compile Include="Controllers\ToolsController.cs" />
     <Compile Include="Controllers\PagesController.Home.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -530,24 +540,26 @@
     <Compile Include="Models\BlogPosts.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\DataProvider.cs" />
-    <Compile Include="Models\TourAgency\cCcities.cs" />
-    <Compile Include="Models\TourAgency\cCity.cs" />
-    <Compile Include="Models\TourAgency\cClient.cs" />
-    <Compile Include="Models\TourAgency\cClients.cs" />
-    <Compile Include="Models\TourAgency\cCountries.cs" />
-    <Compile Include="Models\TourAgency\cCountry.cs" />
-    <Compile Include="Models\TourAgency\cOrder.cs" />
-    <Compile Include="Models\TourAgency\cOrders.cs" />
-    <Compile Include="Models\TourAgency\cRout.cs" />
-    <Compile Include="Models\TourAgency\cRouts.cs" />
-    <Compile Include="Models\TourAgency\cTour.cs" />
-    <Compile Include="Models\TourAgency\cTours.cs" />
-    <Compile Include="Models\TourAgency\cUser.cs" />
-    <Compile Include="Models\TourAgency\cUsers.cs" />
-    <Compile Include="Models\TourAgency\IBase.cs" />
-    <Compile Include="Models\TourAgency\IExtCollections.cs" />
+    <Compile Include="Models\SearchModel.cs" />
+    <Compile Include="Models\cCcities.cs" />
+    <Compile Include="Models\cCity.cs" />
+    <Compile Include="Models\cClient.cs" />
+    <Compile Include="Models\cClients.cs" />
+    <Compile Include="Models\cCountries.cs" />
+    <Compile Include="Models\cCountry.cs" />
+    <Compile Include="Models\cOrder.cs" />
+    <Compile Include="Models\cOrders.cs" />
+    <Compile Include="Models\cRout.cs" />
+    <Compile Include="Models\cRouts.cs" />
+    <Compile Include="Models\cTour.cs" />
+    <Compile Include="Models\cTours.cs" />
+    <Compile Include="Models\cUser.cs" />
+    <Compile Include="Models\cUsers.cs" />
+    <Compile Include="Models\IBase.cs" />
+    <Compile Include="Models\IExtCollections.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

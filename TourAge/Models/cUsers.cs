@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace TourAgency
+namespace TourAge.Models
 {
 	public class cUsers : BindingList<cUser>, IExtCollections<cUser>
     {
