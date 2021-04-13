@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Drawing
+<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8" />
@@ -88,9 +89,15 @@
 				<div class="info">
 					<div class="content-сolumn">
 						<div class="copyright">
-							Copyright (c) @DateTime.Today.Year.ToString() Nemtsov A.
+							@Html.DevExpress().HyperLink(hlSettings =>
+					   {
+						   hlSettings.Name = "AdminLink";
+						   hlSettings.Properties.Text = "Copyright(c) " + DateTime.Today.Year.ToString()+ " Nemtsov A.";
+								hlSettings.ControlStyle.CssClass = "copyright";
+						   hlSettings.ControlStyle.Font.Underline = false;
+						   hlSettings.NavigateUrl = DevExpressHelper.GetUrl(new { Controller = "Tools", Action = "Admin" });
+					   }).GetHtml()
 						</div>
-
 					</div>
 				</div>
 			</div>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -12,6 +13,7 @@ namespace TourAge.Models
         public int Id { get; set; }
 
         [DisplayName("Название города")]
+        //[Required(ErrorMessage = "Необходимо ввести название города")]
         public string Name { get; set; }
 
         [DisplayName("Страна")]
@@ -35,7 +37,7 @@ namespace TourAge.Models
 
             DataTable vRes = DataProvider.GetDataTable("Select Id, Name, CountryId From Cities Where Id = @Id", vParams);
 
-            if (vRes.Rows.Count > 0)
+            if (vRes?.Rows.Count > 0)
             {
                 DataRow vRow = vRes.Rows[0];
 

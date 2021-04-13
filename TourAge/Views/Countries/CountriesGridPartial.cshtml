@@ -1,7 +1,7 @@
 ﻿@using DevExpress.Web.Mvc.UI
 @using TourAge.Models
 @{
-	GridViewExtension vGrid = Html.DevExpress().GridView<cCity>(vGridView =>
+	GridViewExtension vGrid = Html.DevExpress().GridView<cCountry>(vGridView =>
 	{
 		vGridView.Name = "gvCountries";
 		vGridView.CallbackRouteValues = new {Controller = "Countries", Action = "CountriesGridPartial" };
@@ -15,7 +15,7 @@
 		//vGridView.ClientSideEvents.BeginCallback = "OnBeginCallback";
 		vGridView.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
 		//vGridView.SettingsEditing.Mode = GridViewEditingMode.PopupEditForm;
-		vGridView.KeyFieldName = "CountryId"; //;CategoryDate;CategoryId
+		vGridView.KeyFieldName = "Id"; //;CategoryDate;CategoryId
 
 		vGridView.Settings.ShowFooter = false;
 		vGridView.Settings.ShowColumnHeaders = true;
@@ -56,6 +56,8 @@
 			});
 		});
 
+		vGridView.Columns.Add("Id").Visible = false;
+
 		vGridView.Columns.Add(vColumnNumber =>
 		{
 			vColumnNumber.FieldName = "№";
@@ -66,14 +68,13 @@
 		});
 
 
-		vGridView.Columns.Add(vColumnCategoryName =>
+		vGridView.Columns.Add(vColumnCountryName =>
 		{
-
-			vColumnCategoryName.FieldName = "Name";
-			vColumnCategoryName.Caption = "Наименование";
-			vColumnCategoryName.Width = Unit.Pixel(125);
-			vColumnCategoryName.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
-			vColumnCategoryName.CellStyle.HorizontalAlign = HorizontalAlign.Center;
+			vColumnCountryName.FieldName = "Name";
+			vColumnCountryName.Caption = "Наименование";
+			vColumnCountryName.Width = Unit.Pixel(125);
+			vColumnCountryName.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+			vColumnCountryName.CellStyle.HorizontalAlign = HorizontalAlign.Center;
 		});
 
 		vGridView.SetEditFormTemplateContent(vTemplate =>
@@ -82,11 +83,12 @@
 			{
 				flSettings.Name = "FormLayoutCountries";
 				flSettings.Width = Unit.Percentage(100);
-				flSettings.ColCount = 2;
+				//flSettings.ColCount = 2;
 
 				flSettings.Items.Add(vColumnCountryName =>
 				{
-					vColumnCountryName.FieldName = "CountryName";
+					vColumnCountryName.FieldName = "Name";
+					vColumnCountryName.Caption = "Наименование страны";
 					vColumnCountryName.NestedExtension().TextBox(p =>
 					{
 						p.Height = Unit.Pixel(20);
@@ -94,8 +96,7 @@
 					});
 				});
 
-
-				flSettings.Items.AddEmptyItem();
+				//flSettings.Items.AddEmptyItem();
 
 				flSettings.Items.Add(i =>
 				{

@@ -21,7 +21,7 @@ namespace TourAge.Models
 
             DataTable vRes = DataProvider.GetDataTable("Select Id From Cities");
 
-            if (vRes != null && vRes.Rows.Count > 0)
+            if (vRes?.Rows.Count > 0)
             {
                 foreach (DataRow vRow in vRes.Rows)
                 {
@@ -100,21 +100,24 @@ namespace TourAge.Models
         /// Удаляет объект по его Id
         /// </summary>
         /// <param name="Id">Идентификатор объекта</param>
-        public void RemoveById(int Id, bool bRemoveToDatabase = false)
+        /// <param name="bRemoveToDatabase"></param>
+        public string RemoveById(int Id, bool bRemoveToDatabase = false)
         {
             cCity vCity = this.GetObjectById(Id);
 
             if (vCity != null)
-                this.Remove(vCity, bRemoveToDatabase);
+                return this.Remove(vCity, bRemoveToDatabase);
+
+            return null;
         }
 
         /// <summary>
         /// Удаляет объект из коллекции
         /// </summary>
         /// <param name="vCity">Удаляемый объект</param>
-        public new void Remove(cCity vCity)
+        public new string Remove(cCity vCity)
         {
-            this.Remove(vCity, false);
+            return this.Remove(vCity, true);
         }
 
         /// <summary>
@@ -122,10 +125,8 @@ namespace TourAge.Models
         /// </summary>
         /// <param name="vCity">Удаляемый объект</param>
         /// <param name="bRemoveToDatabase">Удалять или нет объект из базы данных</param>
-        public void Remove(cCity vCity, bool bRemoveToDatabase = false)
+        public string Remove(cCity vCity, bool bRemoveToDatabase = false)
         {
-	        bool bIsDel = true;
-
             if (bRemoveToDatabase)
             {
                 List<SqlParameter> vParams = new List<SqlParameter> {
@@ -134,10 +135,9 @@ namespace TourAge.Models
 
                 DataTable vRes = DataProvider.GetDataTable("SELECT id FROM Routes WHERE CityStartId = @Id OR CityEndId = @Id", vParams);
 
-                if (vRes.Rows.Count > 0)
+                if (vRes?.Rows.Count > 0)
                 {
-	                //MessageBox.Show("Город удалить нельзя он указан в маршрутах!", "Ошибка удаления", MessageBoxButtons.OK, MessageBoxIcon.Error);
-	                bIsDel = false;
+	               return "Город удалить нельзя он указан в маршрутах!";
                 }
                 else
                 {
@@ -145,13 +145,12 @@ namespace TourAge.Models
                 }
             }
 
-            if (bIsDel)
-            {
-	            if (_vDictIdObject.ContainsKey(vCity.Id))
-		            _vDictIdObject.Remove(vCity.Id);
+            if (_vDictIdObject.ContainsKey(vCity.Id))
+	            _vDictIdObject.Remove(vCity.Id);
 
-	            base.Remove(vCity);
-            }
+            base.Remove(vCity);
+
+            return null;
         }
 
         /// <summary>

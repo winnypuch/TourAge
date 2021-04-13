@@ -21,7 +21,7 @@ namespace TourAge.Models
 
             DataTable vRes = DataProvider.GetDataTable("Select Id From Countries");
 
-            if (vRes != null && vRes.Rows.Count > 0)
+            if (vRes?.Rows.Count > 0)
             {
                 foreach (DataRow vRow in vRes.Rows)
                 {
@@ -98,21 +98,23 @@ namespace TourAge.Models
         /// Удаляет объект по его Id
         /// </summary>
         /// <param name="Id">Идентификатор объекта</param>
-        public void RemoveById(int Id, bool bRemoveToDatabase = false)
+        /// <param name="bRemoveToDatabase">Удалить из базы данных</param>
+        public string RemoveById(int Id, bool bRemoveToDatabase = false)
         {
             cCountry vCountry = this.GetObjectById(Id);
 
             if (vCountry != null)
-                this.Remove(vCountry, bRemoveToDatabase);
+                return this.Remove(vCountry, bRemoveToDatabase);
+            return null;
         }
 
         /// <summary>
         /// Удаляет объект из коллекции
         /// </summary>
         /// <param name="vCountry">Удаляемый объект</param>
-        public new void Remove(cCountry vCountry)
+        public new string Remove(cCountry vCountry)
         {
-            this.Remove(vCountry, false);
+            return this.Remove(vCountry, true);
         }
 
         /// <summary>
@@ -120,10 +122,8 @@ namespace TourAge.Models
         /// </summary>
         /// <param name="vCountry">Удаляемый объект</param>
         /// <param name="bRemoveToDatabase">Удалять или нет объект из базы данных</param>
-        public void Remove(cCountry vCountry, bool bRemoveToDatabase = false)
+        public string Remove(cCountry vCountry, bool bRemoveToDatabase = false)
         {
-	        bool bIsDel = true;
-
             if (bRemoveToDatabase)
             {
                 List<SqlParameter> vParams = new List<SqlParameter> {
@@ -131,10 +131,9 @@ namespace TourAge.Models
                     };
                 DataTable vRes = DataProvider.GetDataTable("SELECT id FROM Cities WHERE CountryId = @Id", vParams);
 
-                if (vRes.Rows.Count > 0)
+                if (vRes?.Rows.Count > 0)
                 {
-	                //MessageBox.Show("Страну удалить нельзя она указана в городах!", "Ошибка удаления", MessageBoxButtons.OK, MessageBoxIcon.Error);
-	                bIsDel = false;
+	                return "Страну удалить нельзя она указана в городах!";
                 }
                 else
                 {
@@ -142,13 +141,13 @@ namespace TourAge.Models
                 }
             }
 
-            if (bIsDel)
-            {
-	            if (_vDictIdObject.ContainsKey(vCountry.Id))
-		            _vDictIdObject.Remove(vCountry.Id);
+            if (_vDictIdObject.ContainsKey(vCountry.Id))
+	            _vDictIdObject.Remove(vCountry.Id);
 
-	            base.Remove(vCountry);
-            }
+            base.Remove(vCountry);
+
+
+            return null;
         }
 
         /// <summary>

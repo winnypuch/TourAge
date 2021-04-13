@@ -5,7 +5,7 @@
     nb.ShowExpandButtons = false;
     nb.ControlStyle.CssClass = "blogNavBar";
     nb.Styles.GroupHeader.CssClass = "blogNabVarGroupHeader";
-    
+
     nb.Groups.Add("Archive (All)").NavigateUrl = DevExpressHelper.GetUrl(new { Controller = "Pages", Action = "BlogTimeline" });
     foreach(var yearsGroup in TourAge.Models.BlogPostsProvider.GetBlogsByCategories())
     {

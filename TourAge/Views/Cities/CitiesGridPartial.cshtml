@@ -15,7 +15,7 @@
 		//vGridView.ClientSideEvents.BeginCallback = "OnBeginCallback";
 		vGridView.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
 		//vGridView.SettingsEditing.Mode = GridViewEditingMode.PopupEditForm;
-		vGridView.KeyFieldName = "CityId"; //;CategoryDate;CategoryId
+		vGridView.KeyFieldName = "Id"; //;CategoryDate;CategoryId
 
 		vGridView.Settings.ShowFooter = false;
 		vGridView.Settings.ShowColumnHeaders = true;
@@ -56,6 +56,7 @@
 				});
 			});
 
+		vGridView.Columns.Add("Id").Visible = false;
 		vGridView.Columns.Add(vColumnNumber =>
 		{
 			vColumnNumber.FieldName = "№";
@@ -65,15 +66,22 @@
 			vColumnNumber.Width = Unit.Pixel(20);
 		});
 
-
-		vGridView.Columns.Add(vColumnCategoryName =>
+		vGridView.Columns.Add(vColumnName =>
 		{
+			vColumnName.FieldName = "Name";
+			vColumnName.Caption = "Наименование";
+			vColumnName.Width = Unit.Pixel(125);
+			vColumnName.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+			vColumnName.CellStyle.HorizontalAlign = HorizontalAlign.Center;
+		});
 
-			vColumnCategoryName.FieldName = "Name";
-			vColumnCategoryName.Caption = "Наименование";
-			vColumnCategoryName.Width = Unit.Pixel(125);
-			vColumnCategoryName.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
-			vColumnCategoryName.CellStyle.HorizontalAlign = HorizontalAlign.Center;
+		vGridView.Columns.Add(vColumnName =>
+		{
+			vColumnName.FieldName = "Country.Name";
+			vColumnName.Caption = "Наименование страны";
+			vColumnName.Width = Unit.Pixel(125);
+			vColumnName.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+			vColumnName.CellStyle.HorizontalAlign = HorizontalAlign.Center;
 		});
 
 		vGridView.SetEditFormTemplateContent(vTemplate =>
@@ -87,6 +95,7 @@
 				flSettings.Items.Add(vColumnCityName =>
 				{
 					vColumnCityName.FieldName = "Name";
+					vColumnCityName.Caption = "Наименование города";
 					vColumnCityName.NestedExtension().TextBox(p =>
 					{
 						p.Height = Unit.Pixel(20);
@@ -98,8 +107,7 @@
 				flSettings.Items.Add(vColumnCountryName =>
 				{
 					vColumnCountryName.FieldName = "Country.Id";
-					vColumnCountryName.Caption = "Наименование категории";
-					vColumnCountryName.ShowCaption = DefaultBoolean.False;
+					vColumnCountryName.Caption = "Наименование Страны";
 					vColumnCountryName.NestedExtension().ComboBox(vComboBox =>
 					{
 						vComboBox.Properties.TextField = "Name";
@@ -108,7 +116,6 @@
 						vComboBox.Properties.DataSource = cCountries.Fill();
 						vComboBox.Properties.ValidationSettings.Display = Display.Dynamic;
 						vComboBox.ShowModelErrors = true;
-						vComboBox.Width = Unit.Pixel(130);
 						vComboBox.PreRender = (s, e) =>
 						{
 							if (vTemplate.Grid.IsNewRowEditing)
@@ -125,7 +132,7 @@
 					vColumnCountryName.Width = Unit.Pixel(140);
 				});
 
-				//flSettings.Items.AddEmptyItem();
+				flSettings.Items.AddEmptyItem();
 
 				flSettings.Items.Add(i =>
 				{

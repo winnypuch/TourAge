@@ -8,7 +8,6 @@ namespace TourAge.Models
 {
 	public class cTours : BindingList<cTour>, IExtCollections<cTour>
     {
-
         private Dictionary<int, cTour> _vDictIdObject;
 
         public cTours()
@@ -22,7 +21,7 @@ namespace TourAge.Models
 
             DataTable vRes = DataProvider.GetDataTable("Select Id From Tours");
 
-            if (vRes.Rows.Count > 0)
+            if (vRes?.Rows.Count > 0)
             {
                 foreach (DataRow vRow in vRes.Rows)
                 {
@@ -103,21 +102,23 @@ namespace TourAge.Models
         /// Удаляет объект по его Id
         /// </summary>
         /// <param name="Id">Идентификатор объекта</param>
-        public void RemoveById(int Id, bool bRemoveToDatabase = false)
+        /// <param name="bRemoveToDatabase"></param>
+        public string RemoveById(int Id, bool bRemoveToDatabase = false)
         {
             cTour vTour = this.GetObjectById(Id);
 
             if (vTour != null)
-                this.Remove(vTour, bRemoveToDatabase);
+                return this.Remove(vTour, bRemoveToDatabase);
+            return null;
         }
 
         /// <summary>
         /// Удаляет объект из коллекции
         /// </summary>
         /// <param name="vTour">Удаляемый объект</param>
-        public new void Remove(cTour vTour)
+        public new string Remove(cTour vTour)
         {
-            this.Remove(vTour, false);
+            return this.Remove(vTour, true);
         }
 
         /// <summary>
@@ -125,10 +126,8 @@ namespace TourAge.Models
         /// </summary>
         /// <param name="vTour">Удаляемый объект</param>
         /// <param name="bRemoveToDatabase">Удалять или нет объект из базы данных</param>
-        public void Remove(cTour vTour, bool bRemoveToDatabase = false)
+        public string Remove(cTour vTour, bool bRemoveToDatabase = false)
         {
-	        bool bIsDel = true;
-
             if (bRemoveToDatabase)
             {
 	            vTour.RemoveRoutes();
@@ -138,18 +137,16 @@ namespace TourAge.Models
 
                 DataTable vRes = DataProvider.GetDataTable("SELECT id FROM Orders WHERE TourId = @Id", vParams);
 
-                if (vRes.Rows.Count > 0)
+                if (vRes?.Rows.Count > 0)
                 {
-	                //MessageBox.Show("Тур удалить нельзя он указан в заказах!", "Ошибка удаления", MessageBoxButtons.OK, MessageBoxIcon.Error);
-	                bIsDel = false;
+	                return "Тур удалить нельзя он указан в заказах!";
                 }
                 else
                 {
 	                DataTable vRes2 = DataProvider.GetDataTable("SELECT id FROM RoutesInTour WHERE TourId = @Id", vParams);
-	                if (vRes2.Rows.Count > 0)
+	                if (vRes2?.Rows.Count > 0)
 	                {
-		                //MessageBox.Show("Тур удалить нельзя у него есть маршруты!", "Ошибка удаления", MessageBoxButtons.OK, MessageBoxIcon.Error);
-		                bIsDel = false;
+		               return "Тур удалить нельзя у него есть маршруты!";
 	                }
 	                else
 	                {
@@ -158,13 +155,12 @@ namespace TourAge.Models
                 }
             }
 
-            if (bIsDel)
-            {
-	            if (_vDictIdObject.ContainsKey(vTour.Id))
-		            _vDictIdObject.Remove(vTour.Id);
+            if (_vDictIdObject.ContainsKey(vTour.Id))
+	            _vDictIdObject.Remove(vTour.Id);
 
-	            base.Remove(vTour);
-            }
+            base.Remove(vTour);
+
+            return null;
         }
     }
 }

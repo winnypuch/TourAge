@@ -519,6 +519,8 @@
     <Content Include="Views\Cities\CitiesGridPartial.cshtml" />
     <Content Include="Views\Tools\PCToolsPartial.cshtml" />
     <Content Include="Views\Countries\CountriesGridPartial.cshtml" />
+    <Content Include="Views\Tools\Admin.cshtml" />
+    <Content Include="Views\Routs\RoutsGridPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -530,6 +532,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\RoutsController.cs" />
     <Compile Include="Controllers\CountriesController.cs" />
     <Compile Include="Controllers\CitiesController.cs" />
     <Compile Include="Controllers\PagesController.BlogPosts.cs" />

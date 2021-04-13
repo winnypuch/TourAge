@@ -16,10 +16,10 @@ namespace TourAge.Models
         [DisplayName("Стоимость маршрута")]
         public decimal RCost { get; set; }
 
-        [DisplayName("Начальный маршрут")]
+        [DisplayName("Начальный город")]
         public cCity CityStart { get; set; }
 
-        [DisplayName("Конечный маршрут")]
+        [DisplayName("Конечный город")]
         public cCity CityEnd { get; set; }
 
         public cRout()
@@ -41,7 +41,7 @@ namespace TourAge.Models
 
             DataTable vRes = DataProvider.GetDataTable("Select Id, Name, RCost, CityStartId, CityEndId From Routes Where Id = @Id", vParams);
 
-            if (vRes.Rows.Count > 0)
+            if (vRes?.Rows.Count > 0)
             {
                 DataRow vRow = vRes.Rows[0];
                 if (vRow != null)

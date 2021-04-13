@@ -1,7 +1,6 @@
 #region < Usings >
 
 using System;
-using System.Collections.Generic;
 using System.Web.Mvc;
 using TourAge.Models;
 
@@ -60,24 +59,18 @@ namespace TourAge.Controllers
 		{
 			if (iCityId > 0)
 			{
-					AgentBase vSubscriber = DBObject.Load<AgentBase>(iSubscriberId);
+				cCities vCities = cCities.Fill();
+				string sError = vCities.RemoveById(iCityId, true);
 
-					if (vSubscriber != null)
-					{
-						vSubscriber.AgentCategories.RemoveAt(dCategoryDate.Value);
-						vSubscriber.Save();
-					}
-					else
-					{
-						ViewData["EditError"] = "Ошибка получения данных абонента!";
-					}
+				if(string.IsNullOrWhiteSpace(sError))
+					ViewData["EditError"] = sError;
 			}
 			else
 			{
-				ViewData["EditError"] = "Нет даты категории!";
+				ViewData["EditError"] = "Нет Id города!";
 			}
 
-			return ViewData["EditError"] == null ? Json(new {Result = "OK"}) : Json(new {Result = "Error", Error = "При удалении категории возникла ошибка:\n" + ViewData["EditError"]});
+			return ViewData["EditError"] == null ? Json(new {Result = "OK"}) : Json(new {Result = "Error", Error = "При удалении города возникла ошибка:\n" + ViewData["EditError"]});
 		}
 
 		/// <summary>
@@ -91,34 +84,22 @@ namespace TourAge.Controllers
 			{
 				try
 				{
-
-					AgentCategory vAgentCategory = DBObject.Load<AgentCategory>(vAgentCategoryModel.CategoryId);
-					AgentBase vAgent = DBObject.Load<AgentBase>(iSubscriberId);
-
-					if (vAgentCategory != null && vAgent != null && vAgentCategoryModel.CategoryId != 0 && vAgentCategoryModel.CategoryDate != null)
+					if (vCity != null && !string.IsNullOrWhiteSpace(vCity.Name) && vCity.Country.Id != 0)
 					{
-						Dictionary<DateTime?, AgentCategory> vDates = vAgent.AgentCategories.GetItemsDates();
-
-						if (!bAddNewCategory || (vDates != null && vDates.ContainsKey(vAgentCategoryModel.CategoryDate)))
+						if (!bAddNewCity)
 						{
-							if (vDates != null && !vDates[vAgentCategoryModel.CategoryDate].Equals(vAgentCategory))
-							{
-								vAgent.AgentCategories.RemoveAt(vAgentCategoryModel.CategoryDate.Value);
-								vAgent.AgentCategories.Add(vAgentCategory, vAgentCategoryModel.CategoryDate);
-								vAgent.Save();
-							}
+							vCity.Save();
 						}
 						else
 						{
-							vAgent.AgentCategories.Add(vAgentCategory, vAgentCategoryModel.CategoryDate);
-							vAgent.Save();
+							cCities vCities = cCities.Fill();
+							vCities.Add(vCity, true);
 						}
 					}
 					else
 					{
-						ViewData["EditError"] = "Укажите категорию и её дату!";
+						ViewData["EditError"] = "Укажите город и его страну!";
 					}
-
 				}
 				catch (Exception e)
 				{
@@ -131,7 +112,7 @@ namespace TourAge.Controllers
 			}
 
 			if (ViewData["EditError"] != null)
-				ViewData["vCategoryModel"] = vAgentCategoryModel;
+				ViewData["vCity"] = vCity;
 		}
 
 		#endregion < Города >

@@ -105,21 +105,22 @@ namespace TourAge.Models
         /// </summary>
         /// <param name="Id">Идентификатор объекта</param>
         /// <param name="bRemoveToDatabase">Удалить из базы данных</param>
-        public void RemoveById(int Id, bool bRemoveToDatabase = false)
+        public string RemoveById(int Id, bool bRemoveToDatabase = false)
         {
             cClient vClient = this.GetObjectById(Id);
 
             if (vClient != null)
-                this.Remove(vClient, bRemoveToDatabase);
+                return this.Remove(vClient, bRemoveToDatabase);
+            return null;
         }
 
         /// <summary>
         /// Удаляет объект из коллекции
         /// </summary>
         /// <param name="vClient">Удаляемый объект</param>
-        public new void Remove(cClient vClient)
+        public new string Remove(cClient vClient)
         {
-            this.Remove(vClient, false);
+            return this.Remove(vClient, true);
         }
 
         /// <summary>
@@ -127,10 +128,8 @@ namespace TourAge.Models
         /// </summary>
         /// <param name="vClient">Удаляемый объект</param>
         /// <param name="bRemoveToDatabase">Удалять или нет объект из базы данных</param>
-        public void Remove(cClient vClient, bool bRemoveToDatabase = false)
+        public string Remove(cClient vClient, bool bRemoveToDatabase = false)
         {
-	        bool bIsDel = true;
-
             if (bRemoveToDatabase)
             {
                 List<SqlParameter> vParams = new List<SqlParameter> {
@@ -141,8 +140,7 @@ namespace TourAge.Models
 
                 if (vRes != null && vRes.Rows.Count > 0)
                 {
-	                //MessageBox.Show("Клиента удалить нельзя он указан в заказах!","Ошибка удаления", MessageBoxButtons.OK, MessageBoxIcon.Error);
-	                bIsDel = false;
+	                return "Клиента удалить нельзя он указан в заказах!";
                 }
                 else
                 {
@@ -150,13 +148,12 @@ namespace TourAge.Models
                 }
             }
 
-            if (bIsDel)
-            {
-	            if (_vDictIdObject.ContainsKey(vClient.Id))
-		            _vDictIdObject.Remove(vClient.Id);
+            if (_vDictIdObject.ContainsKey(vClient.Id))
+	            _vDictIdObject.Remove(vClient.Id);
 
-	            base.Remove(vClient);
-            }
+            base.Remove(vClient);
+
+            return null;
         }
     }
 }

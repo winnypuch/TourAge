@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -11,6 +12,7 @@ namespace TourAge.Models
         public int Id { get; set; }
 
         [DisplayName("Название страны")]
+        //[Required(ErrorMessage = "Необходимо ввести название страны")]
         public string Name { get; set; }
 
         /// <summary>

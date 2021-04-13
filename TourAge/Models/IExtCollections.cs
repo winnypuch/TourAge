@@ -36,13 +36,13 @@
 		/// </summary>
 		/// <param name="Id">Идентификатор объекта</param>
 		/// <param name="bRemoveToDatabase">Удалить из базы данных</param>
-		void RemoveById(int Id, bool bRemoveToDatabase = false);
+		string RemoveById(int Id, bool bRemoveToDatabase = false);
 
 		/// <summary>
 		/// Удаляет объект из коллекции
 		/// </summary>
 		/// <param name="vObject">Удаляемый объект</param>
 		/// <param name="bRemoveToDatabase">Удалять или нет объект из базы данных</param>
-		void Remove(T vObject, bool bRemoveToDatabase = false);
+		string Remove(T vObject, bool bRemoveToDatabase = false);
 	}
 }

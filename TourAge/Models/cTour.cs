@@ -45,7 +45,7 @@ namespace TourAge.Models
 
 			DataTable vRes = DataProvider.GetDataTable("Select Id, Name, CostOfLiving, TDateBegin, TDateEnd From Tours Where Id = @Id", vParams);
 
-			if (vRes.Rows.Count > 0)
+			if (vRes?.Rows.Count > 0)
 			{
 				DataRow vRow = vRes.Rows[0];
 				if (vRow != null)

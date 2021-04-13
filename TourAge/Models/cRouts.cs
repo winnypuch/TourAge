@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using DevExpress.CodeParser;
 
 namespace TourAge.Models
 {
@@ -21,7 +22,7 @@ namespace TourAge.Models
 
             DataTable vRes = DataProvider.GetDataTable("Select Id From Routes");
 
-            if (vRes.Rows.Count > 0)
+            if (vRes?.Rows.Count > 0)
             {
                 foreach (DataRow vRow in vRes.Rows)
                 {
@@ -104,37 +105,42 @@ namespace TourAge.Models
         /// </summary>
         /// <param name="Id">Идентификатор объекта</param>
         /// <param name="bRemoveToDatabase">Удалить объект из базы</param>
-        public void RemoveById(int Id, bool bRemoveToDatabase = false)
+        public string RemoveById(int Id, bool bRemoveToDatabase = false)
         {
             cRout vRout = this.GetObjectById(Id);
 
             if (vRout != null)
                 this.Remove(vRout, bRemoveToDatabase);
+            return null;
         }
 
         /// <summary>
         /// Удаляет объект из коллекции
         /// </summary>
         /// <param name="vRout">Удаляемый объект</param>
-        public new void Remove(cRout vRout)
+        public new string Remove(cRout vRout)
         {
-            this.Remove(vRout, false);
+            return this.Remove(vRout, true);
         }
 
         /// <summary>
         /// Очистить всю коллекцию
         /// </summary>
         /// <param name="bRemoveToDatabase">Удалять или нет объект из базы данных</param>
-        public void Clear(bool bRemoveToDatabase = false)
+        public string Clear(bool bRemoveToDatabase = false)
         {
+	        string sRes = "";
+
 	        if (this.Count > 0)
 	        {
 		        for (var i = this.Count-1; i >= 0; i--)
 		        {
 			        cRout vRout = this[i];
-			        this.Remove(vRout, bRemoveToDatabase);
+			        sRes += this.Remove(vRout, bRemoveToDatabase) + "\n";
 		        }
 	        }
+
+	        return string.IsNullOrWhiteSpace(sRes) ? null : sRes;
         }
 
         /// <summary>
@@ -142,10 +148,8 @@ namespace TourAge.Models
         /// </summary>
         /// <param name="vRout">Удаляемый объект</param>
         /// <param name="bRemoveToDatabase">Удалять или нет объект из базы данных</param>
-        public void Remove(cRout vRout, bool bRemoveToDatabase = false)
+        public string Remove(cRout vRout, bool bRemoveToDatabase = false)
         {
-	        bool bIsDel = true;
-
             if (bRemoveToDatabase)
             {
                 List<SqlParameter> vParams = new List<SqlParameter> {
@@ -154,10 +158,9 @@ namespace TourAge.Models
 
                 DataTable vRes = DataProvider.GetDataTable("SELECT id FROM RoutesInTour WHERE RouteId = @Id", vParams);
 
-                if (vRes.Rows.Count > 0)
+                if (vRes?.Rows.Count > 0)
                 {
-	                //MessageBox.Show("Маршрут удалить нельзя он указан в турах!", "Ошибка удаления", MessageBoxButtons.OK, MessageBoxIcon.Error);
-	                bIsDel = false;
+	                return "Маршрут удалить нельзя он указан в турах!";
                 }
                 else
                 {
@@ -165,13 +168,22 @@ namespace TourAge.Models
                 }
             }
 
-            if (bIsDel)
-            {
-	            if (_vDictIdObject.ContainsKey(vRout.Id))
-		            _vDictIdObject.Remove(vRout.Id);
+            if (_vDictIdObject.ContainsKey(vRout.Id))
+	            _vDictIdObject.Remove(vRout.Id);
 
-	            base.Remove(vRout);
-            }
+            base.Remove(vRout);
+
+            return null;
+        }
+        /// <summary>
+        /// Загрузить коллекцию маршрутов
+        /// </summary>
+        /// <returns></returns>
+        public static cRouts Fill()
+        {
+	        cRouts vRouts = new cRouts();
+	        vRouts.Load();
+	        return vRouts;
         }
     }
 }

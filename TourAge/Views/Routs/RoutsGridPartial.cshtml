@@ -1,0 +1,245 @@
+﻿@using DevExpress.Web.Mvc.UI
+@using TourAge.Models
+@{
+	GridViewExtension vGrid = Html.DevExpress().GridView<cRout>(vGridView =>
+	{
+		vGridView.Name = "gvRouts";
+		vGridView.CallbackRouteValues = new {Controller = "Routs", Action = "RoutsGridPartial" };
+
+		vGridView.SettingsEditing.AddNewRowRouteValues = new {Controller = "Routs", Action = "RoutsAddNewPartial" };
+
+		vGridView.SettingsEditing.UpdateRowRouteValues = new {Controller = "Routs", Action = "RoutsUpdatePartial" };
+
+		vGridView.SettingsEditing.DeleteRowRouteValues = new {Controller = "Routs", Action = "RoutsDeletePartial" };
+
+		//vGridView.ClientSideEvents.BeginCallback = "OnBeginCallback";
+		vGridView.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+		//vGridView.SettingsEditing.Mode = GridViewEditingMode.PopupEditForm;
+		vGridView.KeyFieldName = "Id"; //;CategoryDate;CategoryId
+
+		vGridView.Settings.ShowFooter = false;
+		vGridView.Settings.ShowColumnHeaders = true;
+		vGridView.Styles.AlternatingRow.Enabled = DefaultBoolean.True;
+
+		vGridView.SettingsBehavior.AllowFocusedRow = true;
+		vGridView.SettingsBehavior.ConfirmDelete = true;
+		vGridView.SettingsBehavior.EnableRowHotTrack = true;
+
+		vGridView.SettingsPager.PageSize = 5;
+		vGridView.Width = Unit.Percentage(100);
+
+		vGridView.CustomJSProperties = (sender, e) =>
+		{
+			if (ViewData["EditError"] != null)
+				e.Properties["cpEditError"] = ViewData["EditError"];
+		};
+		//vGridView.ClientSideEvents.ToolbarItemClick = "Categories_ToolbarItemClick";
+		vGridView.Toolbars.Add(vToolBar =>
+		{
+			vToolBar.Enabled = true;
+			vToolBar.Position = GridToolbarPosition.Top;
+			vToolBar.ItemAlign = GridToolbarItemAlign.Right;
+			vToolBar.SettingsAdaptivity.Enabled = true;
+			vToolBar.SettingsAdaptivity.EnableCollapseRootItemsToIcons = true;
+
+			vToolBar.Items.Add(GridViewToolbarCommand.New);
+
+			vToolBar.Items.Add(GridViewToolbarCommand.Edit);
+
+			vToolBar.Items.Add(GridViewToolbarCommand.Delete);
+
+			vToolBar.Items.Add(i =>
+			{
+				i.SetTemplateContent(c => {
+					ViewContext.Writer.Write(Html.AntiForgeryToken().ToHtmlString());
+				});
+			});
+		});
+
+		vGridView.Columns.Add("Id").Visible = false;
+		vGridView.Columns.Add(vColumnNumber =>
+		{
+			vColumnNumber.FieldName = "№";
+			vColumnNumber.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+			vColumnNumber.CellStyle.HorizontalAlign = HorizontalAlign.Center;
+			vColumnNumber.UnboundType = DevExpress.Data.UnboundColumnType.Integer;
+			vColumnNumber.Width = Unit.Pixel(20);
+		});
+
+		vGridView.Columns.Add(vColumnName =>
+		{
+			vColumnName.FieldName = "Name";
+			vColumnName.Caption = "Наименование";
+			vColumnName.Width = Unit.Pixel(125);
+			vColumnName.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+			vColumnName.CellStyle.HorizontalAlign = HorizontalAlign.Center;
+		});
+
+		vGridView.Columns.Add(vColumnDocSum =>
+		{
+			vColumnDocSum.FieldName = "RCost";
+			vColumnDocSum.Caption = "Стоимость маршрута";
+			vColumnDocSum.EditorProperties().SpinEdit(p =>
+			{
+				p.DisplayFormatString = "{0:#0.##;;\"\"}";
+			});
+			vColumnDocSum.Width = Unit.Pixel(60);
+			vColumnDocSum.HeaderStyle.HorizontalAlign = HorizontalAlign.Right;
+		});
+
+		vGridView.Columns.Add(vColumnName =>
+		{
+			vColumnName.FieldName = "CityStart.Name";
+			vColumnName.Caption = "Начальная точка";
+			vColumnName.Width = Unit.Pixel(125);
+			vColumnName.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+			vColumnName.CellStyle.HorizontalAlign = HorizontalAlign.Center;
+		});
+
+		vGridView.Columns.Add(vColumnName =>
+		{
+			vColumnName.FieldName = "CityEnd.Name";
+			vColumnName.Caption = "Конечная точка";
+			vColumnName.Width = Unit.Pixel(125);
+			vColumnName.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+			vColumnName.CellStyle.HorizontalAlign = HorizontalAlign.Center;
+		});
+
+		vGridView.SetEditFormTemplateContent(vTemplate =>
+		{
+			Html.DevExpress().FormLayout(flSettings =>
+			{
+				flSettings.Name = "FormLayoutRouts";
+				flSettings.Width = Unit.Percentage(100);
+				flSettings.ColCount = 2;
+
+				flSettings.Items.Add(vColumnCityName =>
+				{
+					vColumnCityName.FieldName = "Name";
+					vColumnCityName.Caption = "Наименование маршрута";
+					vColumnCityName.NestedExtension().TextBox(p =>
+					{
+						p.Height = Unit.Pixel(20);
+						p.Width = Unit.Percentage(100);
+					});
+				});
+
+				flSettings.Items.Add(vColumnCityName =>
+				{
+					vColumnCityName.FieldName = "RCost";
+					vColumnCityName.Caption = "Стоимость маршрута";
+					vColumnCityName.NestedExtension().TextBox(p =>
+					{
+						p.Height = Unit.Pixel(20);
+						p.Width = Unit.Percentage(100);
+					});
+				});
+
+				flSettings.Items.Add(vColumnName =>
+				{
+					vColumnName.FieldName = "CityStart.Id";
+					vColumnName.Caption = "Начальная точка";
+					vColumnName.NestedExtension().ComboBox(vComboBox =>
+					{
+						vComboBox.Properties.TextField = "Name";
+						vComboBox.Properties.ValueField = "Id";
+						vComboBox.Properties.ValueType = typeof(int);
+						vComboBox.Properties.DataSource = cCities.Fill();
+						vComboBox.Properties.ValidationSettings.Display = Display.Dynamic;
+						vComboBox.ShowModelErrors = true;
+						vComboBox.PreRender = (s, e) =>
+						{
+							if (vTemplate.Grid.IsNewRowEditing)
+							{
+								ASPxComboBox vCBox = s as ASPxComboBox;
+
+								if (vCBox != null)
+								{
+									vCBox.SelectedIndex = 0;
+								}
+							}
+						};
+					});
+					vColumnName.Width = Unit.Pixel(140);
+				});
+
+				flSettings.Items.AddEmptyItem(); flSettings.Items.Add(vColumnName =>
+				{
+					vColumnName.FieldName = "CityEnd.Id";
+					vColumnName.Caption = "Начальная точка";
+					vColumnName.NestedExtension().ComboBox(vComboBox =>
+					{
+						vComboBox.Properties.TextField = "Name";
+						vComboBox.Properties.ValueField = "Id";
+						vComboBox.Properties.ValueType = typeof(int);
+						vComboBox.Properties.DataSource = cCities.Fill();
+						vComboBox.Properties.ValidationSettings.Display = Display.Dynamic;
+						vComboBox.ShowModelErrors = true;
+						vComboBox.PreRender = (s, e) =>
+						{
+							if (vTemplate.Grid.IsNewRowEditing)
+							{
+								ASPxComboBox vCBox = s as ASPxComboBox;
+
+								if (vCBox != null)
+								{
+									vCBox.SelectedIndex = 0;
+								}
+							}
+						};
+					});
+					vColumnName.Width = Unit.Pixel(140);
+				});
+
+				flSettings.Items.Add(i =>
+				{
+					i.ShowCaption = DefaultBoolean.False;
+				}).SetNestedContent(() =>
+				{
+					ViewContext.Writer.Write("<div style='float:right'>");
+					Html.DevExpress().HyperLink(hlSettings =>
+					{
+						hlSettings.Name = "lnkUpdate";
+						hlSettings.Properties.Text = "Сохранить";
+						hlSettings.Properties.ClientSideEvents.Click = "function(s, e){ gvRouts.UpdateEdit(); }";
+					}).Render();
+
+					Html.DevExpress().HyperLink(hlSettings =>
+					{
+						hlSettings.Name = "lnkCancel";
+						hlSettings.Properties.Text = "Отмена";
+						hlSettings.Style[HtmlTextWriterStyle.MarginLeft] = "5px";
+						hlSettings.Properties.ClientSideEvents.Click = "function(s, e){ gvRouts.CancelEdit(); }";
+					}).Render();
+					ViewContext.Writer.Write("</div>");
+				});
+			}).Bind(ViewData["cCity"] ?? (vTemplate.Grid.IsNewRowEditing ? new cRout() : vTemplate.Grid.GetRow(vTemplate.Grid.EditingRowVisibleIndex))).Render();
+		});
+
+		string sColumnFieldName;
+		GridViewDataColumn vColumn;
+
+		vGridView.CustomColumnDisplayText = (s, e) =>
+		{
+			vColumn = e.Column;
+
+			if (vColumn == null)
+				return;
+
+			sColumnFieldName = vColumn.FieldName;
+
+			switch (sColumnFieldName)
+			{
+				case "№":
+					e.DisplayText = (e.VisibleIndex + 1).ToString();
+					break;
+			}
+		};
+	});
+
+	if (ViewData["EditError"] != null)
+	{
+		vGrid.SetEditErrorText((string) ViewData["EditError"]);
+	}
+	vGrid.Bind(Model).GetHtml();
+}

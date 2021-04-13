@@ -3,35 +3,68 @@
 	pcSettings.Name = "pcTools";
 	pcSettings.CallbackRouteValues = new
 	{
-		Controller = "Tools", Action = "PCToolsPartial"
+		Controller = "Tools",
+		Action = "PCToolsPartial"
 	};
 
 	pcSettings.Width = Unit.Percentage(100);
 	pcSettings.Styles.Content.CssClass = "padding4";
 	pcSettings.Styles.Tab.CssClass = "padding4";
-	pcSettings.EnableClientSideAPI = true;
+	//pcSettings.EnableClientSideAPI = true;
+
+	pcSettings.TabPages.Add(vTabPage =>
+	{
+		vTabPage.Name = "tpCountries";
+		//vTabPage.TabImage.Url = "~/Content/Images/16x16/Find.png";
+		vTabPage.Text = "Страны";
+		vTabPage.ToolTip = "Страны";
+		vTabPage.SetContent(() =>
+		{
+			//ViewContext.Writer.Write("<div>");
+			//Html.RenderPartial("~/Views/Countries/CountriesGridPartial.cshtml", cCountries.Fill());
+			//ViewContext.Writer.Write("</div>");
+			Html.RenderAction("CountriesGridPartial", "Countries");
+		});
+	});
+
+	//pcSettings.TabPages.Add(vTabPage =>
+	//{
+	//	vTabPage.Name = "tpCountries2";
+	//	//vTabPage.TabImage.Url = "~/Content/Images/16x16/Find.png";
+	//	vTabPage.Text = "Страны";
+	//	vTabPage.ToolTip = "Страны";
+	//	vTabPage.SetContent(() =>
+	//	{
+	//		ViewContext.Writer.Write("<div>");
+	//		Html.RenderPartial("~/Views/Countries/CountriesGridPartial.cshtml", cCountries.Fill());
+	//		ViewContext.Writer.Write("</div>");
+	//	});
+	//});
 
 	pcSettings.TabPages.Add(vTabPage =>
 	{
 		vTabPage.Name = "tpCities";
-		vTabPage.TabImage.Url = "~/Content/Images/16x16/Find.png";
+		//vTabPage.TabImage.Url = "~/Content/Images/16x16/Find.png";
 		vTabPage.Text = "Города";
 		vTabPage.ToolTip = "Города";
 		vTabPage.SetContent(() =>
 		{
+			//ViewContext.Writer.Write("<div>");
+			//Html.RenderPartial("~/Views/Cities/CitiesGridPartial.cshtml", cCities.Fill());
+			//ViewContext.Writer.Write("</div>");
 			Html.RenderAction("CitiesGridPartial", "Cities");
 		});
 	});
 
 	pcSettings.TabPages.Add(vTabPage =>
 	{
-		vTabPage.Name = "tpCities";
-		vTabPage.TabImage.Url = "~/Content/Images/16x16/Find.png";
-		vTabPage.Text = "Города";
-		vTabPage.ToolTip = "Города";
+		vTabPage.Name = "tpRoutes";
+		//vTabPage.TabImage.Url = "~/Content/Images/16x16/Find.png";
+		vTabPage.Text = "Маршруты";
+		vTabPage.ToolTip = "Маршруты";
 		vTabPage.SetContent(() =>
 		{
-		//Html.RenderAction("CitiesPartial", "Cities");
+			Html.RenderAction("RoutsGridPartial", "Routs");
 		});
 	});
 }).GetHtml()

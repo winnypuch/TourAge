@@ -209,7 +209,8 @@ public class DBConnection
 					//"server=localhost;user id=bar;password=foobar;database=foo;"
 					//String.Format("server={0};port={1};user id={2}; password={3}; database={4}; SslMode={5}", "localhost", 3306, "root", "Tamerlanec2306", "base", "none")
 					//_vConnection = new SqlConnection(String.Format("server={0};port={1};user id={2}; password={3}; database={4}; SslMode={5}", "localhost", 3306, "root", "Tamerlanec2306", "base", "none"));
-					_vConnection = new SqlConnection(String.Format("server={0};uid={1}; password={2}; database={3};", "127.0.0.1", "root", "Tamerlanec2306", "base"));
+					////_vConnection = new SqlConnection(String.Format("server={0};uid={1}; password={2}; database={3};", "127.0.0.1", "root", "Tamerlanec2306", "base"));
+					_vConnection = new SqlConnection("Data Source=COMPIK10\\MSSQLSERVER19;Initial Catalog=TourAge;Integrated Security=SSPI;");
 					//String.Format("server={0};uid={1}; pwd={2}; database={3};", "127.0.0.1", "root", "Tamerlanec2306", "base")
 					//string.Format("Server=localhost; database={0}; UID=root; password={1}", "base", "Tamerlanec2306")
 					_vConnection.Open();

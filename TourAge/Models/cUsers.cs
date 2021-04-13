@@ -21,7 +21,7 @@ namespace TourAge.Models
 
             DataTable vRes = DataProvider.GetDataTable("Select Id From Users");
 
-            if (vRes != null && vRes.Rows.Count > 0)
+            if (vRes?.Rows.Count > 0)
             {
                 foreach(DataRow vRow in vRes.Rows)
                 {
@@ -106,21 +106,22 @@ namespace TourAge.Models
         /// </summary>
         /// <param name="Id">Идентификатор объекта</param>
         /// <param name="bRemoveToDatabase">Удалить из базы данных</param>
-        public void RemoveById(int Id, bool bRemoveToDatabase = false)
+        public string RemoveById(int Id, bool bRemoveToDatabase = false)
         {
             cUser vUser = this.GetObjectById(Id);
 
             if(vUser != null)
-                this.Remove(vUser, bRemoveToDatabase);
+                return this.Remove(vUser, bRemoveToDatabase);
+            return null;
         }
 
         /// <summary>
         /// Удаляет объект из коллекции
         /// </summary>
         /// <param name="vUser">Удаляемый объект</param>
-        public new void Remove(cUser vUser)
+        public new string Remove(cUser vUser)
         {
-            this.Remove(vUser, false);
+            return this.Remove(vUser, true);
         }
 
         /// <summary>
@@ -128,7 +129,7 @@ namespace TourAge.Models
         /// </summary>
         /// <param name="vUser">Удаляемый объект</param>
         /// <param name="bRemoveToDatabase">Удалять или нет объект из базы данных</param>
-        public void Remove(cUser vUser, bool bRemoveToDatabase = false)
+        public string Remove(cUser vUser, bool bRemoveToDatabase = false)
         {
             if (bRemoveToDatabase)
             {
@@ -143,6 +144,7 @@ namespace TourAge.Models
                 _vDictIdObject.Remove(vUser.Id);
 
             base.Remove(vUser);
+            return null;
         }
     }
 }

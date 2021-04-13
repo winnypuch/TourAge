@@ -48,9 +48,10 @@ namespace TourAge.Models
 
             DataTable vRes = DataProvider.GetDataTable("Select Id, Name, LastName, Patronymic, Phones From Clients Where Id = @Id", vParams);
 
-            if (vRes != null && vRes.Rows.Count > 0)
+            if (vRes?.Rows.Count > 0)
             {
                 DataRow vRow = vRes.Rows[0];
+
                 if (vRow != null)
                 {
                     this.Id = iClientId;
