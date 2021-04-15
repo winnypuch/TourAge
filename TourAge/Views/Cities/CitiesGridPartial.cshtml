@@ -92,11 +92,11 @@
 				flSettings.Width = Unit.Percentage(100);
 				flSettings.ColCount = 2;
 
-				flSettings.Items.Add(vColumnCityName =>
+				flSettings.Items.Add(vColumnName =>
 				{
-					vColumnCityName.FieldName = "Name";
-					vColumnCityName.Caption = "Наименование города";
-					vColumnCityName.NestedExtension().TextBox(p =>
+					vColumnName.FieldName = "Name";
+					vColumnName.Caption = "Наименование города";
+					vColumnName.NestedExtension().TextBox(p =>
 					{
 						p.Height = Unit.Pixel(20);
 						p.Width = Unit.Percentage(100);

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XtraReportsLayoutSerializer SerializerVersion="20.2.5.0" Ref="0" ControlType="DevExpress.XtraReports.UI.XtraReport, DevExpress.XtraReports.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Name="Report1" Margins="100, 100, 62, 661" PageWidth="850" PageHeight="1100" Version="20.2" Font="Arial, 9.75pt">
+  <Bands>
+    <Item1 Ref="1" ControlType="TopMarginBand" Name="TopMargin" HeightF="62.5">
+      <Controls>
+        <Item1 Ref="2" ControlType="XRPictureBox" Name="pictureBox1" ImageSource="img,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" SizeF="236.837143,40.5915833" LocationFloat="0,0" />
+      </Controls>
+    </Item1>
+    <Item2 Ref="3" ControlType="DetailBand" Name="Detail" HeightF="23.3333263">
+      <Controls>
+        <Item1 Ref="4" ControlType="XRLabel" Name="label3" Multiline="true" Text="label3" SizeF="315.656555,23" LocationFloat="297.032837,0" Padding="2,2,0,0,96">
+          <ExpressionBindings>
+            <Item1 Ref="5" EventName="BeforePrint" PropertyName="Text" Expression="[OrderCount]" />
+          </ExpressionBindings>
+        </Item1>
+        <Item2 Ref="6" ControlType="XRLabel" Name="label2" Multiline="true" Text="label2" SizeF="297.032837,23" LocationFloat="0,0" Padding="2,2,0,0,96">
+          <ExpressionBindings>
+            <Item1 Ref="7" EventName="BeforePrint" PropertyName="Text" Expression="[RouteName]" />
+          </ExpressionBindings>
+        </Item2>
+      </Controls>
+    </Item2>
+    <Item3 Ref="8" ControlType="BottomMarginBand" Name="BottomMargin" HeightF="661.4583" />
+    <Item4 Ref="9" ControlType="ReportHeaderBand" Name="ReportHeader" HeightF="161.041672">
+      <Controls>
+        <Item1 Ref="10" ControlType="XRLabel" Name="label1" Multiline="true" Text="Колличество заказов за период по маршрутам" TextAlignment="MiddleLeft" SizeF="375.94696,56.8181763" LocationFloat="99.7158661,10.0000067" Font="Arial Rounded MT Bold, 11.75pt" Padding="2,2,0,0,100" BorderWidth="2">
+          <StylePriority Ref="11" UseFont="false" UseBorderWidth="false" UseTextAlignment="false" />
+        </Item1>
+        <Item2 Ref="12" ControlType="XRTable" Name="table1" TextAlignment="TopLeft" SizeF="612.6894,83.33333" LocationFloat="0,77.70834" Padding="2,2,0,0,96" Borders="All">
+          <Rows>
+            <Item1 Ref="13" ControlType="XRTableRow" Name="tableRow1" Weight="0.368200835409632">
+              <Cells>
+                <Item1 Ref="14" ControlType="XRTableCell" Name="tableCell1" Weight="1.4544049925570088" Multiline="true" Text="Наименование маршрута" TextAlignment="MiddleCenter">
+                  <StylePriority Ref="15" UseTextAlignment="false" />
+                </Item1>
+                <Item2 Ref="16" ControlType="XRTableCell" Name="tableCell2" Weight="1.5455950074429912" Multiline="true" Text="Колл-во заказов" TextAlignment="MiddleCenter">
+                  <StylePriority Ref="17" UseTextAlignment="false" />
+                </Item2>
+              </Cells>
+            </Item1>
+          </Rows>
+          <StylePriority Ref="18" UseTextAlignment="false" />
+        </Item2>
+      </Controls>
+    </Item4>
+  </Bands>
+</XtraReportsLayoutSerializer>

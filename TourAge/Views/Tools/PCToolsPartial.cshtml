@@ -67,4 +67,28 @@
 			Html.RenderAction("RoutsGridPartial", "Routs");
 		});
 	});
+	pcSettings.TabPages.Add(vTabPage =>
+	{
+		vTabPage.Name = "tpTours";
+		//vTabPage.TabImage.Url = "~/Content/Images/16x16/Find.png";
+		vTabPage.Text = "Туры";
+		vTabPage.ToolTip = "Туры";
+		vTabPage.SetContent(() =>
+		{
+			Html.RenderAction("ToursGridPartial", "Tours");
+		});
+	});
+
+	pcSettings.TabPages.Add(vTabPage =>
+	{
+		vTabPage.Name = "tpReports";
+		//vTabPage.TabImage.Url = "~/Content/Images/16x16/Find.png";
+		vTabPage.Text = "Отчёты";
+		vTabPage.ToolTip = "Отчёты";
+		vTabPage.SetContent(() =>
+		{
+			Html.RenderAction("ReportsPartial", "Reports");
+		});
+	});
+
 }).GetHtml()

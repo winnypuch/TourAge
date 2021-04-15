@@ -1,16 +1,16 @@
 ﻿@using DevExpress.Web.Mvc.UI
 @using TourAge.Models
 @{
-	GridViewExtension vGrid = Html.DevExpress().GridView<cRout>(vGridView =>
+	GridViewExtension vGrid = Html.DevExpress().GridView<cTour>(vGridView =>
 	{
-		vGridView.Name = "gvRouts";
-		vGridView.CallbackRouteValues = new {Controller = "Routs", Action = "RoutsGridPartial" };
+		vGridView.Name = "gvTours";
+		vGridView.CallbackRouteValues = new {Controller = "Tours", Action = "ToursGridPartial" };
 
-		vGridView.SettingsEditing.AddNewRowRouteValues = new {Controller = "Routs", Action = "RoutsAddNewPartial" };
+		vGridView.SettingsEditing.AddNewRowRouteValues = new {Controller = "Tours", Action = "ToursAddNewPartial" };
 
-		vGridView.SettingsEditing.UpdateRowRouteValues = new {Controller = "Routs", Action = "RoutsUpdatePartial" };
+		vGridView.SettingsEditing.UpdateRowRouteValues = new {Controller = "Tours", Action = "ToursUpdatePartial" };
 
-		vGridView.SettingsEditing.DeleteRowRouteValues = new {Controller = "Routs", Action = "RoutsDeletePartial" };
+		vGridView.SettingsEditing.DeleteRowRouteValues = new {Controller = "Tours", Action = "ToursDeletePartial" };
 
 		//vGridView.ClientSideEvents.BeginCallback = "OnBeginCallback";
 		vGridView.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
@@ -77,8 +77,8 @@
 
 		vGridView.Columns.Add(vColumnDocSum =>
 		{
-			vColumnDocSum.FieldName = "RCost";
-			vColumnDocSum.Caption = "Стоимость маршрута";
+			vColumnDocSum.FieldName = "CostOfLiving";
+			vColumnDocSum.Caption = "Стоимость проживания";
 			vColumnDocSum.EditorProperties().SpinEdit(p =>
 			{
 				p.DisplayFormatString = "{0:#0.##;;\"\"}";
@@ -109,7 +109,7 @@
 		{
 			Html.DevExpress().FormLayout(flSettings =>
 			{
-				flSettings.Name = "FormLayoutRouts";
+				flSettings.Name = "FormLayoutTours";
 				flSettings.Width = Unit.Percentage(100);
 				flSettings.ColCount = 2;
 
@@ -207,7 +207,7 @@
 					{
 						hlSettings.Name = "lnkUpdate";
 						hlSettings.Properties.Text = "Сохранить";
-						hlSettings.Properties.ClientSideEvents.Click = "function(s, e){ gvRouts.UpdateEdit(); }";
+						hlSettings.Properties.ClientSideEvents.Click = "function(s, e){ gvTours.UpdateEdit(); }";
 					}).Render();
 
 					Html.DevExpress().HyperLink(hlSettings =>
@@ -215,11 +215,11 @@
 						hlSettings.Name = "lnkCancel";
 						hlSettings.Properties.Text = "Отмена";
 						hlSettings.Style[HtmlTextWriterStyle.MarginLeft] = "5px";
-						hlSettings.Properties.ClientSideEvents.Click = "function(s, e){ gvRouts.CancelEdit(); }";
+						hlSettings.Properties.ClientSideEvents.Click = "function(s, e){ gvTours.CancelEdit(); }";
 					}).Render();
 					ViewContext.Writer.Write("</div>");
 				});
-			}).Bind(ViewData["cCity"] ?? (vTemplate.Grid.IsNewRowEditing ? new cRout() : vTemplate.Grid.GetRow(vTemplate.Grid.EditingRowVisibleIndex))).Render();
+			}).Bind(ViewData["cCity"] ?? (vTemplate.Grid.IsNewRowEditing ? new cTour() : vTemplate.Grid.GetRow(vTemplate.Grid.EditingRowVisibleIndex))).Render();
 		});
 
 		string sColumnFieldName;

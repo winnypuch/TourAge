@@ -20,7 +20,9 @@ h1, h2, h3, h4, h5 {
 .header,
 .footer {
     width: 100%;
+
 }
+
 
 .content-сolumn {
     width: 920px;
@@ -65,8 +67,8 @@ h1, h2, h3, h4, h5 {
 }
 
 .footer .columns {
-    padding-top: 26px;
-    padding-bottom: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .footer .column {
@@ -104,7 +106,7 @@ h1, h2, h3, h4, h5 {
 
 .footer .copyright {
     float: left;
-    margin-top: 20px;
+    margin-top: 12px;
     font-size: 15px;
     color: #ffffff;
 }

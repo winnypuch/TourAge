@@ -484,11 +484,15 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Reports\Routes_report.repx" />
+    <Content Include="Reports\Routes_report2 .repx" />
+    <Content Include="Reports\Routes_report3.repx" />
     <None Include="packages.config" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\print.js" />
     <Content Include="Scripts\site.js" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
@@ -521,6 +525,11 @@
     <Content Include="Views\Countries\CountriesGridPartial.cshtml" />
     <Content Include="Views\Tools\Admin.cshtml" />
     <Content Include="Views\Routs\RoutsGridPartial.cshtml" />
+    <Content Include="Views\Tours\ToursGridPartial.cshtml" />
+    <Content Include="Views\Shared\_Layout-admin.cshtml" />
+    <Content Include="Views\Shared\HeaderPanelwithoutbuttonPartial.cshtml" />
+    <Content Include="Views\Reports\ReportsPartial.cshtml" />
+    <Content Include="Views\Print\PrintForm.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -532,6 +541,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
+    <Compile Include="Controllers\PrintController.cs" />
+    <Compile Include="Controllers\ToursController.cs" />
     <Compile Include="Controllers\RoutsController.cs" />
     <Compile Include="Controllers\CountriesController.cs" />
     <Compile Include="Controllers\CitiesController.cs" />

@@ -162,5 +162,16 @@ namespace TourAge.Models
 
             return null;
         }
+
+        /// <summary>
+        /// Загрузить коллекцию туров
+        /// </summary>
+        /// <returns></returns>
+        public static cTours Fill()
+        {
+	        cTours vTours = new cTours();
+	        vTours.Load();
+	        return vTours;
+        }
     }
 }

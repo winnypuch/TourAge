@@ -1,0 +1,40 @@
+<div class="header">
+	<div class="content-ñolumn">
+		<div class="logo">
+			@Html.DevExpress().Button(settings =>
+			{
+				settings.Name = "logo";
+				settings.RenderMode = ButtonRenderMode.Link;
+				settings.Images.Image.Url = Url.Content("~/Content/Images/Header1.png");
+				settings.ClientSideEvents.Click = "function(e) { window.location = '" + @Url.Action("Home", "Pages") + "'; }";
+				settings.Text = "";
+				settings.UseSubmitBehavior = true;
+			}).GetHtml()
+
+		</div>
+		<div class="buttons">
+			@*@Html.DevExpress().Button(settings =>
+			{
+				settings.Name = "Admin";
+				settings.RenderMode = ButtonRenderMode.Button;
+				settings.ClientSideEvents.Click = "function(e) { window.location = '" + @Url.Action("PCToolsPartial", "Tools") + "'; }";
+				settings.Text = "Admin";
+				settings.Width = Unit.Pixel(107);
+				settings.Height = Unit.Pixel(38);
+				settings.ControlStyle.CssClass = "orangeButton";
+			}).GetHtml()*@
+			@*@Html.DevExpress().Button(settings =>
+			{
+				settings.Name = "Contact";
+				settings.RenderMode = ButtonRenderMode.Button;
+				settings.ClientSideEvents.Click = "function(e) { window.location = '" + @Url.Action("Home", "Pages") + "'; }";
+				settings.Text = "Ïîìîùü";
+				settings.Width = Unit.Pixel(107);
+				settings.Height = Unit.Pixel(38);
+				settings.ControlStyle.CssClass = "orangeButton";
+			}).GetHtml()*@
+		</div>
+		<div class="clear"></div>
+	</div>
+
+</div>

@@ -1,0 +1,151 @@
+﻿@model TourAge.Models.SearchModel
+<div class="searchPanelContainer">
+	<div id="Search" class="search-panel">
+
+		@Html.DevExpress().FormLayout(flSettings =>
+		{
+			flSettings.Name = "flReport";
+			flSettings.Width = Unit.Percentage(100);
+			flSettings.ColCount = 2;
+			flSettings.SettingsItemCaptions.Location = LayoutItemCaptionLocation.Top;
+			flSettings.Items.Add(i =>
+			{
+				i.Name = "lblReport";
+				i.ShowCaption = DefaultBoolean.False;
+				i.NestedExtension().Label(vLabelProp =>
+				{
+					vLabelProp.Width = Unit.Percentage(100);
+					vLabelProp.Text = "<h3>Отчёты</h3>";
+					vLabelProp.EncodeHtml = false;
+				});
+				i.ColSpan = 2;
+			});
+
+			flSettings.Items.Add(m => m.DateBegin, i =>
+			{
+				i.Width = Unit.Percentage(50);
+				i.NestedExtension().DateEdit(vDateEditProp =>
+				{
+					vDateEditProp.Properties.DisplayFormatString = "dd/MM/yyyy";
+					vDateEditProp.Properties.EditFormatString = "dd/MM/yyyy";
+					//vDateEditProp.Properties.ClientSideEvents.ValueChanged = "SocialCategory_Check";
+					//vDateEditProp.Properties.ClientSideEvents.KeyUp = "SocialCategory_Check";
+					vDateEditProp.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Popup;
+					vDateEditProp.Properties.SelectInputTextOnClick = true;
+					vDateEditProp.Properties.NullText = "Введите дату начала...";
+					vDateEditProp.Properties.NullTextDisplayMode = NullTextDisplayMode.UnfocusedAndFocused;
+					vDateEditProp.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+					vDateEditProp.Properties.DropDownButton.Image.Url = Url.Content("~/Content/Images/calendar.png");
+					vDateEditProp.PreRender = (s, e) =>
+					{
+						ASPxDateEdit vDateEdit = s as ASPxDateEdit;
+
+						if (vDateEdit != null)
+						{
+							if (vDateEdit.Date == DateTime.MaxValue.Date)
+								vDateEdit.Value = "";
+						}
+
+					};
+				});
+			});
+
+			flSettings.Items.Add(m => m.DateEnd, i =>
+			{
+				i.Width = Unit.Percentage(50);
+				i.NestedExtension().DateEdit(vDateEditProp =>
+				{
+					vDateEditProp.Height = Unit.Pixel(30);
+					vDateEditProp.ControlStyle.CssClass = "cmbLocs";
+					vDateEditProp.Properties.EditFormat = EditFormat.Custom;
+					vDateEditProp.Properties.DisplayFormatString = "dd/MM/yyyy";
+					vDateEditProp.Properties.EditFormatString = "dd/MM/yyyy";
+					//vDateEditProp.Properties.ClientSideEvents.ValueChanged = "SocialCategory_Check";
+					//vDateEditProp.Properties.ClientSideEvents.KeyUp = "SocialCategory_Check";
+					vDateEditProp.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Popup;
+					vDateEditProp.Properties.SelectInputTextOnClick = true;
+					vDateEditProp.Properties.NullText = "Введите дату окончания...";
+					vDateEditProp.Properties.NullTextDisplayMode = NullTextDisplayMode.UnfocusedAndFocused;
+					vDateEditProp.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+					vDateEditProp.Properties.DropDownButton.Image.Url = Url.Content("~/Content/Images/calendar.png");
+					vDateEditProp.PreRender = (s, e) =>
+					{
+						ASPxDateEdit vDateEdit = s as ASPxDateEdit;
+
+						if (vDateEdit != null)
+						{
+							if (vDateEdit.Date == DateTime.MaxValue.Date)
+								vDateEdit.Value = "";
+						}
+					};
+				});
+			});
+
+			flSettings.Items.Add(i =>
+			{
+				i.ShowCaption = DefaultBoolean.False;
+				i.ColSpan = 2;
+				i.NestedExtension().Button(vButtonProp =>
+				{
+					vButtonProp.Name = "Report1";
+					vButtonProp.RenderMode = ButtonRenderMode.Button;
+					vButtonProp.Width = Unit.Percentage(100);
+					vButtonProp.Text = "Отчёт 1";
+					vButtonProp.ControlStyle.CssClass = "search-button";
+					vButtonProp.ClientSideEvents.Click = string.Format("function(s, e) {{ OpenPrintWindow({{ 'iReportNumber': 1, 'dDateBegin': FormateDate(DateBegin.GetValue()), 'dDateEnd': FormateDate(DateEnd.GetValue()) }},'{0}'); }}", Url.Action("PrintForm", "Print"));
+
+					//vButtonProp.PreRender = (s, e) =>
+					//{
+					//	(s as MVCxButton).HoverStyle.CssClass = "search-button-hover";
+					//};
+				});
+
+				//vButtonProp.PreRender = (s, e) =>
+				//{
+				//	(s as MVCxButton).HoverStyle.CssClass = "search-button-hover";
+				//};
+			});
+
+
+			flSettings.Items.Add(i =>
+			{
+				i.ShowCaption = DefaultBoolean.False;
+				i.ColSpan = 2;
+				i.NestedExtension().Button(vButtonProp =>
+				{
+					vButtonProp.Name = "Report2";
+					vButtonProp.RenderMode = ButtonRenderMode.Button;
+					vButtonProp.Width = Unit.Percentage(100);
+					vButtonProp.Text = "Отчёт 2";
+					vButtonProp.ControlStyle.CssClass = "search-button";
+					vButtonProp.ClientSideEvents.Click = string.Format("function(s, e) {{ OpenPrintWindow({{ iReportNumber: 2, 'dDateBegin': FormateDate(DateBegin.GetValue()), 'dDateEnd': FormateDate(DateEnd.GetValue()) }},'{0}'); }}", Url.Action("PrintForm", "Print"));
+					//vButtonProp.PreRender = (s, e) =>
+					//{
+					//	(s as MVCxButton).HoverStyle.CssClass = "search-button-hover";
+					//};
+				});
+
+			});
+			flSettings.Items.Add(i =>
+			{
+				i.ShowCaption = DefaultBoolean.False;
+				i.ColSpan = 2;
+				i.NestedExtension().Button(vButtonProp =>
+				{
+					vButtonProp.Name = "Report3";
+					vButtonProp.RenderMode = ButtonRenderMode.Button;
+					vButtonProp.Width = Unit.Percentage(100);
+					vButtonProp.Text = "Отчёт 3";
+					vButtonProp.ControlStyle.CssClass = "search-button";
+					vButtonProp.ClientSideEvents.Click = string.Format("function(s, e) {{ OpenPrintWindow({{ iReportNumber: 3, 'dDateBegin': FormateDate(DateBegin.GetValue()), 'dDateEnd': FormateDate(DateEnd.GetValue()) }},'{0}'); }}", Url.Action("PrintForm", "Print"));
+					//vButtonProp.PreRender = (s, e) =>
+					//{
+					//	(s as MVCxButton).HoverStyle.CssClass = "search-button-hover";
+					//};
+				});
+			});
+		}).GetHtml()
+
+	</div>
+</div>
+<div class="clear"></div>

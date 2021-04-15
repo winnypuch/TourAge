@@ -54,7 +54,7 @@
 				{
 					ViewContext.Writer.Write("<div class='title'><a href='" + Url.Action("Home", "Pages") + "'>TourAge</a><p class='small'>C нами весело</p></div>");
 				});
-				p.SetContent(() => { Html.RenderPartial("HeaderPanelContentPartial"); });
+				p.SetContent(() => { Html.RenderPartial("HeaderPanelwithoutbuttonPartial"); });
 			}).GetHtml()
 
 		</div>
@@ -67,42 +67,6 @@
 	</div>
 
 </div>
-<footer>
-	<div class="footer">
-		<div class="columns content-сolumn">
-			<div class="column rightBorder">
-				<h5>Гарантии качества</h5>
-				<div class="text"></div>
-				<div class="text"><a class="orangeLink" href=""></a></div>
-			</div>
-			<div class="column rightBorder">
-				<h5>Мы всегда готовы помочь</h5>
-				<div class="text"></div>
-				<div class="text"><a class="orangeLink" href=""></a></div>
-			</div>
-			<div class="column">
-				<h5>Профессиональный подход</h5>
-				<div class="text">
 
-				</div>
-			</div>
-			<div class="clear"></div>
-		</div>
-		<div class="info">
-			<div class="content-сolumn">
-				<div class="copyright">
-					@Html.DevExpress().HyperLink(hlSettings =>
-					{
-						hlSettings.Name = "AdminLink";
-						hlSettings.Properties.Text = "Copyright(c) " + DateTime.Today.Year.ToString()+ " Nemtsov A.";
-						hlSettings.ControlStyle.CssClass = "copyright";
-						hlSettings.ControlStyle.Font.Underline = false;
-						hlSettings.NavigateUrl = DevExpressHelper.GetUrl(new { Controller = "Tools", Action = "Admin" });
-					}).GetHtml()
-				</div>
-			</div>
-		</div>
-	</div>
-</footer>
 </body>
 </html>

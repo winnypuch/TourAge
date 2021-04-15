@@ -1,4 +1,14 @@
-﻿@model TourAge.Models.SearchModel
+﻿@{ Layout = "~/Views/Shared/_Layout-admin.cshtml";}
 <div class="container">
+	<form  method="post" role="form" id="FormLogOff" style="display: none">
+		@Html.AntiForgeryToken()
+	</form>
 	@Html.Partial("~/Views/Tools/PCToolsPartial.cshtml")
+</div>
+<div class="container-fluid">
+	<div class="row">
+	</div>
+</div>
+<div class="container">
+
 </div>
