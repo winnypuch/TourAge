@@ -623,7 +623,7 @@ h1, h2, h3, h4, h5 {
     float: left;
     padding-top: 20px;
     padding-bottom: 30px;
-    width: 655px;
+    width: 100%;
 }
 
 .results .results-content .pager {

@@ -2,147 +2,159 @@
 <div class="index-banner">
 	<div class="searchPanelContainer">
 		<div id="Search" class="search-panel">
-
-	@Html.DevExpress().FormLayout(flSettings =>
-{
-	//flSettings.UseDefaultPaddings = false;
-	//flSettings.AlignItemCaptionsInAllGroups = true;
-
-	flSettings.Name = "flSearchPanelLayout";
-	flSettings.Width = Unit.Percentage(100);
-	flSettings.ColCount = 2;
-	flSettings.SettingsItemCaptions.Location = LayoutItemCaptionLocation.Top;
-	flSettings.Items.Add(i =>
-	{
-		i.Name = "lblSearch";
-		i.ShowCaption = DefaultBoolean.False;
-		i.NestedExtension().Label(vLabelProp =>
+		@using (Html.BeginForm("Results", "Results", null, FormMethod.Post, new {role = "form", id = "sSearchForm"}))
 		{
-			vLabelProp.Width = Unit.Percentage(100);
-			vLabelProp.Text = "<h3>Поиск Туров</h3>";
-			vLabelProp.EncodeHtml = false;
-		});
-		i.ColSpan = 2;
-	});
 
-	flSettings.Items.Add(m => m.CityId, vColumnCountryName =>
-	{
-		vColumnCountryName.Caption = "Местонахождение тура";
-		vColumnCountryName.ShowCaption = DefaultBoolean.True;
-		vColumnCountryName.Width = Unit.Percentage(100);
-		vColumnCountryName.CssClass = "cmbLocs";
-		vColumnCountryName.ColSpan = 2;
-		vColumnCountryName.NestedExtension().ComboBox(vComboBox =>
-		{
-			vComboBox.Width = Unit.Percentage(100);
-			vComboBox.Properties.TextField = "CountryName";
-			vComboBox.Properties.ValueField = "CountryId";
-			vComboBox.Properties.ValueType = typeof(int);
-			vComboBox.Properties.DataSource = ""; //SocialCategoryModel.FillAllSocialCategories();
-			vComboBox.Properties.ValidationSettings.Display = Display.Dynamic;
-			//vComboBox.Properties.ClientSideEvents.ValueChanged = "SocialCategory_Check";
-			//vComboBox.Properties.ClientSideEvents.KeyUp = "SocialCategory_Check";
-			vComboBox.ShowModelErrors = true;
-			vComboBox.PreRender = (s, e) =>
+			@Html.DevExpress().FormLayout(flSettings =>
 			{
-				ASPxComboBox vCBox = s as ASPxComboBox;
+				//flSettings.UseDefaultPaddings = false;
+				//flSettings.AlignItemCaptionsInAllGroups = true;
 
-				if (vCBox != null)
+				flSettings.Name = "flSearchPanelLayout";
+				flSettings.Width = Unit.Percentage(100);
+				flSettings.ColCount = 2;
+				flSettings.RequiredMarkDisplayMode = RequiredMarkMode.None;
+				flSettings.SettingsItemCaptions.Location = LayoutItemCaptionLocation.Top;
+				flSettings.Items.Add(i =>
 				{
-					if ((string) ViewData["sAction"] == "New")
-						vCBox.SelectedIndex = 0;
-					else
+					i.Name = "lblSearch";
+					i.ShowCaption = DefaultBoolean.False;
+					i.NestedExtension().Label(vLabelProp =>
 					{
-						if (Convert.ToInt64(vCBox.Value) == 0)
-							vCBox.Value = "";
-					}
-				}
-			};
-		});
-	});
+						vLabelProp.Width = Unit.Percentage(100);
+						vLabelProp.Text = "<h3>Поиск Туров</h3>";
+						vLabelProp.EncodeHtml = false;
+					});
+					i.ColSpan = 2;
+				});
 
-	flSettings.Items.Add(m => m.DateBegin, i =>
-	{
-		i.Width = Unit.Percentage(50);
-		i.NestedExtension().DateEdit(vDateEditProp =>
-		{
-			//vDateEditProp.Width = Unit.Percentage(50);
-			vDateEditProp.Height = Unit.Pixel(30);
-			//vDateEditProp.ControlStyle.CssClass = "cmbLocs";
-			vDateEditProp.Properties.EditFormat = EditFormat.Custom;
-			vDateEditProp.Properties.DisplayFormatString = "dd/MM/yyyy";
-			vDateEditProp.Properties.EditFormatString = "dd/MM/yyyy";
-			//vDateEditProp.Properties.ClientSideEvents.ValueChanged = "SocialCategory_Check";
-			//vDateEditProp.Properties.ClientSideEvents.KeyUp = "SocialCategory_Check";
-			vDateEditProp.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Popup;
-			vDateEditProp.Properties.SelectInputTextOnClick = true;
-			vDateEditProp.Properties.NullText = "Введите дату начала...";
-			vDateEditProp.Properties.NullTextDisplayMode = NullTextDisplayMode.UnfocusedAndFocused;
-			vDateEditProp.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
-			vDateEditProp.Properties.DropDownButton.Image.Url = Url.Content("~/Content/Images/calendar.png");
-			vDateEditProp.PreRender = (s, e) =>
-			{
-				ASPxDateEdit vDateEdit = s as ASPxDateEdit;
-
-				if (vDateEdit != null)
+				flSettings.Items.Add(m => m.CityId, vColumnCountryName =>
 				{
-					if (vDateEdit.Date == DateTime.MaxValue.Date)
-						vDateEdit.Value = "";
-				}
-			};
-		});
-	});
+					vColumnCountryName.Caption = "Местонахождение тура";
+					vColumnCountryName.ShowCaption = DefaultBoolean.True;
+					vColumnCountryName.Width = Unit.Percentage(100);
+					vColumnCountryName.CssClass = "cmbLocs";
+					vColumnCountryName.ColSpan = 2;
+					vColumnCountryName.NestedExtension().ComboBox(vComboBox =>
+					{
+						vComboBox.Width = Unit.Percentage(100);
+						vComboBox.Properties.TextFormatString = "{1} {2}";
+						vComboBox.Properties.ValueField = "CityId";
+						vComboBox.Properties.ValueType = typeof(int);
+						vComboBox.Properties.DataSource = DataProvider.GetDataTable("SELECT C.Id AS CityId, T.Name AS TourName, CO.Name AS CountryName, C.Name AS CityName, COUNT(T.Id) AS TourQty " +
+						                                                            "FROM [dbo].[Routes] AS R INNER JOIN dbo.RoutesInTour AS RT ON R.Id = RT.RouteId " +
+						                                                            "INNER JOIN dbo.Tours AS T ON T.Id = RT.TourId INNER JOIN dbo.Cities AS C ON R.[CityStartId] = C.Id " +
+						                                                            "INNER JOIN dbo.Countries AS CO ON C.CountryId = CO.Id GROUP BY C.Id, T.Name, CO.Name, C.Name " +
+						                                                            "ORDER BY	T.Name, CO.Name, C.Name");
+						vComboBox.Properties.ValidationSettings.Display = Display.Dynamic;
+						vComboBox.Properties.Columns.Add("TourName", "Имя тура", Unit.Percentage(40));
+						vComboBox.Properties.Columns.Add("CountryName", "Страна", Unit.Percentage(20));
+						vComboBox.Properties.Columns.Add("CityName", "Город", Unit.Percentage(20));
+						vComboBox.Properties.Columns.Add("TourQty", "Туров", Unit.Percentage(20));
+						//vComboBox.Properties.ClientSideEvents.ValueChanged = "SocialCategory_Check";
+						//vComboBox.Properties.ClientSideEvents.KeyUp = "SocialCategory_Check";
+						vComboBox.ShowModelErrors = true;
+						vComboBox.PreRender = (s, e) =>
+						{
+							ASPxComboBox vCBox = s as ASPxComboBox;
 
-	flSettings.Items.Add(m => m.DateEnd, i =>
-	{
-		i.Width = Unit.Percentage(50);
-		i.NestedExtension().DateEdit(vDateEditProp =>
-		{
-			vDateEditProp.Height = Unit.Pixel(30);
-			vDateEditProp.ControlStyle.CssClass = "cmbLocs";
-			vDateEditProp.Properties.EditFormat = EditFormat.Custom;
-			vDateEditProp.Properties.DisplayFormatString = "dd/MM/yyyy";
-			vDateEditProp.Properties.EditFormatString = "dd/MM/yyyy";
-			//vDateEditProp.Properties.ClientSideEvents.ValueChanged = "SocialCategory_Check";
-			//vDateEditProp.Properties.ClientSideEvents.KeyUp = "SocialCategory_Check";
-			vDateEditProp.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Popup;
-			vDateEditProp.Properties.SelectInputTextOnClick = true;
-			vDateEditProp.Properties.NullText = "Введите дату окончания...";
-			vDateEditProp.Properties.NullTextDisplayMode = NullTextDisplayMode.UnfocusedAndFocused;
-			vDateEditProp.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
-			vDateEditProp.Properties.DropDownButton.Image.Url = Url.Content("~/Content/Images/calendar.png");
-			vDateEditProp.PreRender = (s, e) =>
-			{
-				ASPxDateEdit vDateEdit = s as ASPxDateEdit;
+							if (vCBox != null)
+							{
+								if ((string) ViewData["sAction"] == "New")
+									vCBox.SelectedIndex = 0;
+								else
+								{
+									if (Convert.ToInt64(vCBox.Value) == 0)
+										vCBox.Value = "";
+								}
+							}
+						};
+					});
+				});
 
-				if (vDateEdit != null)
+				flSettings.Items.Add(m => m.DateBegin, i =>
 				{
-					if (vDateEdit.Date == DateTime.MaxValue.Date)
-						vDateEdit.Value = "";
-				}
-			};
-		});
-	});
-	flSettings.Items.Add(i =>
-	{
-		i.ShowCaption = DefaultBoolean.False;
-		i.ColSpan = 2;
-		i.NestedExtension().Button(vButtonProp =>
-		{
-			vButtonProp.Name = "SearchButton";
-			vButtonProp.RenderMode = ButtonRenderMode.Button;
-			vButtonProp.Width = Unit.Percentage(100);
-			vButtonProp.Text = "ПОИСК";
-			vButtonProp.ControlStyle.CssClass = "search-button";
-			//vButtonProp.PreRender = (s, e) =>
-			//{
-			//	(s as MVCxButton).HoverStyle.CssClass = "search-button-hover";
-			//};
-		});
+					i.Width = Unit.Percentage(50);
+					i.NestedExtension().DateEdit(vDateEditProp =>
+					{
+						//vDateEditProp.Width = Unit.Percentage(50);
+						vDateEditProp.Height = Unit.Pixel(30);
+						//vDateEditProp.ControlStyle.CssClass = "cmbLocs";
+						vDateEditProp.Properties.EditFormat = EditFormat.Custom;
+						vDateEditProp.Properties.DisplayFormatString = "dd/MM/yyyy";
+						vDateEditProp.Properties.EditFormatString = "dd/MM/yyyy";
+						//vDateEditProp.Properties.ClientSideEvents.ValueChanged = "SocialCategory_Check";
+						//vDateEditProp.Properties.ClientSideEvents.KeyUp = "SocialCategory_Check";
+						vDateEditProp.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Popup;
+						vDateEditProp.Properties.SelectInputTextOnClick = true;
+						vDateEditProp.Properties.NullText = "Введите дату начала...";
+						vDateEditProp.Properties.NullTextDisplayMode = NullTextDisplayMode.UnfocusedAndFocused;
+						vDateEditProp.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+						vDateEditProp.Properties.DropDownButton.Image.Url = Url.Content("~/Content/Images/calendar.png");
+						vDateEditProp.PreRender = (s, e) =>
+						{
+							ASPxDateEdit vDateEdit = s as ASPxDateEdit;
 
-	});
-}).GetHtml()
+							if (vDateEdit != null)
+							{
+								if (vDateEdit.Date == DateTime.MaxValue.Date)
+									vDateEdit.Value = "";
+							}
+						};
+					});
+				});
 
+				flSettings.Items.Add(m => m.DateEnd, i =>
+				{
+					i.Width = Unit.Percentage(50);
+					i.NestedExtension().DateEdit(vDateEditProp =>
+					{
+						vDateEditProp.Height = Unit.Pixel(30);
+						vDateEditProp.ControlStyle.CssClass = "cmbLocs";
+						vDateEditProp.Properties.EditFormat = EditFormat.Custom;
+						vDateEditProp.Properties.DisplayFormatString = "dd/MM/yyyy";
+						vDateEditProp.Properties.EditFormatString = "dd/MM/yyyy";
+						//vDateEditProp.Properties.ClientSideEvents.ValueChanged = "SocialCategory_Check";
+						//vDateEditProp.Properties.ClientSideEvents.KeyUp = "SocialCategory_Check";
+						vDateEditProp.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Popup;
+						vDateEditProp.Properties.SelectInputTextOnClick = true;
+						vDateEditProp.Properties.NullText = "Введите дату окончания...";
+						vDateEditProp.Properties.NullTextDisplayMode = NullTextDisplayMode.UnfocusedAndFocused;
+						vDateEditProp.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+						vDateEditProp.Properties.DropDownButton.Image.Url = Url.Content("~/Content/Images/calendar.png");
+						vDateEditProp.PreRender = (s, e) =>
+						{
+							ASPxDateEdit vDateEdit = s as ASPxDateEdit;
+
+							if (vDateEdit != null)
+							{
+								if (vDateEdit.Date == DateTime.MaxValue.Date)
+									vDateEdit.Value = "";
+							}
+						};
+					});
+				});
+				flSettings.Items.Add(i =>
+				{
+					i.ShowCaption = DefaultBoolean.False;
+					i.ColSpan = 2;
+					i.NestedExtension().Button(vButtonProp =>
+					{
+						vButtonProp.Name = "SearchButton";
+						vButtonProp.RenderMode = ButtonRenderMode.Button;
+						vButtonProp.Width = Unit.Percentage(100);
+						vButtonProp.Text = "ПОИСК";
+						vButtonProp.ControlStyle.CssClass = "search-button";
+						vButtonProp.UseSubmitBehavior = true;
+						//vButtonProp.PreRender = (s, e) =>
+						//{
+						//	(s as MVCxButton).HoverStyle.CssClass = "search-button-hover";
+						//};
+					});
+
+				});
+			}).GetHtml()
+		}
 		</div>
 		<div class="text">
 			<h1>Оформление туров и поездок</h1>

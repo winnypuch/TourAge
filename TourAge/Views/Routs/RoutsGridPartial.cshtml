@@ -105,6 +105,24 @@
 			vColumnName.CellStyle.HorizontalAlign = HorizontalAlign.Center;
 		});
 
+		vGridView.Columns.Add(vColumnName =>
+		{
+			vColumnName.FieldName = "ImageURL";
+			vColumnName.Caption = "URL картинки";
+			vColumnName.Width = Unit.Pixel(125);
+			vColumnName.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+			vColumnName.CellStyle.HorizontalAlign = HorizontalAlign.Center;
+		});
+
+		vGridView.Columns.Add(vColumnName =>
+		{
+			vColumnName.FieldName = "Descriptions";
+			vColumnName.Caption = "Описание";
+			vColumnName.Width = Unit.Pixel(125);
+			vColumnName.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+			vColumnName.CellStyle.HorizontalAlign = HorizontalAlign.Center;
+		});
+
 		vGridView.SetEditFormTemplateContent(vTemplate =>
 		{
 			Html.DevExpress().FormLayout(flSettings =>
@@ -191,6 +209,30 @@
 								}
 							}
 						};
+					});
+					vColumnName.Width = Unit.Percentage(50);
+				});
+
+				flSettings.Items.Add(vColumnName =>
+				{
+					vColumnName.FieldName = "ImageURL";
+					vColumnName.Caption = "URL картинки";
+					vColumnName.NestedExtension().TextBox(p =>
+					{
+						p.Height = Unit.Pixel(20);
+						p.Width = Unit.Percentage(100);
+					});
+					vColumnName.Width = Unit.Percentage(50);
+				});
+
+				flSettings.Items.Add(vColumnName =>
+				{
+					vColumnName.FieldName = "Descriptions";
+					vColumnName.Caption = "Описание";
+					vColumnName.NestedExtension().Memo(p =>
+					{
+						p.Height = Unit.Pixel(50);
+						p.Width = Unit.Percentage(100);
 					});
 					vColumnName.Width = Unit.Percentage(50);
 				});

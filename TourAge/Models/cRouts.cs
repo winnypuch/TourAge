@@ -80,9 +80,11 @@ namespace TourAge.Models
                        new SqlParameter("@CityStartId", SqlDbType.NVarChar) { Value = vRout.CityStart.Id },
                        new SqlParameter("@CityEndId", SqlDbType.NVarChar) { Value = vRout.CityEnd.Id },
                        new SqlParameter("@RCost", SqlDbType.NVarChar) { Value = vRout.RCost },
+                       new SqlParameter("@ImageURL", SqlDbType.NVarChar) { Value = vRout.ImageURL },
+                       new SqlParameter("@Descriptions", SqlDbType.NVarChar) { Value = vRout.Descriptions },
                     };
 
-                vRout.Id = DataProvider.ExecuteQuery("INSERT INTO Routes(Name, CityStartId, CityEndId, RCost) values(@Name , @CityStartId , @CityEndId, @RCost)", vParams, true);
+                vRout.Id = DataProvider.ExecuteQuery("INSERT INTO Routes(Name, CityStartId, CityEndId, RCost, ImageURL, Descriptions) values(@Name , @CityStartId , @CityEndId, @RCost, @ImageURL, @Descriptions)", vParams, true);
             }
             _vDictIdObject.Add(vRout.Id, vRout);
 

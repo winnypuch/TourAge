@@ -2,6 +2,7 @@
 
 using System;
 using System.Web.Mvc;
+using DevExpress.Web.Mvc;
 using TourAge.Models;
 
 #endregion <Using>
@@ -22,6 +23,16 @@ namespace TourAge.Controllers
 		public ActionResult OrdersGridPartial()
 		{
 			return PartialView("OrdersGridPartial", cOrders.Fill());
+		}
+
+
+		public ActionResult OrdersCaptchaPartial() {
+			return PartialView();
+		}
+
+
+		public ActionResult OrdersPartial() {
+			return PartialView("OrdersPartial");
 		}
 
 		/// <summary>

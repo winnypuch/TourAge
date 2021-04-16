@@ -1,0 +1,12 @@
+﻿@using DevExpress.Web.Captcha
+@Html.DevExpress().Captcha(vProp =>
+{
+	vProp.CallbackRouteValues = new { Controller = "Orders", Action = "OrdersCaptchaPartial" };
+	vProp.Width = Unit.Percentage(100);
+	vProp.Height = Unit.Pixel(30);
+	vProp.ControlStyle.CssClass = "captcha";
+	vProp.CodeLength = 5;
+	vProp.ChallengeImage.Width = 328;
+	vProp.RefreshButton.Position = ControlPosition.Right;
+	vProp.TextBox.Position = ControlPosition.Right;
+}).GetHtml()

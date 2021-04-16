@@ -1,0 +1,187 @@
+﻿@using System.Drawing
+@using DevExpress.Web.Captcha
+@model TourAge.Models.cClient
+<div class="booking-header">
+	<div class="content">
+		<div class="hotel-summary">
+			<h2 class="hotel-title"><%= hotel.Hotel_Name %></h2>
+			<div class="hotel-address">
+				@Html.DevExpress().Label(settings =>
+				{
+					settings.Name = "lblAddress";
+					settings.ControlStyle.Font.Size = FontUnit.Parse("14px");
+					settings.ControlStyle.ForeColor = ColorTranslator.FromHtml("#7c7c7c");
+					settings.Text = ViewData["TourName"].ToString();
+				}).GetHtml()
+			</div>
+		</div>
+		<div class="help-block">
+			<div class="text">
+				<h5>Мы можем Вам помочь.</h5>
+				<span class="contact">
+					Напишите нам: <a href="mailto:info@artem.com" style="color: #f88e1d; text-decoration: underline">info@artem.com</a>
+				</span>
+			</div>
+			@Html.DevExpress().Image(settings =>
+			{
+				settings.ImageUrl = Url.Content("~/Content/Images/help.png");
+				settings.ControlStyle.CssClass = "image";
+			})
+		</div>
+	</div>
+</div>
+<div class="clear"></div>
+<div class="booking-title">
+	<h5>Заказывайте и помните...</h5>
+	<h4>Это всё не просто так</h4>
+</div>
+<div class="booking-content">
+	<div class="form">
+		<h3>Необходимо указать Ваши данные для создания счёта.</h3>
+		<div class="block">
+			@using (Html.BeginForm("OrdersPartial", "Orders", null, FormMethod.Post, new {role = "form", id = "fOrderForm"}))
+			{
+
+				@Html.DevExpress().FormLayout(flSettings =>
+				{
+					//flSettings.UseDefaultPaddings = false;
+					//flSettings.AlignItemCaptionsInAllGroups = true;
+
+					flSettings.Name = "flOrderLayout";
+					flSettings.Width = Unit.Percentage(100);
+					flSettings.ControlStyle.CssClass = "form-layout";
+					flSettings.Styles.LayoutItem.CssClass = "item";
+					flSettings.ColCount = 2;
+					flSettings.RequiredMarkDisplayMode = RequiredMarkMode.None;
+					flSettings.Items.Add(m => m.LastName, i =>
+					{
+						i.ColSpan = 2;
+						i.ShowCaption = DefaultBoolean.False;
+						i.NestedExtension().TextBox(vProp =>
+						{
+							vProp.Width = Unit.Pixel(328);
+							vProp.Height = Unit.Pixel(30);
+							vProp.ControlStyle.CssClass = "editor";
+							vProp.Properties.NullDisplayText = "Фамилия";
+							vProp.Properties.NullTextStyle.CssClass = "nulltext";
+						});
+					});
+					flSettings.Items.Add(m => m.Name, i =>
+					{
+						i.ColSpan = 2;
+						i.ShowCaption = DefaultBoolean.False;
+						i.NestedExtension().TextBox(vProp =>
+						{
+							vProp.Width = Unit.Pixel(328);
+							vProp.Height = Unit.Pixel(30);
+							vProp.ControlStyle.CssClass = "editor";
+							vProp.Properties.NullDisplayText = "Имя";
+							vProp.Properties.NullTextStyle.CssClass = "nulltext";
+						});
+					});
+					flSettings.Items.Add(m => m.Patronymic, i =>
+					{
+						i.ColSpan = 2;
+						i.ShowCaption = DefaultBoolean.False;
+						i.NestedExtension().TextBox(vProp =>
+						{
+							vProp.Width = Unit.Pixel(328);
+							vProp.Height = Unit.Pixel(30);
+							vProp.ControlStyle.CssClass = "editor";
+							vProp.Properties.NullDisplayText = "Отчество";
+							vProp.Properties.NullTextStyle.CssClass = "nulltext";
+						});
+					});
+					flSettings.Items.Add(m => m.Phones, i =>
+					{
+						i.ColSpan = 2;
+						i.ShowCaption = DefaultBoolean.False;
+						i.NestedExtension().TextBox(vProp =>
+						{
+							vProp.Width = Unit.Pixel(328);
+							vProp.Height = Unit.Pixel(30);
+							vProp.ControlStyle.CssClass = "editor";
+							vProp.Properties.NullDisplayText = "Телефоны";
+							vProp.Properties.NullTextStyle.CssClass = "nulltext";
+						});
+					});
+
+					flSettings.Items.Add( i =>
+					{
+						i.ColSpan = 2;
+						i.ShowCaption = DefaultBoolean.False;
+						i.SetNestedContent(() => {
+							Html.RenderPartial("OrdersCaptchaPartial");
+						});
+					});
+
+				}).GetHtml()
+			}
+		</div>
+	</div>
+	<div class="summary">
+		<h3>Your Reservation Summary</h3>
+		<div class="block">
+			<div class="common">
+				<dx:ASPxImage ID="HotelImage" runat="server" CssClass="hotel-image" Width="70px" Height="70px" />
+				<h5><%= State.Hotel.Hotel_Name %></h5>
+				<span class="address">
+					<%= State.Hotel.Address %><br />
+					<%= State.Hotel.DetailsCity %>
+				</span>
+				<div class="clear"></div>
+				<div class="date-container">
+					Check in<br />
+					<span class="date"><%= State.CheckInDate.ToString("MMMM dd, yyyy") %></span>
+				</div>
+				<div class="date-container">
+					Check out<br />
+					<span class="date"><%= State.CheckOutDate.ToString("MMMM dd, yyyy") %></span>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="room-info">
+				<h5><%= State.Room.Room_Types.Type_Name %></h5>
+				<dx:ASPxDataView runat="server" ID="RoomFeaturesDataView" CssClass="features-data-view" ItemSpacing="6px">
+					<ContentStyle CssClass="content"></ContentStyle>
+					<SettingsTableLayout ColumnCount="2" RowsPerPage="3" />
+					<ItemStyle Width="148px" Height="22px" CssClass="item" />
+					<PagerSettings Visible="false"></PagerSettings>
+					<ItemTemplate>
+						<dx:ASPxImage runat="server" CssClass="feature-img" ImageAlign="Middle" ID="RoomFeatureIcon" ImageUrl='<%# Eval("ImageUrl") %>'></dx:ASPxImage>
+						<div class="feature-description"><%# Eval("Description") %></div>
+					</ItemTemplate>
+				</dx:ASPxDataView>
+			</div>
+			<div class="price-info">
+				<table class="price-block">
+					<asp:Repeater runat="server" ID="PriceRepeater">
+						<ItemTemplate>
+							<tr class="price-day">
+								<td class="period"><%# Eval("Period") %></td>
+								<td class="price"><%# Eval("Price", "{0:C}") %></td>
+							</tr>
+						</ItemTemplate>
+					</asp:Repeater>
+					<tr class="price-result">
+						<td class="period">TOTAL</td>
+						<td class="price"><%= string.Format("{0:C}", State.Room.Nighly_Rate.Value * State.NightsCount) %></td>
+					</tr>
+				</table>
+				<div class="small-price-block">
+					TOTAL<br />
+					<span class="price">
+						<%= string.Format("{0:C}", State.Room.Nighly_Rate.Value * State.NightsCount) %>
+					</span>
+				</div>
+			</div>
+			<div class="invoice-info">
+				<dx:ASPxButton runat="server" CssClass="button" Width="150px" Height="40px" ID="InvoiceButton" Text="Print Invoice" AutoPostBack="false">
+					<ClientSideEvents Click="onInvoiceButtonClick" />
+					<HoverStyle CssClass="orange-button-hover"></HoverStyle>
+				</dx:ASPxButton>
+			</div>
+		</div>
+	</div>
+</div>
+<div style="clear: both"></div>

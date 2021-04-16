@@ -533,6 +533,10 @@
     <Content Include="Views\Tours\RoutSelectPartial.cshtml" />
     <Content Include="Views\Clients\ClientsGridPartial.cshtml" />
     <Content Include="Views\Orders\OrdersGridPartial.cshtml" />
+    <Content Include="Views\Details\DetailsPartial.cshtml" />
+    <Content Include="Views\Results\ResultsPartial.cshtml" />
+    <Content Include="Views\Orders\OrdersPartial.cshtml" />
+    <Content Include="Views\Orders\OrdersCaptchaPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -545,6 +549,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
+    <Compile Include="Controllers\ResultsController.cs" />
+    <Compile Include="Controllers\DetailsController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\PrintController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />

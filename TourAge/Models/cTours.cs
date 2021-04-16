@@ -78,9 +78,11 @@ namespace TourAge.Models
                        new SqlParameter("@CostOfLiving", SqlDbType.Decimal) {Value = vTour.CostOfLiving},
                        new SqlParameter("@TDateBegin", SqlDbType.DateTime) {Value = vTour.TDateBegin},
                        new SqlParameter("@TDateEnd", SqlDbType.DateTime) {Value = vTour.TDateEnd},
+                       new SqlParameter("@ImageURL", SqlDbType.NVarChar) { Value = vTour.ImageURL },
+                       new SqlParameter("@Descriptions", SqlDbType.NVarChar) { Value = vTour.Descriptions }
                     };
 
-                vTour.Id = DataProvider.ExecuteQuery("INSERT INTO Tours(Name, CostOfLiving, TDateBegin, TDateEnd) values(@Name, @CostOfLiving, @TDateBegin, @TDateEnd)", vParams, true);
+                vTour.Id = DataProvider.ExecuteQuery("INSERT INTO Tours(Name, CostOfLiving, TDateBegin, TDateEnd, ImageURL, Descriptions) values(@Name, @CostOfLiving, @TDateBegin, @TDateEnd, @ImageURL, @Descriptions)", vParams, true);
             }
             _vDictIdObject.Add(vTour.Id, vTour);
 

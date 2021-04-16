@@ -23,17 +23,30 @@ namespace TourAge.Models
 
 		public int[] RoutsIDs { get; set; }
 
-		public string RoutsIDsString {
-			get
-			{
-				int[] RoutsIDs = this.RoutsIDs;
+		[DisplayName("URL")]
+		public string ImageURL{ get; set; }
 
-				return cRouts.Fill().Where(t => RoutsIDs.Contains(t.Id)).Select(t => t.Name).DefaultIfEmpty()
-					.Aggregate((a, b) => a + ", " + b);
-			}
-		}
+		[DisplayName("Описание")]
+		public string Descriptions{ get; set; }
 
-	public cTour()
+		[DisplayName("Стоимость тура")]
+		public decimal CostTour { get; set; }
+
+		public string RoutsIDsString { get; set; }
+		//{
+		//	get
+		//	{
+		//		int[] RoutsIDs = this.RoutsIDs;
+
+		//		return cRouts.Fill().Where(t => RoutsIDs.Contains(t.Id)).Select(t => t.Name).DefaultIfEmpty()
+		//			.Aggregate((a, b) => a + ", " + b);
+		//	}
+		//}
+
+		public string TourCities { get; set; }
+
+
+		public cTour()
 		{
 			this.Routs = new cRouts();
 		}
@@ -50,7 +63,7 @@ namespace TourAge.Models
 				new SqlParameter("@Id", SqlDbType.Int) {Value = iTourId},
 			};
 
-			DataTable vRes = DataProvider.GetDataTable("Select Id, Name, CostOfLiving, TDateBegin, TDateEnd From Tours Where Id = @Id", vParams);
+			DataTable vRes = DataProvider.GetDataTable("Select Id, Name, CostOfLiving, TDateBegin, TDateEnd, ImageURL, Descriptions From Tours Where Id = @Id", vParams);
 
 			if (vRes?.Rows.Count > 0)
 			{
@@ -63,6 +76,8 @@ namespace TourAge.Models
 					this.TDateBegin = Convert.ToDateTime(vRow["TDateBegin"]);
 					this.TDateEnd = Convert.ToDateTime(vRow["TDateEnd"]);
 					this.Routs = new cRouts();
+					this.ImageURL = Convert.ToString(vRow["ImageURL"]);
+					this.Descriptions = Convert.ToString(vRow["Descriptions"]);
 
 					List<SqlParameter> vRParams = new List<SqlParameter>
 					{
@@ -71,6 +86,9 @@ namespace TourAge.Models
 					DataTable vRouts = DataProvider.GetDataTable("Select RouteId From RoutesInTour Where TourId = @Id", vRParams);
 
 					this.RoutsIDs = new int[] {};
+					this.TourCities = "";
+					this.CostTour = this.CostOfLiving;
+					this.RoutsIDsString = "";
 
 					if (vRouts.Rows.Count > 0)
 					{
@@ -84,6 +102,15 @@ namespace TourAge.Models
 							Array.Resize(ref vArr, vArr.Length + 1);
 							vArr[vArr.GetUpperBound(0)] = vcRout.Id;
 							this.RoutsIDs = vArr;
+
+							if (!string.IsNullOrWhiteSpace(this.TourCities))
+								this.TourCities += "<br/>";
+							if (!string.IsNullOrWhiteSpace(this.RoutsIDsString))
+								this.RoutsIDsString += ", ";
+
+							this.RoutsIDsString += vcRout.Id.ToString();
+							this.TourCities += vcRout.CityStart.Name;
+							this.CostTour += vcRout.RCost;
 						}
 					}
 
@@ -107,9 +134,11 @@ namespace TourAge.Models
 				new SqlParameter("@CostOfLiving", SqlDbType.Decimal) {Value = this.CostOfLiving},
 				new SqlParameter("@TDateBegin", SqlDbType.DateTime) {Value = this.TDateBegin},
 				new SqlParameter("@TDateEnd", SqlDbType.DateTime) {Value = this.TDateEnd},
+				new SqlParameter("@ImageURL", SqlDbType.NVarChar) { Value = this.ImageURL },
+				new SqlParameter("@Descriptions", SqlDbType.NVarChar) { Value = this.Descriptions },
 			};
 
-			DataProvider.ExecuteQuery("UPDATE Tours SET Name = @Name, CostOfLiving = @CostOfLiving, TDateBegin = @TDateBegin, TDateEnd = @TDateEnd WHERE id = @Id", vParams);
+			DataProvider.ExecuteQuery("UPDATE Tours SET Name = @Name, CostOfLiving = @CostOfLiving, TDateBegin = @TDateBegin, TDateEnd = @TDateEnd, ImageURL = @ImageURL, Descriptions = @Descriptions WHERE id = @Id", vParams);
 			return true;
 		}
 

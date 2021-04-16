@@ -1,0 +1,103 @@
+﻿@using System.Drawing
+@model ICollection<TourAge.Models.cTour>
+<div class="results-header">
+	<div class="content-сolumn">
+		<h3>@ViewData["CityName"], @ViewData["CountryName"]</h3>
+		<br />
+		<span class="start-filter">@ViewData["Period"]</span>
+	</div>
+</div>
+<div class="content-сolumn results">
+	<div class="results-summary">
+		@Html.DevExpress().Label(settings =>
+		{
+			settings.Name = "HotelsResultsLabel";
+			settings.ControlStyle.Font.Size = FontUnit.Parse("36px");
+			settings.ControlStyle.ForeColor = ColorTranslator.FromHtml("#f78119");
+			settings.Text = "НАЙДЕНО";
+		}).GetHtml()
+		@Html.DevExpress().Label(settings =>
+		{
+			settings.Name = "HotelsCountLabel";
+			settings.ControlStyle.Font.Size = FontUnit.Parse("36px");
+			settings.ControlStyle.ForeColor = ColorTranslator.FromHtml("#999999");
+			settings.Text = ViewData["TourCount"].ToString();
+		}).GetHtml()
+
+		@*<dx:ASPxTokenBox ID="FilterTokenBox" runat="server" ItemValueType="System.String" Font-Size="16px" Width="100%" CssClass="token-box" AutoPostBack="true" OnValueChanged="FilterTokenBox_ValueChanged">
+				<TokenRemoveButtonStyle CssClass="token-remove-button"></TokenRemoveButtonStyle>
+				<TokenTextStyle CssClass="token-text"></TokenTextStyle>
+				<TokenStyle CssClass="token"></TokenStyle>
+				<TokenBoxInputStyle CssClass="token-box-input"></TokenBoxInputStyle>
+			</dx:ASPxTokenBox>*@
+	</div>
+	<div class="results-content">
+		@Html.DevExpress().DataView(settings =>
+   {
+	   settings.CallbackRouteValues = new { Controller = "Results", Action = "ResultsPartial", vSearchModel = ViewData["vSearchModel"]};
+	   settings.Name = "HotelsDataView";
+	   settings.Layout = DevExpress.Web.Layout.Table;
+	   settings.Width = Unit.Percentage(100);
+	   settings.PagerAlign = PagerAlign.Left;
+	   settings.ControlStyle.Border.BorderStyle = BorderStyle.None;
+	   settings.ControlStyle.ItemSpacing = 0;
+	   //	< ItemStyle CssClass = "item" />
+	   settings.SettingsTableLayout.ColumnCount = 1;
+	   settings.SettingsTableLayout.RowsPerPage = 3;
+	   settings.PagerSettings.Position = PagerPosition.Bottom;
+	   settings.PagerSettings.ShowNumericButtons = true;
+	   settings.PagerSettings.Summary.Visible = false;
+	   //< PagerStyle CssClass = "pager" ></ PagerStyle >
+	   settings.Styles.Item.CssClass = "item";
+	   settings.SetItemTemplateContent(c =>
+	   {
+		   ViewContext.Writer.Write("<div class=\"hotel-image\">");
+		   Html.DevExpress().HyperLink(hlsettings =>
+		   {
+			   //hlsettings.Name = "TourImage";
+			   hlsettings.Properties.ImageUrl = Url.Content(DataBinder.Eval(c.DataItem, "ImageURL").ToString()); //'<%# GetHotelDetailsUrl(Eval("ID")) %>
+			   hlsettings.Properties.ImageHeight = Unit.Pixel(140);
+			   hlsettings.Properties.ImageWidth = Unit.Pixel(140);
+			   hlsettings.NavigateUrl = Url.Action("Details", "Details", new {iId = DataBinder.Eval(c.DataItem, "Id")});
+		   }).Render();
+
+		   ViewContext.Writer.Write("</div>");
+		   ViewContext.Writer.Write("<div class=\"hotel-common\">");
+		   Html.DevExpress().HyperLink(hlsettings =>
+		   {
+			   // hlsettings.Name = "TourTitleHyperLink";
+			   hlsettings.Properties.Text = DataBinder.Eval(c.DataItem, "Name").ToString();
+			   hlsettings.ControlStyle.CssClass = "hotel-title";
+			   hlsettings.NavigateUrl = Url.Action("Details", "Details", new {iId = DataBinder.Eval(c.DataItem, "Id")});
+		   }).Render();
+		   ViewContext.Writer.Write("<div class=\"hotel-address\">" + DataBinder.Eval(c.DataItem, "TourCities").ToString() + "</div>");
+		   ViewContext.Writer.Write("<div class=\"hotel-stats\">");
+		   ViewContext.Writer.Write("<div class=\"stat\"> </div>");
+		   ViewContext.Writer.Write("<div class=\"stat\"> </div>");
+		   ViewContext.Writer.Write("<div class=\"stat\"> </div>");
+		   ViewContext.Writer.Write("</div>");
+		   ViewContext.Writer.Write("</div>");
+		   ViewContext.Writer.Write("<div class=\"hotel-right-block\">");
+		   ViewContext.Writer.Write("<div class=\"price\">" + string.Format("{0:C0}", DataBinder.Eval(c.DataItem, "CostTour")) + "</div>");
+		   ViewContext.Writer.Write("<br/>");
+		   Html.DevExpress().Button(btnsettings =>
+		   {
+			   btnsettings.Name = "UpdateFilterButton" + DataBinder.Eval(c.DataItem, "Id");
+			   btnsettings.Text = "Заказать";
+			   btnsettings.ControlStyle.CssClass = "button";
+			   btnsettings.Height = Unit.Pixel(40);
+			   btnsettings.Width = Unit.Pixel(110);
+			   btnsettings.ControlStyle.BackColor = ColorTranslator.FromHtml("#f7f7f7");
+			   btnsettings.ClientSideEvents.Click = Url.Action("OrdersPartial", "Orders", new { iTourId = DataBinder.Eval(c.DataItem, "Id") });
+		   }).Render();
+
+		   ViewContext.Writer.Write("</div>");
+		   ViewContext.Writer.Write("<div class=\"clear\"> </div>");
+		   ViewContext.Writer.Write("<div class=\"hotel-description\">" + DataBinder.Eval(c.DataItem, "Descriptions").ToString() + "</div>");
+	   });
+   }).Bind(Model).GetHtml()
+	</div>
+	@*<div class="results-filter">
+	</div>*@
+	<div style="clear: both"></div>
+</div>

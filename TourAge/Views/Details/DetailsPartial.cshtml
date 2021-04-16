@@ -1,0 +1,29 @@
+﻿@using System.Drawing
+<div class="details-header">
+	<div class="content-сolumn">
+		<div class="hotel-summary">
+			<h2 class="hotel-title"><%= hotel.Hotel_Name %></h2>
+			<div class="hotel-address">
+				@Html.DevExpress().Label(settings =>
+				{
+					settings.Name = "lblAddress";
+					settings.ControlStyle.Font.Size = FontUnit.Parse("14px");
+					settings.ControlStyle.ForeColor = ColorTranslator.FromHtml("#7c7c7c");
+				}).GetHtml();
+			</div>
+		</div>
+		<div class="filter-info">
+			<%= State.StartFilterText %>
+			@Html.DevExpress().Button(settings =>
+			{
+				settings.Name = "UpdateFilterButton";
+				settings.Text = "Изменить поиск";
+				settings.ControlStyle.CssClass = "button-white";
+				settings.Height = Unit.Pixel(40);
+				settings.Width = Unit.Pixel(138);
+
+			}).GetHtml()
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
