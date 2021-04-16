@@ -1,6 +1,7 @@
 #region < Usings >
 
 using System;
+using System.Linq;
 using System.Web.Mvc;
 using TourAge.Models;
 
@@ -22,6 +23,18 @@ namespace TourAge.Controllers
 		public ActionResult ToursGridPartial()
 		{
 			return PartialView("ToursGridPartial", cTours.Fill());
+		}
+
+		public ActionResult RoutSelectPartial(int? CurrentID)
+		{
+
+			cTour model = new cTour() { Id = -1, RoutsIDs = new int[0] };
+			if (CurrentID > -1)
+			{
+				model = cTours.Fill().Where(item => item.Id == CurrentID).FirstOrDefault();
+			}
+
+			return PartialView("RoutSelectPartial", model);
 		}
 
 		/// <summary>
@@ -95,10 +108,20 @@ namespace TourAge.Controllers
 							cTours vTours = cTours.Fill();
 							vTours.Add(vTour, true);
 						}
+
+						vTour.RemoveRoutes();
+						foreach (int iTourRoutsID in vTour.RoutsIDs)
+						{
+							cRout vRout = new cRout();
+							vRout.Load(iTourRoutsID);
+							vTour.Routs.Add(vRout);
+						}
+						vTour.SaveRoutes();
+
 					}
 					else
 					{
-						ViewData["EditError"] = "Укажите город и его страну!";
+						ViewData["EditError"] = "Укажите наименование тура, стоимость проживания, дату начала и окончания тура !";
 					}
 				}
 				catch (Exception e)

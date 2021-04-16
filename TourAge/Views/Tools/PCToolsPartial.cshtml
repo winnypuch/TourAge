@@ -81,6 +81,30 @@
 
 	pcSettings.TabPages.Add(vTabPage =>
 	{
+		vTabPage.Name = "tpClients";
+		//vTabPage.TabImage.Url = "~/Content/Images/16x16/Find.png";
+		vTabPage.Text = "Клиенты";
+		vTabPage.ToolTip = "Клиенты";
+		vTabPage.SetContent(() =>
+		{
+			Html.RenderAction("ClientsGridPartial", "Clients");
+		});
+	});
+
+	pcSettings.TabPages.Add(vTabPage =>
+	{
+		vTabPage.Name = "tpOrders";
+		//vTabPage.TabImage.Url = "~/Content/Images/16x16/Find.png";
+		vTabPage.Text = "Заказы";
+		vTabPage.ToolTip = "Заказы";
+		vTabPage.SetContent(() =>
+		{
+			Html.RenderAction("OrdersGridPartial", "Orders");
+		});
+	});
+
+	pcSettings.TabPages.Add(vTabPage =>
+	{
 		vTabPage.Name = "tpReports";
 		//vTabPage.TabImage.Url = "~/Content/Images/16x16/Find.png";
 		vTabPage.Text = "Отчёты";

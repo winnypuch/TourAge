@@ -155,5 +155,16 @@ namespace TourAge.Models
 
             return null;
         }
+
+        /// <summary>
+        /// Загрузить коллекцию клиентов
+        /// </summary>
+        /// <returns></returns>
+        public static cClients Fill()
+        {
+	        cClients vClients = new cClients();
+	        vClients.Load();
+	        return vClients;
+        }
     }
 }

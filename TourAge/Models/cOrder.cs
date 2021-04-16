@@ -14,7 +14,7 @@ namespace TourAge.Models
         public string Name { get; set; }
 
         [DisplayName("Дата")]
-        public DateTime Date { get; set; }
+        public DateTime OrderDate { get; set; }
 
         [DisplayName("Кол-во человек")]
         public int ClientsCount { get; set; }
@@ -52,7 +52,7 @@ namespace TourAge.Models
                 {
                     this.Id = iOrderId;
                     this.Name = Convert.ToString(vRow["Name"]);
-                    this.Date = Convert.ToDateTime(vRow["Date"]);
+                    this.OrderDate = Convert.ToDateTime(vRow["Date"]);
                     this.ClientsCount = Convert.ToInt32(vRow["ClientsCount"]);
                     this.Tour = new cTour();
                     this.Tour.Load(Convert.ToInt32(vRow["TourId"]));
@@ -74,7 +74,7 @@ namespace TourAge.Models
             List<SqlParameter> vParams = new List<SqlParameter> {
                        new SqlParameter("@Id", SqlDbType.Int) { Value = this.Id },
                        new SqlParameter("@Name", SqlDbType.NVarChar) { Value = this.Name },
-                       new SqlParameter("@Date", SqlDbType.DateTime) { Value = this.Date },
+                       new SqlParameter("@Date", SqlDbType.DateTime) { Value = this.OrderDate },
                        new SqlParameter("@ClientsCount", SqlDbType.Int) { Value = this.ClientsCount },
                        new SqlParameter("@iTourId", SqlDbType.Int) { Value = this.Tour.Id },
                        new SqlParameter("@iClientId", SqlDbType.Int) { Value = this.Client.Id },

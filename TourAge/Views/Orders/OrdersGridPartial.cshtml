@@ -1,16 +1,16 @@
 ﻿@using DevExpress.Web.Mvc.UI
 @using TourAge.Models
 @{
-	GridViewExtension vGrid = Html.DevExpress().GridView<cTour>(vGridView =>
+	GridViewExtension vGrid = Html.DevExpress().GridView<cOrder>(vGridView =>
 	{
-		vGridView.Name = "gvTours";
-		vGridView.CallbackRouteValues = new {Controller = "Tours", Action = "ToursGridPartial" };
+		vGridView.Name = "gvOrders";
+		vGridView.CallbackRouteValues = new {Controller = "Orders", Action = "OrdersGridPartial" };
 
-		vGridView.SettingsEditing.AddNewRowRouteValues = new {Controller = "Tours", Action = "ToursAddNewPartial" };
+		vGridView.SettingsEditing.AddNewRowRouteValues = new {Controller = "Orders", Action = "OrdersAddNewPartial" };
 
-		vGridView.SettingsEditing.UpdateRowRouteValues = new {Controller = "Tours", Action = "ToursUpdatePartial" };
+		vGridView.SettingsEditing.UpdateRowRouteValues = new {Controller = "Orders", Action = "OrdersUpdatePartial" };
 
-		vGridView.SettingsEditing.DeleteRowRouteValues = new {Controller = "Tours", Action = "ToursDeletePartial" };
+		vGridView.SettingsEditing.DeleteRowRouteValues = new {Controller = "Orders", Action = "OrdersDeletePartial" };
 
 		//vGridView.ClientSideEvents.BeginCallback = "OnBeginCallback";
 		vGridView.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
@@ -75,10 +75,19 @@
 			vColumnName.CellStyle.HorizontalAlign = HorizontalAlign.Center;
 		});
 
+		vGridView.Columns.Add(vColumnName =>
+		{
+			vColumnName.FieldName = "OrderDate";
+			vColumnName.Caption = "Дата";
+			vColumnName.Width = Unit.Pixel(65);
+			vColumnName.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+			vColumnName.CellStyle.HorizontalAlign = HorizontalAlign.Center;
+		});
+
 		vGridView.Columns.Add(vColumnDocSum =>
 		{
-			vColumnDocSum.FieldName = "CostOfLiving";
-			vColumnDocSum.Caption = "Стоимость проживания";
+			vColumnDocSum.FieldName = "ClientsCount";
+			vColumnDocSum.Caption = "Кол-во клиентов";
 			vColumnDocSum.EditorProperties().SpinEdit(p =>
 			{
 				p.DisplayFormatString = "{0:#0.##;;\"\"}";
@@ -89,66 +98,35 @@
 
 		vGridView.Columns.Add(vColumnName =>
 		{
-			vColumnName.FieldName = "TDateBegin";
-			vColumnName.Caption = "Дата начала";
-			vColumnName.Width = Unit.Pixel(65);
+			vColumnName.FieldName = "Client.Name";
+			vColumnName.Caption = "Клиент";
+			vColumnName.Width = Unit.Pixel(125);
 			vColumnName.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
 			vColumnName.CellStyle.HorizontalAlign = HorizontalAlign.Center;
 		});
 
 		vGridView.Columns.Add(vColumnName =>
 		{
-			vColumnName.FieldName = "TDateEnd";
-			vColumnName.Caption = "Дата окончания";
-			vColumnName.Width = Unit.Pixel(65);
+			vColumnName.FieldName = "Tour.Name";
+			vColumnName.Caption = "Тур";
+			vColumnName.Width = Unit.Pixel(125);
 			vColumnName.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
 			vColumnName.CellStyle.HorizontalAlign = HorizontalAlign.Center;
 		});
 
-		vGridView.Columns.Add(vColumnName =>
-		{
-			vColumnName.FieldName = "RoutsIDsString";
-			vColumnName.Caption = "Маршруты";
-			vColumnName.Width = Unit.Pixel(200);
-			vColumnName.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
-			vColumnName.CellStyle.HorizontalAlign = HorizontalAlign.Center;
-		});
-
-		//vGridView.CustomColumnDisplayText = (s, e) =>
-		//{
-		//	if (e.Column.FieldName == "RoutsIDs")
-		//	{
-		//		int[] RoutsIDs = (int[])e.Value;
-		//		string sText = cRouts.Fill().Where(t => RoutsIDs.Contains(t.Id)).
-		//			Select(t => t.Name).DefaultIfEmpty().Aggregate((a, b) => a + ", " + b);
-		//		e.DisplayText = sText ?? string.Empty;
-		//	}
-		//};
 		vGridView.SetEditFormTemplateContent(vTemplate =>
 		{
 			Html.DevExpress().FormLayout(flSettings =>
 			{
-				flSettings.Name = "FormLayoutTours";
+				flSettings.Name = "FormLayoutOrders";
 				flSettings.Width = Unit.Percentage(100);
 				flSettings.ColCount = 2;
 
 				flSettings.Items.Add(vColumnName =>
 				{
 					vColumnName.FieldName = "Name";
-					vColumnName.Caption = "Наименование тура";
+					vColumnName.Caption = "Наименование заказа";
 					vColumnName.NestedExtension().TextBox(p =>
-					{
-						p.Height = Unit.Pixel(20);
-						p.Width = Unit.Percentage(100);
-					});
-					vColumnName.Width = Unit.Percentage(50);
-				});
-
-				flSettings.Items.Add(vColumnName =>
-				{
-					vColumnName.FieldName = "CostOfLiving";
-					vColumnName.Caption = "Стоимость проживания";
-					vColumnName.NestedExtension().SpinEdit(p =>
 					{
 						p.Height = Unit.Pixel(20);
 						p.Width = Unit.Percentage(100);
@@ -158,8 +136,8 @@
 
 				flSettings.Items.Add(i =>
 				{
-					i.FieldName = "TDateBegin";
-					i.Caption = "Дата начала";
+					i.FieldName = "OrderDate";
+					i.Caption = "Дата";
 					i.Width = Unit.Percentage(50);
 					i.NestedExtension().DateEdit(vDateEditProp =>
 					{
@@ -190,48 +168,77 @@
 					});
 				});
 
-				flSettings.Items.Add(i =>
+				flSettings.Items.Add(vColumnName =>
 				{
-					i.FieldName = "TDateEnd";
-					i.Caption = "Дата окончания";
-					i.Width = Unit.Percentage(50);
-					i.NestedExtension().DateEdit(vDateEditProp =>
+					vColumnName.FieldName = "ClientsCount";
+					vColumnName.Caption = "Количество клиентов";
+					vColumnName.NestedExtension().SpinEdit(p =>
 					{
-						vDateEditProp.Width = Unit.Percentage(100);
-						vDateEditProp.Height = Unit.Pixel(30);
-						vDateEditProp.ControlStyle.CssClass = "cmbLocs";
-						vDateEditProp.Properties.EditFormat = EditFormat.Custom;
-						vDateEditProp.Properties.DisplayFormatString = "dd/MM/yyyy";
-						vDateEditProp.Properties.EditFormatString = "dd/MM/yyyy";
-						//vDateEditProp.Properties.ClientSideEvents.ValueChanged = "SocialCategory_Check";
-						//vDateEditProp.Properties.ClientSideEvents.KeyUp = "SocialCategory_Check";
-						vDateEditProp.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Popup;
-						vDateEditProp.Properties.SelectInputTextOnClick = true;
-						vDateEditProp.Properties.NullText = "Введите дату окончания...";
-						vDateEditProp.Properties.NullTextDisplayMode = NullTextDisplayMode.UnfocusedAndFocused;
-						vDateEditProp.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
-						vDateEditProp.Properties.DropDownButton.Image.Url = Url.Content("~/Content/Images/calendar.png");
-						vDateEditProp.PreRender = (s, e) =>
-						{
-							ASPxDateEdit vDateEdit = s as ASPxDateEdit;
+						p.Height = Unit.Pixel(20);
+						p.Width = Unit.Percentage(100);
+					});
+					vColumnName.Width = Unit.Percentage(50);
+				});
 
-							if (vDateEdit != null)
+				flSettings.Items.Add(vColumnName =>
+				{
+					vColumnName.FieldName = "Client.Id";
+					vColumnName.Caption = "Клиент";
+					vColumnName.NestedExtension().ComboBox(vComboBox =>
+					{
+						vComboBox.Width = Unit.Percentage(100);
+						vComboBox.Properties.TextField = "Name";
+						vComboBox.Properties.ValueField = "Id";
+						vComboBox.Properties.ValueType = typeof(int);
+						vComboBox.Properties.DataSource = cClients.Fill();
+						vComboBox.Properties.ValidationSettings.Display = Display.Dynamic;
+						vComboBox.ShowModelErrors = true;
+						vComboBox.PreRender = (s, e) =>
+						{
+							if (vTemplate.Grid.IsNewRowEditing)
 							{
-								if (vDateEdit.Date == DateTime.MaxValue.Date)
-									vDateEdit.Value = "";
+								ASPxComboBox vCBox = s as ASPxComboBox;
+
+								if (vCBox != null)
+								{
+									vCBox.SelectedIndex = 0;
+								}
 							}
 						};
 					});
+					vColumnName.Width = Unit.Percentage(50);
 				});
-				flSettings.Items.Add(i =>
+
+				flSettings.Items.Add(vColumnName =>
 				{
-					i.FieldName = "RoutsIDs";
-					i.ShowCaption = DefaultBoolean.False;
-					i.Width = Unit.Percentage(50);
-				}).SetNestedContent(() =>
-				{
-					Html.RenderAction("RoutSelectPartial", new { CurrentID = DataBinder.Eval(vTemplate.DataItem, "Id") });
+					vColumnName.FieldName = "Tour.Id";
+					vColumnName.Caption = "Тур";
+					vColumnName.NestedExtension().ComboBox(vComboBox =>
+					{
+						vComboBox.Width = Unit.Percentage(100);
+						vComboBox.Properties.TextField = "Name";
+						vComboBox.Properties.ValueField = "Id";
+						vComboBox.Properties.ValueType = typeof(int);
+						vComboBox.Properties.DataSource = cTours.Fill();
+						vComboBox.Properties.ValidationSettings.Display = Display.Dynamic;
+						vComboBox.ShowModelErrors = true;
+						vComboBox.PreRender = (s, e) =>
+						{
+							if (vTemplate.Grid.IsNewRowEditing)
+							{
+								ASPxComboBox vCBox = s as ASPxComboBox;
+
+								if (vCBox != null)
+								{
+									vCBox.SelectedIndex = 0;
+								}
+							}
+						};
+					});
+					vColumnName.Width = Unit.Percentage(50);
 				});
+
+				flSettings.Items.AddEmptyItem();
 
 				flSettings.Items.Add(i =>
 				{
@@ -243,7 +250,7 @@
 					{
 						hlSettings.Name = "lnkUpdate";
 						hlSettings.Properties.Text = "Сохранить";
-						hlSettings.Properties.ClientSideEvents.Click = "function(s, e){ gvTours.UpdateEdit(); }";
+						hlSettings.Properties.ClientSideEvents.Click = "function(s, e){ gvOrders.UpdateEdit(); }";
 					}).Render();
 
 					Html.DevExpress().HyperLink(hlSettings =>
@@ -251,11 +258,11 @@
 						hlSettings.Name = "lnkCancel";
 						hlSettings.Properties.Text = "Отмена";
 						hlSettings.Style[HtmlTextWriterStyle.MarginLeft] = "5px";
-						hlSettings.Properties.ClientSideEvents.Click = "function(s, e){ gvTours.CancelEdit(); }";
+						hlSettings.Properties.ClientSideEvents.Click = "function(s, e){ gvOrders.CancelEdit(); }";
 					}).Render();
 					ViewContext.Writer.Write("</div>");
 				});
-			}).Bind(ViewData["cCity"] ?? (vTemplate.Grid.IsNewRowEditing ? new cTour() : vTemplate.Grid.GetRow(vTemplate.Grid.EditingRowVisibleIndex))).Render();
+			}).Bind(ViewData["cOrder"] ?? (vTemplate.Grid.IsNewRowEditing ? new cOrder() : vTemplate.Grid.GetRow(vTemplate.Grid.EditingRowVisibleIndex))).Render();
 		});
 
 		string sColumnFieldName;

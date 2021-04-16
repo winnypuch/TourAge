@@ -74,7 +74,7 @@ namespace TourAge.Models
             if (bAddToDatabase)
             {
                 List<SqlParameter> vParams = new List<SqlParameter> {
-                       new SqlParameter("@Date", SqlDbType.DateTime) { Value = vOrder.Date },
+                       new SqlParameter("@Date", SqlDbType.DateTime) { Value = vOrder.OrderDate },
                        new SqlParameter("@Name", SqlDbType.NVarChar) { Value = vOrder.Name },
                        new SqlParameter("@ClientsCount", SqlDbType.Int) { Value = vOrder.ClientsCount },
                        new SqlParameter("@iTourId", SqlDbType.Int) { Value = vOrder.Tour.Id },
@@ -143,6 +143,17 @@ namespace TourAge.Models
 
             base.Remove(vOrder);
             return null;
+        }
+
+        /// <summary>
+        /// Загрузить коллекцию заказов
+        /// </summary>
+        /// <returns></returns>
+        public static cOrders Fill()
+        {
+	        cOrders vOrders = new cOrders();
+	        vOrders.Load();
+	        return vOrders;
         }
     }
 }

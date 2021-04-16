@@ -530,6 +530,9 @@
     <Content Include="Views\Shared\HeaderPanelwithoutbuttonPartial.cshtml" />
     <Content Include="Views\Reports\ReportsPartial.cshtml" />
     <Content Include="Views\Print\PrintForm.cshtml" />
+    <Content Include="Views\Tours\RoutSelectPartial.cshtml" />
+    <Content Include="Views\Clients\ClientsGridPartial.cshtml" />
+    <Content Include="Views\Orders\OrdersGridPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -541,8 +544,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\PrintController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ToursController.cs" />
     <Compile Include="Controllers\RoutsController.cs" />
     <Compile Include="Controllers\CountriesController.cs" />

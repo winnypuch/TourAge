@@ -219,7 +219,7 @@
 					}).Render();
 					ViewContext.Writer.Write("</div>");
 				});
-			}).Bind(ViewData["cCity"] ?? (vTemplate.Grid.IsNewRowEditing ? new cRout() : vTemplate.Grid.GetRow(vTemplate.Grid.EditingRowVisibleIndex))).Render();
+			}).Bind(ViewData["cRout"] ?? (vTemplate.Grid.IsNewRowEditing ? new cRout() : vTemplate.Grid.GetRow(vTemplate.Grid.EditingRowVisibleIndex))).Render();
 		});
 
 		string sColumnFieldName;
